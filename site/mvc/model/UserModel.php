@@ -12,12 +12,14 @@ class UserModel extends Model{
     private $isAdmin;
 
     //constructor    
-    public function __construct($id,$email,$pseudo,$password,$isAdmin) {
-        $this->setId($id);
-        $this->setPassword($password);
-        $this->setEmail($email);
-        $this->setPseudo($pseudo);
-        $this->setIsAdmin($isAdmin);
+    public function __construct($id = NULL, $email = NULL, $pseudo = NULL, $password = NULL, $isAdmin = NULL) {
+        if (!is_null($id) && !is_null($email) && !is_null($pseudo) && !is_null($password) && !is_null($isAdmin)) {
+            $this->setId($id);
+            $this->setPassword($password);
+            $this->setEmail($email);
+            $this->setPseudo($pseudo);
+            $this->setIsAdmin($isAdmin);
+        }
     }
     
     //id
@@ -59,11 +61,5 @@ class UserModel extends Model{
     public function getIsAdmin(){
         return $this->isAdmin;
     }
-
-
 }
-
-
-
-
 ?>

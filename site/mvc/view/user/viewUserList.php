@@ -8,14 +8,12 @@
             <th>Admin</th>
         </tr>
         
-        <?php print_r($users); foreach ($users as $obj): ?>
-            
-            <tr>
-                <td><?php $obj->getId()  ;       ?></td>
-                <td><?php $obj->getPassword() ;  ?></td>
-                <td><?php $obj->getEmail() ;     ?></td>
-                <td><?php $obj->getPseudo()  ;   ?></td>
-                <td><?php $obj->getIsAdmin();    ?></td>
+        <?php foreach ($users as $obj): ?>
+                <td><?= $obj->getId() ?></td>
+                <td><?= $obj->getPassword() ?></td>
+                <td><?= $obj->getEmail() ?></td>
+                <td><?= $obj->getPseudo() ?></td>
+                <td><?= $obj->getIsAdmin() ?></td>
             </tr>
         <?php endforeach;?>
     </table>
