@@ -9,11 +9,11 @@
         </tr>
         
         <?php foreach ($users as $obj): ?>
-                <td><?= $obj->getId() ?></td>
-                <td><?= $obj->getPassword() ?></td>
-                <td><?= $obj->getEmail() ?></td>
-                <td><?= $obj->getPseudo() ?></td>
-                <td><?= $obj->getIsAdmin() ?></td>
+                <td><?= htmlspecialchars($obj->getId()) ?></td>
+                <td><?= htmlspecialchars($obj->getPassword()) ?></td>
+                <td><?= htmlspecialchars($obj->getEmail()) ?></td>
+                <td><?= htmlspecialchars($obj->getPseudo()) ?></td>
+                <td><?= htmlspecialchars($obj->getIsAdmin()) ?></td>
             </tr>
         <?php endforeach;?>
     </table>
