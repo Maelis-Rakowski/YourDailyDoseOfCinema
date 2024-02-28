@@ -21,6 +21,7 @@ class UserModel extends Model{
 
     }
 
+    
     //Login
     public function setLogin($login){
         $this->login = $login;
