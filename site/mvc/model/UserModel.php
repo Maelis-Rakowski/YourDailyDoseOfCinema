@@ -17,7 +17,7 @@ class UserModel extends Model{
         $this->setPassword($password);
         $this->setEmail($email);
         $this->setPseudo($pseudo);
-        $this->setIdAdmin($isAdmin);
+        $this->setIsAdmin($isAdmin);
 
     }
 
