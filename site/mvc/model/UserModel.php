@@ -18,9 +18,10 @@ class UserModel extends Model{
         $this->setEmail($email);
         $this->setPseudo($pseudo);
         $this->setIdAdmin($isAdmin);
-
+        $this->$users[] = $this;
     }
 
+    
     //Login
     public function setLogin($login){
         $this->login = $login;
@@ -60,11 +61,5 @@ class UserModel extends Model{
     public function getIsAdmin(){
         return $this->isAdmin;
     }
-
-
 }
-
-
-
-
 ?>
