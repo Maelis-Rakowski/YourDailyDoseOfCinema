@@ -21,6 +21,21 @@ class UserModel extends Model{
             $this->setIsAdmin($isAdmin);
         }
     }
+
+    public static function create($email,$pseudo,$password){
+        $sql = "INSERT INTO users (email, pseudo,password,isAdmin) VALUES (:email,:pseudo,:password,:isAdmin)";
+        $req =Model::getPDO()->prepare($sql);
+
+        $values = array(
+            "email" => $email,
+            "pseudo" => $pseudo,
+            "password" => $password,
+            "isAdmin" => 0
+        );
+        
+        $req->execute($values);
+        $req->closeCursor();
+    }
     
     //id
     public function setId($id){
