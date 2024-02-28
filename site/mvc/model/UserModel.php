@@ -12,7 +12,8 @@ class UserModel extends Model{
     private $isAdmin;
 
     //constructor    
-    public function __construct($email,$pseudo,$password,$isAdmin) {
+    public function __construct($id,$email,$pseudo,$password,$isAdmin) {
+        $this->setId($id);
         $this->setPassword($password);
         $this->setEmail($email);
         $this->setPseudo($pseudo);

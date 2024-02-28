@@ -18,7 +18,7 @@ class ControllerUser {
     private function showUsers() {       
         $this->_view = new View(array('view','user','viewUserList.php'));
         //Generate the view without data
-        $users = UserModel::GetAll("users","UserModel");
+        $users = UserModel::getAll("users","UserModel");
         $this->_view->generate(array('users'=>$users));
     }
 }

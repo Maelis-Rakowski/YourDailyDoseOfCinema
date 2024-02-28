@@ -24,16 +24,16 @@ class Model {
     //
     //        require_once FILE::build_path(array(class qui descend de Model utilisée));
     //        $users = UserModel::GetAll("users","UserModel");
-    public static function getAll($table, $obj){
-        $datas = [];
-        $req =Model::getPDO()->prepare('SELECT * FROM '.$table);
-        $req->execute();
-        while($data = $req->fetch(PDO::FETCH_ASSOC)){
-            $datas[] = new $obj($data);
+    public static function getAll($table_name, $class_name){
+        $rep = Model::getPDO()->query("SELECT * FROM $table_name");
+        $rep->setFetchMode(PDO::FETCH_ASSOC); // On utilise FETCH_ASSOC pour obtenir un tableau associatif
+        $objects = [];
+        while ($data = $rep->fetch()) {
+            $objects[] = new $class_name($data['id'], $data['email'], $data['pseudo'], $data['password'], $data['isAdmin']);
         }
-        return $datas;
-        $req->closeCursor();
+        return $objects;
     }
+    
 
     public static function getPDO() {
         if (self::$pdo == NULL) {

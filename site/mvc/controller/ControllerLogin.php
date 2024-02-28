@@ -17,13 +17,18 @@ class ControllerLogin {
     }
 
     public function signin() {
-        // $user = new ModelUser($_POST["email"],$_POST["pseudo"],$_POST["password"],0);
+        $sql = "INSERT INTO users (id,email, pseudo,password,isAdmin) VALUES (:id,:email,:pseudo,:password,:isAdmin)";
+        $req =Model::getPDO()->prepare($sql);
 
-        $req =Model::getPDO()->prepare('INSERT INTO user (id,email, pseudo,password,isAdmin) VALUES (5,'.$_POST["email"].','.$_POST["pseudo"].','.$_POST["password"].',0)');
-
-
-        $req =Model::getPDO()->prepare('SELECT * FROM '.$table);
-        $req->execute();
+        $values = array(
+            "id" => 2,
+            "email" => $_POST["email"],
+            "pseudo" => $_POST["pseudo"],
+            "password" => $_POST["password"],
+            "isAdmin" => 0
+        );
+        
+        $req->execute($values);
         $req->closeCursor();
     }
 }

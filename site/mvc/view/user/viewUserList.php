@@ -7,13 +7,15 @@
             <th>Pseudo</th>
             <th>Admin</th>
         </tr>
-        <?php foreach ($users as $obj): ?>
+        
+        <?php print_r($users); foreach ($users as $obj): ?>
+            
             <tr>
-                <td><?php $obj->getLogin()      ?></td>
-                <td><?php $obj->getPassword()   ?></td>
-                <td><?php $obj->getEmail()      ?></td>
-                <td><?php $obj->getPseudo()     ?></td>
-                <td><?php $obj->getIsAdmin()    ?></td>
+                <td><?php $obj->getId()  ;       ?></td>
+                <td><?php $obj->getPassword() ;  ?></td>
+                <td><?php $obj->getEmail() ;     ?></td>
+                <td><?php $obj->getPseudo()  ;   ?></td>
+                <td><?php $obj->getIsAdmin();    ?></td>
             </tr>
         <?php endforeach;?>
     </table>
