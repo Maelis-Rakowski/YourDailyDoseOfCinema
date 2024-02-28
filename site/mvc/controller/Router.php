@@ -2,8 +2,7 @@
 
 //Require all the controllers
 require_once File::build_path(array("controller","ControllerHome.php"));
-
-
+require_once File::build_path(array("controller", "Controller404.php"));
 
 class Router{
 
@@ -17,35 +16,17 @@ class Router{
     public function routeReq(){
        
         //if an action is set, the action will be call the linked function. Else, by default, the action is readAll
-        if(isset($_GET['action'])){
+        $action = isset($_GET['action']) ? $_GET['action'] : 'readAll';
+        $controller = isset($_GET['controller']) ? $_GET['controller'] : 'home';
+        //build the controller class name
+        $controller_class = "Controller".ucfirst($controller);
 
-            $action=$_GET['action'];
-        }
-        else {
-            $action='readAll';
-        }
-        
-        //call the linked controller automatically based on the name of the file.
-        if(isset($_GET['controller'])) {
-            $controller = $_GET['controller'];
-            $controller_class = "Controller".ucfirst($controller);
-            if(class_exists($controller_class)) {
-               
-                //Create a new controller
-                $this->_controller = new $controller_class;
-
-                //Call the specified fonction based on the action name (action and function have to have the same spelling)
-                $this->_controller->$action();
-            }
-            else  $action='error';
-        }
-
-        //if no controller is set, it's the readAll of the default page
-        else {
-            
-             $home = new ControllerHome();
-             $home->readAll();
-
+        try {
+            $this->_controller = new $controller_class;
+            $this->_controller->$action();
+        } catch (\Throwable $th) {
+            $this->_controller = new Controller404();
+            $this->_controller->show404();
         }
     }
 }
