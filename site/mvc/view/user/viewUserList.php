@@ -15,7 +15,6 @@
                 <td><?php $obj->getPseudo()     ?></td>
                 <td><?php $obj->getIsAdmin()    ?></td>
             </tr>
-        <?php endforeach;
-        f;ezkpfezkofjzeiojfeziof,eziofjeziofeziofjezoifjeziofjezio?>
+        <?php endforeach;?>
     </table>
 </main>

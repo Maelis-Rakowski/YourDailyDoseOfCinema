@@ -27,9 +27,11 @@ class Router{
             $this->_controller = new $controller_class;
             $this->_controller->$action();
         } catch (\Throwable $th) {
+            if(!class_exists($controller_class) | !method_exists($controller_class, $action)) {
+                $this->_controller = new Controller404();
+                $this->_controller->show404();
+            }
             echo $th;
-            $this->_controller = new Controller404();
-            $this->_controller->show404();
         }
     }
 }
