@@ -20,18 +20,10 @@ class Model {
 
     //Récupère tous les éléments d'une table
     //param : table de la base , modèle à qui va etre instancier pour chaque element de la table
-    //exemple :
-    //
-    //        require_once FILE::build_path(array(class qui descend de Model utilisée));
-    //        $users = UserModel::GetAll("users","UserModel");
-    public static function getAll($table_name, $class_name){
-        $rep = Model::getPDO()->query("SELECT * FROM $table_name");
-        $rep->setFetchMode(PDO::FETCH_ASSOC); // On utilise FETCH_ASSOC pour obtenir un tableau associatif
-        $objects = [];
-        while ($data = $rep->fetch()) {
-            $objects[] = new $class_name($data['id'], $data['email'], $data['pseudo'], $data['password'], $data['isAdmin']);
-        }
-        return $objects;
+    public static function selectAll($table_name, $class_name){
+        $rep = Model::getPDO() -> query("SELECT * FROM $table_name");
+        $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+        return $rep->fetchAll();
     }
     
 

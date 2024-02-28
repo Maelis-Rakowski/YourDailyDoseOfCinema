@@ -11,15 +11,11 @@ class ControllerUser {
     }
 
     public function readAll(){
-        $this->showUsers();
-    }
-
-
-    private function showUsers() {       
         $this->_view = new View(array('view','user','viewUserList.php'));
         //Generate the view without data
-        $users = UserModel::getAll("users","UserModel");
+        $users = UserModel::selectAll("users","UserModel");
         $this->_view->generate(array('users'=>$users));
     }
+
 }
 ?>
