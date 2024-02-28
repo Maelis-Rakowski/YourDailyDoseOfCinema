@@ -17,11 +17,10 @@ class ControllerLogin {
     }
 
     public function signin() {
-        $sql = "INSERT INTO users (id,email, pseudo,password,isAdmin) VALUES (:id,:email,:pseudo,:password,:isAdmin)";
+        $sql = "INSERT INTO users (email, pseudo,password,isAdmin) VALUES (:email,:pseudo,:password,:isAdmin)";
         $req =Model::getPDO()->prepare($sql);
 
         $values = array(
-            "id" => 2,
             "email" => $_POST["email"],
             "pseudo" => $_POST["pseudo"],
             "password" => $_POST["password"],
