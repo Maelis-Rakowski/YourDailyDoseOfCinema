@@ -1,5 +1,5 @@
 create database yddoc;
-CREATE USER 'yddoc'@'%' IDENTIFIED WITH caching_sha2_password BY '***';GRANT USAGE ON *.* TO 'yddoc'@'%';GRANT ALL PRIVILEGES ON `yddoc`.* TO 'yddoc'@'%';
+CREATE USER 'yddoc'@'%' IDENTIFIED WITH caching_sha2_password BY 'QfqWbB25e7K(kS?s';GRANT USAGE ON *.* TO 'yddoc'@'%';GRANT ALL PRIVILEGES ON `yddoc`.* TO 'yddoc'@'%';
 
 create table if not EXISTS users (
 	id integer PRIMARY KEY AUTO_INCREMENT,
