@@ -20,6 +20,7 @@
             <h1>Your daily dose of cinema</h1>
             <nav >
             <a href="?controller=home">Home</a>
+            <a href="?controller=user">User</a>
             </nav>
         </header>
 

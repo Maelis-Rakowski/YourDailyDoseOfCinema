@@ -3,6 +3,8 @@
 //Require all the controllers
 require_once File::build_path(array("controller","ControllerHome.php"));
 require_once File::build_path(array("controller", "Controller404.php"));
+require_once File::build_path(array("controller", "ControllerUser.php"));
+
 
 class Router{
 
@@ -25,8 +27,10 @@ class Router{
             $this->_controller = new $controller_class;
             $this->_controller->$action();
         } catch (\Throwable $th) {
+            echo $th;
             $this->_controller = new Controller404();
             $this->_controller->show404();
         }
     }
 }
+

@@ -1,5 +1,5 @@
 <?php
-
+require_once FILE::build_path(array('model','Model.php'));
 class UserModel extends Model{
 
     private $login;
