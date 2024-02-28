@@ -6,7 +6,7 @@
 
 
 
-    require 'oo'.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'File.php';//File.php
+    require 'mvc'.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'File.php';//File.php
 
     //Gestion des controller à afficher en fonction de l'url, pour en savoir plus, il faut aller voir le routeur !
     
