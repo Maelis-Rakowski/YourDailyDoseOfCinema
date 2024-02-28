@@ -2,7 +2,7 @@
 require_once FILE::build_path(array('model','Model.php'));
 class UserModel extends Model{
 
-    private $login;
+    private $id;
     private $password;
 
     private $email;
@@ -11,22 +11,20 @@ class UserModel extends Model{
     //boolean for administrator
     private $isAdmin;
 
-    //constructor
-    public function __construct($login,$email,$pseudo,$password,$isAdmin) {
-        $this->setLogin($login);
+    //constructor    
+    public function __construct($email,$pseudo,$password,$isAdmin) {
         $this->setPassword($password);
         $this->setEmail($email);
         $this->setPseudo($pseudo);
         $this->setIsAdmin($isAdmin);
     }
-
     
-    //Login
-    public function setLogin($login){
-        $this->login = $login;
+    //id
+    public function setId($id){
+        $this->id = $id;
     }
-    public function getLogin(){
-        return $this->login;
+    public function getId(){
+        return $this->id;
     }
 
     //Password

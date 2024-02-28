@@ -21,6 +21,7 @@
             <nav >
             <a href="?controller=home">Home</a>
             <a href="?controller=user">User</a>
+            <a href="?controller=login">Sign In</a>
             </nav>
         </header>
 
