@@ -138,9 +138,40 @@ class ControllerLogin {
 
 
     public function resetPassword(){
-        $this->_view = new View(array('view','login','viewConnected.php'));
+        $this->_view = new View(array('view','login','viewResetPassword.php'));
         //Generate the view without data
         $this->_view->generate(array(null));
+    }
+
+    public function sendEmail() {
+        phpinfo();
+        $email = $_POST['email'];
+    
+        $to      = $email;
+        $subject = 'Reset Password YYDDOC';
+        $message = 'Link to reset your password: http://yddoc/site/?controller=login&action=resetPassword';
+        $headers = 'From: nellou.michel@laposte.net' . "\r\n" .
+                   'Reply-To: nellou.michel@laposte.net' . "\r\n" .
+                   'X-Mailer: PHP/' . phpversion();
+    
+        // Configuration des paramètres SMTP pour Gmail
+        ini_set("SMTP", "smtp.laposte.net");
+        ini_set("smtp_port", "465");
+        ini_set("sendmail_from", "nellou.michel@laposte.net");
+    
+        // Activer le chiffrement TLS
+        ini_set("smtp_crypto", "tls");
+    
+        // Authentification SMTP
+        ini_set("smtp_auth", "true");
+        ini_set("username", "nellou.michel@laposte.net");
+        ini_set("password", "");
+    
+        if(mail($to, $subject, $message)) {
+            echo "E-mail sent successfully.";
+        } else {
+            echo "Failed to send e-mail.";
+        }
     }
 }
 ?>

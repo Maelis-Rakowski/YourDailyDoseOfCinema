@@ -15,4 +15,27 @@
         </ul>   
         
     </form>
+
+
+    <br>
+    <br>
+    <div>
+   Forgot Password ?
+    </div>
+    <form method="POST" action="?controller=login&action=sendEmail">
+        <ul>
+            <li>
+                <label for="email">Email</label>
+                <input name="email" type="text">
+            </li>
+
+            <li>
+                <input type="submit" value="Send Mail">
+            </li>
+        </ul>   
+        
+    </form>
+
+
+
 </main>
