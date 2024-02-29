@@ -1,6 +1,6 @@
 <?php
 require_once FILE::build_path(array('model','Model.php'));
-class UserModel extends Model{
+class UserModel extends Model {
 
     private $id;
     private $password;

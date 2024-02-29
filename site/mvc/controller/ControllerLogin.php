@@ -11,13 +11,13 @@ class ControllerLogin {
     }
 
     public function readAll() {               
-        $this->_view = new View(array('view','login','viewLogin.php'));
+        $this->_view = new View(array('view', 'login', 'viewLogin.php'));
         //Generate the view without data
         $this->_view->generate(array(null));
     }
 
     public function signin() {
-        $sql = "INSERT INTO users (email, pseudo,password,isAdmin) VALUES (:email,:pseudo,:password,:isAdmin)";
+        $sql = "INSERT INTO users (email, pseudo, password, isAdmin) VALUES (:email, :pseudo, :password, :isAdmin)";
         $req =Model::getPDO()->prepare($sql);
 
         $values = array(
