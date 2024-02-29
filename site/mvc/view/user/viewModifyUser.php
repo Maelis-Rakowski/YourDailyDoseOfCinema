@@ -1,7 +1,7 @@
 <main>
 
     <h2>Modification du User id : <?=$user_id?></h2>
-    <form action="?controller=user&action=modifyUser" method="POST">
+    <form action="/user/modifyUser" method="POST">
         <ul>
             <input type="hidden" name="user_id" value=" <?= $user_id ?>">
             <li>
