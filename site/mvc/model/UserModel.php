@@ -37,8 +37,7 @@ class UserModel extends Model{
         return $rep->fetchAll();
     }
 
-    public static function modifyUser($user_id, $user_password, $user_email, $user_pseudo, $user_isAdmin)
-    {
+    public static function modifyUser($user_id, $user_password, $user_email, $user_pseudo, $user_isAdmin) {
         $sql = "UPDATE users 
         SET email = :user_email, pseudo = :user_pseudo, password = :user_password, isAdmin = :user_isAdmin
         WHERE id = :user_id";
@@ -54,7 +53,7 @@ class UserModel extends Model{
         return $rep->fetchAll();
     }
     
-    public static function create($email, $pseudo, $password){
+    public static function create($email, $pseudo, $password) {
         $sql = "INSERT INTO users (email, pseudo, password, isAdmin) VALUES (:email, :pseudo, :password, :isAdmin)";
         $req = Model::getPDO()->prepare($sql);
 

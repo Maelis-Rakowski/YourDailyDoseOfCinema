@@ -6,19 +6,23 @@
             <input type="hidden" name="user_id" value=" <?= $user_id ?>">
             <li>
                 <label for="new_user_pseudo">New Pseudo : </label><br>
-                <input name="new_user_pseudo" type="text" placeholder="last : <?=$user_pseudo?>"><br><br>
+                <input name="new_user_pseudo" type="text" value="<?=$user_pseudo?>"><br><br>
             </li>
             <li>
                 <label for="new_user_password">New password : </label><br>
-                <input name="new_user_password" type="password" placeholder="last : <?=$user_password?>"><br><br>
+                <input name="new_user_password" type="password" value="<?=$user_password?>"><br><br>
             </li>
             <li>
                 <label for="new_user_email">New email : </label><br>
-                <input name="new_user_email" type="text" placeholder="last : <?=$user_email?>"><br><br>
+                <input name="new_user_email" type="text" value="<?=$user_email?>"><br><br>
             </li>
             <li>
-                <label for="new_user_isAdmin">New status : </label><br>
-                <input name="new_user_isAdmin" type="text" placeholder="last : <?=$user_isAdmin?>"><br><br>
+                <label for="new_user_isAdmin">Admininistrator : </label> 
+                
+                <input name="new_user_isAdmin" type="checkbox"
+                    <?php $checked = ($user_isAdmin == 1) ? "checked" : "" ?>
+                    <?=$checked?>         
+                ><br><br>
             </li>
             <li>                
                 <input type="submit" value="Valider mes modifications"><br><br>
