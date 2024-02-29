@@ -26,6 +26,7 @@ class UserModel extends Model{
             "user_id" => $id,
         );
         $rep->execute($value);
+        $rep->setFetchMode(PDO::FETCH_CLASS, "UserModel");
         return $rep->fetchAll();
     }
 
@@ -34,10 +35,9 @@ class UserModel extends Model{
         $rep = Model::getPDO() -> prepare($sql);
         $value = array("user_id" => $id);
         $rep->execute($value);
-        return $rep->fetchAll();
     }
 
-    public static function modifyUser($user_id, $user_password, $user_email, $user_pseudo, $user_isAdmin) {
+    public static function updateUser($user_id, $user_password, $user_email, $user_pseudo, $user_isAdmin) {
         $sql = "UPDATE users 
         SET email = :user_email, pseudo = :user_pseudo, password = :user_password, isAdmin = :user_isAdmin
         WHERE id = :user_id";
@@ -50,6 +50,7 @@ class UserModel extends Model{
             "user_isAdmin" => $user_isAdmin
         );
         $rep->execute($value);
+        $rep->setFetchMode(PDO::FETCH_CLASS, "UserModel");
         return $rep->fetchAll();
     }
     

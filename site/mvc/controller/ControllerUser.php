@@ -32,7 +32,7 @@
             $user_isAdmin = isset($_POST['new_user_isAdmin']) ? 1 : 0;            
             
             $this->_view = new View(array('view', 'user', 'viewUserList.php'));
-            UserModel::modifyUser($user_id, $user_password, $user_email, $user_pseudo, $user_isAdmin);
+            UserModel::updateUser($user_id, $user_password, $user_email, $user_pseudo, $user_isAdmin);
             $users = UserModel::selectAll("users", "UserModel");
             $this->_view->generate(array('users'=>$users));
         }        
