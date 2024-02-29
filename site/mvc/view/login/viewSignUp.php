@@ -1,5 +1,5 @@
 <main>
-    <form method="POST" action="?controller=login&action=signin">
+    <form method="POST" action="?controller=login&action=signUp">
         <ul>
             <li>
                 <label for="pseudo">Pseudo</label>
@@ -14,9 +14,18 @@
                 <input name="password" type="password">
             </li>
             <li>
-                <input type="submit" value="Sign In">
+                <input type="submit" value="Sign Up">
             </li>
         </ul>   
         
     </form>
+    <br>
+    <br>
+    <div>
+   Already have an acccount ?
+    </div>
+    <div>
+       
+        <a href="?controller=login&action=signInView">Sign In</a>
+    </div>
 </main>
