@@ -1,13 +1,9 @@
 <main>
-    <form method="POST" action="/login/signin">
+    <form method="POST" action="/login/signIn">
         <ul>
             <li>
                 <label for="pseudo">Pseudo</label>
                 <input name="pseudo" type="text">
-            </li>
-            <li>
-                <label for="email">E-mail</label>
-                <input name="email" type="email">
             </li>
             <li>
                 <label for="password">Password</label>
