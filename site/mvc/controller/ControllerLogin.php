@@ -84,30 +84,32 @@ class ControllerLogin {
 
     //Try connect
     public function signIn(){
-        $pseudo = $_POST["pseudo"];
-        $password = $_POST["password"];
-
-
-        //TO DO
-        //TO DO
-        //TO DO
-        //For futur
-        //$user = UserModel::getUser($pseudo,$password);
-
-       
-        //replace the condition to user!=null fot the future
-        //TO DO
-        //TO DO
-        //TO DO
-
-        
-        if($pseudo=="logan" && $password=="logan"){
-
-
-            $this->createSession($pseudo,$password);
-            $this->connected();
-        }
-        else{
+        if(isset($_POST["pseudo"]) && isset($_POST["password"])) {
+            $pseudo = $_POST["pseudo"];
+            $password = $_POST["password"];
+    
+            // Récupérer l'utilisateur correspondant au pseudo
+            $users = UserModel::getUser($pseudo);
+    
+            // Vérifier si l'utilisateur existe
+            if(!empty($users)) {
+                $user = $users[0];
+    
+                // Vérifier si le mot de passe correspond
+                if(password_verify($password, $user->getPassword())) {
+                    // Mot de passe valide, connecter l'utilisateur
+                    $this->createSession($pseudo, $user->getPassword());
+                    $this->connected();
+                } else {
+                    // Mot de passe invalide, afficher la vue de connexion
+                    $this->signInView();
+                }
+            } else {
+                // Utilisateur inexistant, afficher la vue de connexion
+                $this->signInView();
+            }
+        } else {
+            // Les champs pseudo et mot de passe n'ont pas été envoyés, afficher la vue de connexion
             $this->signInView();
         }
     }
