@@ -17,18 +17,19 @@ class ControllerLogin {
     }
 
     public function signin() {
-        $sql = "INSERT INTO users (email, pseudo,password,isAdmin) VALUES (:email,:pseudo,:password,:isAdmin)";
-        $req =Model::getPDO()->prepare($sql);
 
-        $values = array(
-            "email" => $_POST["email"],
-            "pseudo" => $_POST["pseudo"],
-            "password" => $_POST["password"],
-            "isAdmin" => 0
-        );
+        $email = $_POST["email"];
+        $pseudo = $_POST["pseudo"];
+        $password = $_POST["password"];
+
+        UserModel::create($email,$pseudo,$password);
+
+        $this->_view = new View(array('view','login','viewConnected.php'));
+        //Generate the view without data
+        $this->_view->generate(array(null));
         
-        $req->execute($values);
-        $req->closeCursor();
+
+       
     }
 }
 ?>
