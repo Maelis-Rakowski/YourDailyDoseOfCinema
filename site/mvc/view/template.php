@@ -10,7 +10,7 @@
         <meta name="description" content="Your daily dose of cinema is the best website ever">
 
         <!-- Inclure votre fichier CSS -->
-        <link rel="stylesheet" type="text/css" href="css/style.css ">
+        <link rel="stylesheet" type="text/css" href="/assets/css/style.css ">
         <title><?= $t ?></title>
 
     </head>
@@ -19,10 +19,9 @@
         <header>
             <h1>Your daily dose of cinema</h1>
             <nav >
-            <a href="?controller=home">Home</a>
-            <a href="?controller=user">User</a>
-            <a href="?controller=login&action=signInView">Sign In</a>
-            <a href="?controller=login&action=signUpView">Sign Up</a>
+            <a href="/home">Home</a>
+            <a href="/user">User</a>
+            <a href="/login">Sign In</a>
             </nav>
         </header>
 

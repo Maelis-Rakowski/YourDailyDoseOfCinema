@@ -1,0 +1,6 @@
+RewriteEngine On
+# On ne redirige pas les fichiers
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+# Redirige toutes les Urls vers index où elles seront découpées
+RewriteRule ^(.*) index.php
