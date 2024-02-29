@@ -10,15 +10,15 @@
         }
 
         public function readAll() {
-            $this->_view = new View(array('view','user','viewUserList.php'));
+            $this->_view = new View(array('view', 'user', 'viewUserList.php'));
             //Generate the view without data
-            $users = UserModel::selectAll("users","UserModel");
+            $users = UserModel::selectAll("users", "UserModel");
             $this->_view->generate(array('users'=>$users));
         }
 
         public function deleteUser() {
             $userIdToDelete = $_POST["user_id"];
-            $this->_view = new View(array('view','user','viewDeletedUser.php'));
+            $this->_view = new View(array('view', 'user', 'viewDeletedUser.php'));
             $users = UserModel::deleteUserById($userIdToDelete);
             $this->_view->generate(array('users'=>$users));
         }
@@ -30,9 +30,9 @@
             $user_pseudo = $_POST["new_user_pseudo"];
             $user_isAdmin = $_POST["new_user_isAdmin"];
             
-            $this->_view = new View(array('view','user','viewUserList.php'));
+            $this->_view = new View(array('view', 'user', 'viewUserList.php'));
             UserModel::modifyUser($user_id, $user_password, $user_email, $user_pseudo, $user_isAdmin);
-            $users = UserModel::selectAll("users","UserModel");
+            $users = UserModel::selectAll("users", "UserModel");
             $this->_view->generate(array('users'=>$users));
         }        
 
@@ -43,7 +43,7 @@
             $user_pseudo = $_POST["user_pseudo"];
             $user_isAdmin = $_POST["user_isAdmin"];
 
-            $this->_view = new View(array('view','user','viewModifyUser.php'));
+            $this->_view = new View(array('view', 'user', 'viewModifyUser.php'));
             $this->_view->generate(array(
                 'user_id'=>$user_id,
                 'user_password'=>$user_password,

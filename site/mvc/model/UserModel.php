@@ -54,9 +54,9 @@ class UserModel extends Model{
         return $rep->fetchAll();
     }
     
-    public static function create($email,$pseudo,$password){
-        $sql = "INSERT INTO users (email, pseudo,password,isAdmin) VALUES (:email,:pseudo,:password,:isAdmin)";
-        $req =Model::getPDO()->prepare($sql);
+    public static function create($email, $pseudo, $password){
+        $sql = "INSERT INTO users (email, pseudo, password, isAdmin) VALUES (:email, :pseudo, :password, :isAdmin)";
+        $req = Model::getPDO()->prepare($sql);
 
         $values = array(
             "email" => $email,

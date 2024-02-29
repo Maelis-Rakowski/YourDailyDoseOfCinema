@@ -20,8 +20,7 @@
                 <label for="new_user_isAdmin">New status : </label><br>
                 <input name="new_user_isAdmin" type="text" placeholder="last : <?=$user_isAdmin?>"><br><br>
             </li>
-            <li>
-                
+            <li>                
                 <input type="submit" value="Valider mes modifications"><br><br>
             </li>
         </ul>
