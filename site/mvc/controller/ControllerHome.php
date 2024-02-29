@@ -1,5 +1,5 @@
 <?php
-require_once FILE::build_path(array('view','view.php'));
+require_once FILE::build_path(array('view', 'view.php'));
 class ControllerHome {
 
     //variable of the view to generate

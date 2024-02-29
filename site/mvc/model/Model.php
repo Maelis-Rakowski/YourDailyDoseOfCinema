@@ -20,9 +20,11 @@ class Model {
 
     //Récupère tous les éléments d'une table
     //param : table de la base , modèle à qui va etre instancier pour chaque element de la table
-    public static function selectAll($table_name, $class_name) {
-        $rep = Model::getPDO() -> query("SELECT * FROM $table_name");
+    public static function selectAll($table_name, $class_name){
+        $sql = "SELECT * FROM $table_name";
+        $rep = Model::getPDO() -> prepare($sql);
         $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+        $rep->execute();
         return $rep->fetchAll();
     }
     
