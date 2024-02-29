@@ -127,5 +127,18 @@ class ControllerLogin {
         $_SESSION['pseudo'] = $pseudo ;
         $_SESSION['password'] = $password ;
     }
+
+
+
+
+
+
+
+
+    public function resetPassword(){
+        $this->_view = new View(array('view','login','viewConnected.php'));
+        //Generate the view without data
+        $this->_view->generate(array(null));
+    }
 }
 ?>
