@@ -1,0 +1,1 @@
+<h2>L'utilisateur à bien été supprimé</h2>
