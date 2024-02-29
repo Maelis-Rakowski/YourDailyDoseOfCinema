@@ -2,7 +2,7 @@
 require_once FILE::build_path(array('view','view.php'));
 class Controller404 {
     private $_view;
-    public function __construct(){
+    public function __construct() {
       
     }
 

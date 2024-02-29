@@ -1,5 +1,5 @@
 <?php
-require_once FILE::build_path(array('view','view.php'));
+require_once FILE::build_path(array('view', 'view.php'));
 class ControllerHome {
 
     //variable of the view to generate
@@ -7,8 +7,8 @@ class ControllerHome {
 
     public function __construct(){}
 
-    public function readAll(){
-        $this->_view = new View(array('view','home','viewHome.php'));
+    public function readAll() {
+        $this->_view = new View(array('view', 'home', 'viewHome.php'));
         //Generate the view without data
         $this->_view->generate(array(null));
     }
