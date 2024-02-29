@@ -58,6 +58,8 @@ class UserModel extends Model {
         $sql = "INSERT INTO users (email, pseudo, password, isAdmin) VALUES (:email, :pseudo, :password, :isAdmin)";
         $req = Model::getPDO()->prepare($sql);
 
+        //Hashage du password
+        $password = password_hash($password, PASSWORD_DEFAULT);
         $values = array(
             "email" => $email,
             "pseudo" => $pseudo,
@@ -67,6 +69,21 @@ class UserModel extends Model {
         
         $req->execute($values);
         $req->closeCursor();
+    }
+
+    //TEMP
+    public static function getUser($pseudo){
+        $sql = "SELECT * FROM users
+        WHERE pseudo = :pseudo";
+        $rep = Model::getPDO() -> prepare($sql);
+        $rep->setFetchMode(PDO::FETCH_CLASS, 'UserModel');
+
+        $values = array(
+            "pseudo" => $pseudo,
+
+        );
+        $rep->execute($values);
+        return $rep->fetchAll();
     }
     
     //id

@@ -25,6 +25,24 @@
     bottom: 0;
     width: 100%;
   }
+
+/* Style de base pour la balise <a> */
+a {
+  text-decoration: none; /* Supprimer la soulignement par défaut */
+  color: #fff; /* Couleur du texte */
+  background-color: #c4832d; /* Couleur de fond */
+  padding: 5px 10px; /* Espacement interne */
+  border: 2px solid #d8ac1e; /* Bordure solide */
+  border-radius: 5px; /* Coins arrondis */
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Transition fluide pour les changements */
+  margin: 20px;
+}
+
+/* Style au survol de la souris */
+a:hover {
+  background-color: #0056b3; /* Nouvelle couleur de fond au survol */
+  border-color: #0056b3; /* Nouvelle couleur de bordure au survol */
+}
   
 /*======================
     404 page
