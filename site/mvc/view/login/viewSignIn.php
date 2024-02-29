@@ -1,5 +1,5 @@
 <main>
-    <form method="POST" action="?controller=login&action=signIn">
+    <form method="POST" action="/login/signIn">
         <ul>
             <li>
                 <label for="pseudo">Pseudo</label>

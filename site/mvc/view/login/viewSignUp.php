@@ -1,5 +1,5 @@
 <main>
-    <form method="POST" action="?controller=login&action=signUp">
+    <form method="POST" action="/login/signUp">
         <ul>
             <li>
                 <label for="pseudo">Pseudo</label>
@@ -26,7 +26,8 @@
     </div>
     <div>
        
-        <a href="?controller=login&action=signInView">Sign In</a>
+    <a href="/login/signInView">Sign In</a>
+
     </div>
 </main>
 
