@@ -12,15 +12,22 @@ class Router{
     //Variable to keep the current active controller
     private $_controller;
 
+    private $_action;
+
     //Variable to keep the current active view
     private $_view;
 
+    public function __construct($_controller = NULL, $_action = NULL)
+    {
+        $this->_controller = $_controller;
+        $this->_action = $_action; 
+    }
+
     //Load the controller and view to show
-    public function routeReq(){
-       
+    public function routeReq() { 
         //if an action is set, the action will be call the linked function. Else, by default, the action is readAll
-        $action = isset($_GET['action']) ? $_GET['action'] : 'readAll';
-        $controller = isset($_GET['controller']) ? $_GET['controller'] : 'home';
+        $action = $this->_action != null ? $this->_action : 'readAll';
+        $controller = $this->_controller != null ? $this->_controller : 'home';
         //build the controller class name
         $controller_class = "Controller".ucfirst($controller);
 
