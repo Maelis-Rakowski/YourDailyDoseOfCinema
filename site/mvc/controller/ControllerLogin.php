@@ -2,6 +2,8 @@
 require_once FILE::build_path(array('view','view.php'));
 require_once FILE::build_path(array('model','UserModel.php'));
 
+//Pour la renitialisation du mdp
+//<!-- Reset le mot de passe (private key, date de renouvellement de mdp/ lien vers changer mdp dans le mail, dans l'url je mets private key (/moodifiermdp/privatekey) si la private key). faire la différence du temps (30), faire un seed en fonction de la date. Private key email de la personne et timestamp -->
 class ControllerLogin {
 
     //variable of the view to generate
