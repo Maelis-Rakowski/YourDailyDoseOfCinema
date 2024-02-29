@@ -89,7 +89,7 @@ class ControllerLogin {
             $password = $_POST["password"];
     
             // Récupérer l'utilisateur correspondant au pseudo
-            $users = UserModel::getUser($pseudo);
+            $users = UserModel::getUserByPseudo($pseudo);
     
             // Vérifier si l'utilisateur existe
             if(!empty($users)) {
@@ -137,41 +137,90 @@ class ControllerLogin {
 
 
 
-    public function resetPassword(){
+    public function resetPassword($email){
         $this->_view = new View(array('view','login','viewResetPassword.php'));
         //Generate the view without data
-        $this->_view->generate(array(null));
+        $this->_view->generate(array('email'=>$email));
     }
 
     public function sendEmail() {
-        phpinfo();
-        $email = $_POST['email'];
+        // phpinfo();
+        // $email = $_POST['email'];
     
-        $to      = $email;
-        $subject = 'Reset Password YYDDOC';
-        $message = 'Link to reset your password: http://yddoc/site/?controller=login&action=resetPassword';
-        $headers = 'From: nellou.michel@laposte.net' . "\r\n" .
-                   'Reply-To: nellou.michel@laposte.net' . "\r\n" .
-                   'X-Mailer: PHP/' . phpversion();
+        // $to      = $email;
+        // $subject = 'Reset Password YYDDOC';
+        // $message = 'Link to reset your password: http://yddoc/site/?controller=login&action=resetPassword';
+        // $headers = 'From: nellou.michel@laposte.net' . "\r\n" .
+        //            'Reply-To: nellou.michel@laposte.net' . "\r\n" .
+        //            'X-Mailer: PHP/' . phpversion();
     
-        // Configuration des paramètres SMTP pour Gmail
-        ini_set("SMTP", "smtp.laposte.net");
-        ini_set("smtp_port", "465");
-        ini_set("sendmail_from", "nellou.michel@laposte.net");
+        // // Configuration des paramètres SMTP pour Gmail
+        // ini_set("SMTP", "smtp.laposte.net");
+        // ini_set("smtp_port", "465");
+        // ini_set("sendmail_from", "nellou.michel@laposte.net");
     
-        // Activer le chiffrement TLS
-        ini_set("smtp_crypto", "tls");
+        // // Activer le chiffrement TLS
+        // ini_set("smtp_crypto", "tls");
     
-        // Authentification SMTP
-        ini_set("smtp_auth", "true");
-        ini_set("username", "nellou.michel@laposte.net");
-        ini_set("password", "");
+        // // Authentification SMTP
+        // ini_set("smtp_auth", "true");
+        // ini_set("username", "nellou.michel@laposte.net");
+        // ini_set("password", "");
     
-        if(mail($to, $subject, $message)) {
-            echo "E-mail sent successfully.";
-        } else {
-            echo "Failed to send e-mail.";
-        }
+        // if(mail($to, $subject, $message)) {
+        //     echo "E-mail sent successfully.";
+        // } else {
+        //     echo "Failed to send e-mail.";
+        // }
+
+        // Exemple d'utilisation
+        $email = $_POST["email"];
+        $privateKey = $this->generatePrivateKey($email);
+
+        $this->resetPassword($email);
+   
+
+        
+
     }
+
+
+    function generatePrivateKey($email) {
+        // Générer une clé privée en concaténant l'email et la date actuelle
+        $privateKey = $email . "_" . date("Y-m-d H:i:s");
+    
+        // Ajouter un timestamp pour l'expiration après 20 minutes
+        $expirationTimestamp = time() + (20 * 60);
+        $privateKey .= "_" . $expirationTimestamp;
+    
+        // Hasher la clé privée pour plus de sécurité
+        $hashedKey = hash("sha256", $privateKey);
+    
+        return $hashedKey;
+    }
+
+
+
+    public function updatePassword(){
+        $email = $_POST['email'];
+        $users = UserModel::getUserByEmail($email);
+    
+       
+        if($users==null){
+            return;
+        }
+        $user = $users[0];
+        //If confirm password not same as new password, abort
+        if($_POST['newPassword']!=$_POST['confirmPassword']){
+            $this->resetPassword($email);
+            return;
+        }
+
+        //update the new password and then go back to signInView
+        UserModel::updateUser($user->getId(), $_POST['newPassword'], $user->getEmail(),$user->getPseudo(), $user->getIsAdmin());
+        $this->signInView();
+
+    }
+    
 }
 ?>

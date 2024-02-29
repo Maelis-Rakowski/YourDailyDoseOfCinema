@@ -42,6 +42,10 @@ class UserModel extends Model {
         SET email = :user_email, pseudo = :user_pseudo, password = :user_password, isAdmin = :user_isAdmin
         WHERE id = :user_id";
         $rep = Model::getPDO() -> prepare($sql);
+
+        //Hashage du password
+        $user_password = password_hash($user_password, PASSWORD_DEFAULT);
+
         $value = array(
             "user_id" => $user_id,
             "user_password" => $user_password,
@@ -72,7 +76,7 @@ class UserModel extends Model {
     }
 
     //TEMP
-    public static function getUser($pseudo){
+    public static function getUserByPseudo($pseudo){
         $sql = "SELECT * FROM users
         WHERE pseudo = :pseudo";
         $rep = Model::getPDO() -> prepare($sql);
@@ -80,6 +84,21 @@ class UserModel extends Model {
 
         $values = array(
             "pseudo" => $pseudo,
+
+        );
+        $rep->execute($values);
+        return $rep->fetchAll();
+    }
+
+       //TEMP
+       public static function getUserByEmail($email){
+        $sql = "SELECT * FROM users
+        WHERE email = :email";
+        $rep = Model::getPDO() -> prepare($sql);
+        $rep->setFetchMode(PDO::FETCH_CLASS, 'UserModel');
+
+        $values = array(
+            "email" => $email,
 
         );
         $rep->execute($values);

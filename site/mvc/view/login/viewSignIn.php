@@ -1,5 +1,5 @@
 <main>
-    <form method="POST" action="?controller=login&action=signIn">
+    <form method="POST" action="/login/signIn">
         <ul>
             <li>
                 <label for="pseudo">Pseudo</label>
@@ -22,7 +22,7 @@
     <div>
    Forgot Password ?
     </div>
-    <form method="POST" action="?controller=login&action=sendEmail">
+    <form method="POST" action="sendEmail">
         <ul>
             <li>
                 <label for="email">Email</label>
