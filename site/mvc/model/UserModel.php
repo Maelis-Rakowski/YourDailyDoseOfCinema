@@ -54,8 +54,6 @@ class UserModel extends Model {
             "user_email" => $user_email,
             "user_pseudo" => $user_pseudo,
             "user_isAdmin" => $user_isAdmin
-          
-
         );
         $rep->execute($value);
         $rep->setFetchMode(PDO::FETCH_CLASS, "UserModel");
@@ -73,10 +71,8 @@ class UserModel extends Model {
             "user_id" => $user_id,
             "token"=>$token,
             "lastRequestedDate"=>$lastRequestedDate
-
         );
         
-
         $rep->execute($value);
         $rep->setFetchMode(PDO::FETCH_CLASS, "UserModel");
         return $rep->fetchAll();
@@ -108,7 +104,6 @@ class UserModel extends Model {
 
         $values = array(
             "pseudo" => $pseudo,
-
         );
         $rep->execute($values);
         return $rep->fetchAll();

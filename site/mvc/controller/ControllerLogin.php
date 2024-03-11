@@ -46,10 +46,6 @@ class ControllerLogin {
         $this->_view->generate(array(null));
     }
 
-
-
-
-
     public function connected(){
         $this->_view = new View(array('view','login','viewConnected.php'));
         //Generate the view without data
@@ -61,12 +57,6 @@ class ControllerLogin {
         session_destroy();
         $this->signInView();
     }
-
-
-
-
-
-
 
     //Register
     public function signUp() {
@@ -80,7 +70,6 @@ class ControllerLogin {
         $this->createSession($pseudo,$password);
         $this->connected();
     }
-
 
     //Try connect
     public function signIn(){
@@ -114,9 +103,6 @@ class ControllerLogin {
         }
     }
 
-
-
-
     public function checkSessionAlreadyExists(){
         if(isset($_SESSION['pseudo'])){
             return true;
@@ -130,13 +116,6 @@ class ControllerLogin {
         $_SESSION['password'] = $password ;
     }
 
-
-
-
-
-
-
-
     public function resetPassword(){
         
         $this->_view = new View(array('view','login','viewResetPassword.php'));
@@ -145,46 +124,6 @@ class ControllerLogin {
     }
 
     public function sendEmail() {
-        // phpinfo();
-        // $email = $_POST['email'];
-    
-        // $to      = $email;
-        // $subject = 'Reset Password YYDDOC';
-        // $message = 'Link to reset your password: http://yddoc/site/?controller=login&action=resetPassword';
-        // $headers = 'From: nellou.michel@laposte.net' . "\r\n" .
-        //            'Reply-To: nellou.michel@laposte.net' . "\r\n" .
-        //            'X-Mailer: PHP/' . phpversion();
-    
-        // // Configuration des paramètres SMTP pour Gmail
-        // ini_set("SMTP", "smtp.laposte.net");
-        // ini_set("smtp_port", "465");
-        // ini_set("sendmail_from", "nellou.michel@laposte.net");
-    
-        // // Activer le chiffrement TLS
-        // ini_set("smtp_crypto", "tls");
-    
-        // // Authentification SMTP
-        // ini_set("smtp_auth", "true");
-        // ini_set("username", "nellou.michel@laposte.net");
-        // ini_set("password", "");
-    
-        // if(mail($to, $subject, $message)) {
-        //     echo "E-mail sent successfully.";
-        // } else {
-        //     echo "Failed to send e-mail.";
-        // }
-
-        // Exemple d'utilisation
-
-
-
-
-
-
-        // $email = $_POST["email"];
-        // $privateKey = $this->generatePrivateKey($email);
-
-        // $this->resetPassword($email);
 
         $email = $_POST['email'];
         $users = UserModel::getUserByEmail($email);
@@ -195,7 +134,6 @@ class ControllerLogin {
 
         $user = $users[0];
         
-
         $current_date = date('Y-m-d H:i:s'); // Obtenir la date et l'heure actuelles
         $random_string = bin2hex(random_bytes(16)); // Générer une chaîne de caractères aléatoire
 
@@ -208,11 +146,6 @@ class ControllerLogin {
         $this->_view = new View(array('view','login','viewMail.php'));
         //Generate the view without data
         $this->_view->generate(array('token'=>$token, 'email'=>$email));
-
-
-
-        
-
     }
 
 
@@ -236,7 +169,6 @@ class ControllerLogin {
         $email = $_POST['email'];
         $users = UserModel::getUserByEmail($email);
     
-       
         if($users==null){
             echo("email non reconnu");
             return;
