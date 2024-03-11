@@ -25,7 +25,6 @@ class ControllerLogin {
             $this->connected();
             exit;
         }
-
         $this->_view = new View(array('view','login','viewSignUp.php'));
         //Generate the view without data
         $this->_view->generate(array(null));
@@ -33,22 +32,16 @@ class ControllerLogin {
 
     //View for SignIn (connect)
     public function signInView(){
-
         //If the user is already connected, it shows the view connected, else signInView
         session_start();
         if($this->checkSessionAlreadyExists()==true){
             $this->connected();
             exit;
         }
-     
         $this->_view = new View(array('view','login','viewSignIn.php'));
         //Generate the view without data
         $this->_view->generate(array(null));
     }
-
-
-
-
 
     public function connected(){
         $this->_view = new View(array('view','login','viewConnected.php'));
@@ -61,12 +54,6 @@ class ControllerLogin {
         session_destroy();
         $this->signInView();
     }
-
-
-
-
-
-
 
     //Register
     public function signUp() {
@@ -81,16 +68,13 @@ class ControllerLogin {
         $this->connected();
     }
 
-
     //Try connect
     public function signIn(){
         if(isset($_POST["pseudo"]) && isset($_POST["password"])) {
             $pseudo = $_POST["pseudo"];
             $password = $_POST["password"];
-    
             // Récupérer l'utilisateur correspondant au pseudo
-            $users = UserModel::getUser($pseudo);
-    
+            $users = UserModel::getUserByPseudo($pseudo);
             // Vérifier si l'utilisateur existe
             if(!empty($users)) {
                 $user = $users[0];
@@ -114,9 +98,6 @@ class ControllerLogin {
         }
     }
 
-
-
-
     public function checkSessionAlreadyExists(){
         if(isset($_SESSION['pseudo'])){
             return true;
@@ -130,17 +111,91 @@ class ControllerLogin {
         $_SESSION['password'] = $password ;
     }
 
-
-
-
-
-
-
-
     public function resetPassword(){
-        $this->_view = new View(array('view','login','viewConnected.php'));
+        
+        $this->_view = new View(array('view','login','viewResetPassword.php'));
         //Generate the view without data
         $this->_view->generate(array(null));
     }
+
+    public function sendEmail() {
+
+        $email = $_POST['email'];
+        $users = UserModel::getUserByEmail($email);
+        if($users==null) {
+            echo("email non reconnu");
+            return;
+        }
+        $user = $users[0];
+        $current_date = date('Y-m-d H:i:s'); // Obtenir la date et l'heure actuelles
+        $random_string = bin2hex(random_bytes(16)); // Générer une chaîne de caractères aléatoire
+        $token_data =  $user->getId() . $current_date . $random_string . $email;
+        $token = hash('sha256', $token_data);
+
+        UserModel::updateUserToken($user->getId(), $token, $current_date);
+        $this->_view = new View(array('view','login','viewMail.php'));
+        //Generate the view without data
+        $this->_view->generate(array('token'=>$token, 'email'=>$email));
+    }
+
+
+    function generatePrivateKey($email) {
+        // Générer une clé privée en concaténant l'email et la date actuelle
+        $privateKey = $email . "_" . date("Y-m-d H:i:s");
+    
+        // Ajouter un timestamp pour l'expiration après 20 minutes
+        $expirationTimestamp = time() + (20 * 60);
+        $privateKey .= "_" . $expirationTimestamp;
+    
+        // Hasher la clé privée pour plus de sécurité
+        $hashedKey = hash("sha256", $privateKey);
+    
+        return $hashedKey;
+    }
+    
+    public function updatePassword(){
+        $email = $_POST['email'];
+        $users = UserModel::getUserByEmail($email);
+    
+        if($users==null){
+            echo("email non reconnu");
+            return;
+        }
+        $user = $users[0];
+        //If confirm password not same as new password, abort
+        if($_POST['newPassword']!=$_POST['confirmPassword']){
+            echo("Mot de passe non identique");
+            return;
+        }
+
+        if($_POST['token']!=$user->getToken()){
+            echo("Token incorrect");
+            return;
+        }
+        
+        // Récupérer la dernière date et heure de demande de token de l'utilisateur
+        $lastRequestedDate = $user->getLastRequestedDate();
+
+        // Créer un objet DateTime pour la dernière date et heure de demande de token
+        $lastRequestedDateTime = new DateTime($lastRequestedDate);
+        // Ajouter 15 minutes à la dernière date et heure de demande de token
+        $lastRequestedDateTime->add(new DateInterval('PT15M'));
+
+        // Créer un objet DateTime pour la date et l'heure actuelles
+        $currentDateTime = new DateTime();
+        
+        // Vérifier si la date et l'heure actuelles sont supérieures à 15 minutes après la dernière demande de token
+        if ($currentDateTime > $lastRequestedDateTime) {
+            // Le token a expiré
+            echo("Token expiré, renouvellez votre demande de mot de passe");
+            return;
+        }
+
+        //update the new password and then go back to signInView
+        UserModel::updateUser($user->getId(), $_POST['newPassword'], $user->getEmail(),$user->getPseudo(), $user->getIsAdmin());
+        $this->signInView();
+
+    }
+    
 }
 ?>
