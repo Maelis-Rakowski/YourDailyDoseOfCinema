@@ -10,8 +10,8 @@
                 <input name="token" type="hidden" value=<?= $_GET['token'] ?>>
             </li>
             <li>
-                <label for="newPassword">New Password</label>
-                <input name="newPassword" type="password">
+                <label for="newPassword" >New Password</label>
+                <input name="newPassword" class="passwordInput" type="password">
             </li>
             <li>
                 <label for="confirmPassword">Confirm Password</label>
