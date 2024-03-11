@@ -137,10 +137,11 @@ class ControllerLogin {
 
 
 
-    public function resetPassword($email){
+    public function resetPassword(){
+        
         $this->_view = new View(array('view','login','viewResetPassword.php'));
         //Generate the view without data
-        $this->_view->generate(array('email'=>$email));
+        $this->_view->generate(array(null));
     }
 
     public function sendEmail() {
@@ -174,11 +175,41 @@ class ControllerLogin {
         // }
 
         // Exemple d'utilisation
-        $email = $_POST["email"];
-        $privateKey = $this->generatePrivateKey($email);
 
-        $this->resetPassword($email);
-   
+
+
+
+
+
+        // $email = $_POST["email"];
+        // $privateKey = $this->generatePrivateKey($email);
+
+        // $this->resetPassword($email);
+
+        $email = $_POST['email'];
+        $users = UserModel::getUserByEmail($email);
+        if($users==null) {
+            echo("email non reconnu");
+            return;
+        }
+
+        $user = $users[0];
+        
+
+        $current_date = date('Y-m-d H:i:s'); // Obtenir la date et l'heure actuelles
+        $random_string = bin2hex(random_bytes(16)); // Générer une chaîne de caractères aléatoire
+
+        $token_data =  $user->getId() . $current_date . $random_string . $email;
+        $token = hash('sha256', $token_data);
+
+        UserModel::updateUserToken($user->getId(), $token, $current_date);
+
+
+        $this->_view = new View(array('view','login','viewMail.php'));
+        //Generate the view without data
+        $this->_view->generate(array('token'=>$token));
+
+
 
         
 
@@ -207,12 +238,36 @@ class ControllerLogin {
     
        
         if($users==null){
+            echo("email non reconnu");
             return;
         }
         $user = $users[0];
         //If confirm password not same as new password, abort
         if($_POST['newPassword']!=$_POST['confirmPassword']){
-            $this->resetPassword($email);
+            echo("Mot de passe non identique");
+            return;
+        }
+
+        if($_POST['token']!=$user->getToken()){
+            echo("Token incorrect");
+            return;
+        }
+        
+        // Récupérer la dernière date et heure de demande de token de l'utilisateur
+        $lastRequestedDate = $user->getLastRequestedDate();
+
+        // Créer un objet DateTime pour la dernière date et heure de demande de token
+        $lastRequestedDateTime = new DateTime($lastRequestedDate);
+        // Ajouter 15 minutes à la dernière date et heure de demande de token
+        $lastRequestedDateTime->add(new DateInterval('PT15M'));
+
+        // Créer un objet DateTime pour la date et l'heure actuelles
+        $currentDateTime = new DateTime();
+        
+        // Vérifier si la date et l'heure actuelles sont supérieures à 15 minutes après la dernière demande de token
+        if ($currentDateTime > $lastRequestedDateTime) {
+            // Le token a expiré
+            echo("Token expiré, renouvellez votre demande de mot de passe");
             return;
         }
 

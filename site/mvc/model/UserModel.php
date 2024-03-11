@@ -7,6 +7,8 @@ class UserModel extends Model {
     private $email;
     private $pseudo;    
     private $isAdmin;
+    private $token;
+    private $lastRequestedDate;
 
     //constructor    
     public function __construct($id = NULL, $email = NULL, $pseudo = NULL, $password = NULL, $isAdmin = NULL) {
@@ -52,7 +54,29 @@ class UserModel extends Model {
             "user_email" => $user_email,
             "user_pseudo" => $user_pseudo,
             "user_isAdmin" => $user_isAdmin
+          
+
         );
+        $rep->execute($value);
+        $rep->setFetchMode(PDO::FETCH_CLASS, "UserModel");
+        return $rep->fetchAll();
+    }
+
+    public static function updateUserToken($user_id, $token, $lastRequestedDate){
+        $sql = "UPDATE users 
+        SET token = :token, lastRequestedDate = :lastRequestedDate
+        WHERE id = :user_id";
+        $rep = Model::getPDO() -> prepare($sql);
+
+
+        $value = array(
+            "user_id" => $user_id,
+            "token"=>$token,
+            "lastRequestedDate"=>$lastRequestedDate
+
+        );
+        
+
         $rep->execute($value);
         $rep->setFetchMode(PDO::FETCH_CLASS, "UserModel");
         return $rep->fetchAll();
@@ -143,6 +167,22 @@ class UserModel extends Model {
     }
     public function getIsAdmin(){
         return $this->isAdmin;
+    }
+
+    //token
+    public function setToken($token){
+        $this->token = $token;
+    }
+    public function getToken(){
+        return $this->token;
+    }
+
+    //lastRequestedDate
+    public function setLastRequestedDate($lastRequestedDate){
+        $this->lastRequestedDate = $lastRequestedDate;
+    }
+    public function getLastRequestedDate(){
+        return $this->lastRequestedDate;
     }
 }
 ?>

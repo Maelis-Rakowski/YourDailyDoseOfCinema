@@ -19,10 +19,11 @@
 
     <br>
     <br>
+
     <div>
    Forgot Password ?
     </div>
-    <form method="POST" action="sendEmail">
+    <form method="POST" action="sendEmail" target="_blank">
         <ul>
             <li>
                 <label for="email">Email</label>
