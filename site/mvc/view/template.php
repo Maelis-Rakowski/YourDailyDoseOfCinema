@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html>
-
-<!-- The template is defining the header, head and the footer for all the views -->
     <head>
 
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
+        <meta name="viewport" content="width=device-width, initial-scale=1">        
         <meta name="description" content="Your daily dose of cinema is the best website ever">
-
-        <!-- Inclure votre fichier CSS -->
         <link rel="stylesheet" type="text/css" href="/assets/css/style.css ">
         <title><?= $t ?></title>
 
@@ -26,12 +21,8 @@
             </nav>
         </header>
 
-
-
         <main>
-            <!-- Content of the view -->
             <?= $content ?>
-
         </main>
 
         <footer>
@@ -39,4 +30,6 @@
         </footer>
 
     </body>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="/scripts/login.js"></script>
 </html>

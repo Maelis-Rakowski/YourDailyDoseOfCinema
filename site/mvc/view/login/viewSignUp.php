@@ -13,7 +13,7 @@
                 <label for="password">Password</label>
                 <input id="inputPassword" name="password" type="password">
                 <br>
-                <div id="cluesPassword" class="displayNone">
+                <div id="helpPassword" class="displayNone">
                     <p class = "red" id = "pwd_eightCar">    Le mot de passe doit contenir au moins 8 caractères             </p>
                     <p class = "red" id = "pwd_special">     Le mot de passe doit contenir au moins un caractère special     </p>
                     <p class = "red" id = "pwd_maj">         Le mot de passe doit contenir au moins un caractère majuscule   </p>
@@ -22,7 +22,7 @@
                 </div>        
             </li>
             <li>
-                <input id="submitBtn" type="submit" value="Sign Up">
+                <input disabled id="submitBtn" type="submit" value="Sign Up">
             </li>
         </ul>   
         
@@ -33,7 +33,6 @@
     <div>
        
     <a href="/login/signInView">Sign In</a>
-    <script src="/scripts/login.js"></script>
     </div>
 </main>
 

@@ -1,104 +1,40 @@
-document.getElementById('inputPassword').addEventListener('input', checkPassword);
+let all = $('#helpPassword');
+
+// On value changed de : input du password
+$('#inputPassword').on('input', checkPassword);
 
 function checkPassword() {
-    let input = document.getElementById('inputPassword').value;
-    let all = document.getElementById('cluesPassword');
 
-    let pwd_eightCar = document.getElementById("pwd_eightCar");
-    let pwd_special = document.getElementById("pwd_special");
-    let pwd_maj = document.getElementById("pwd_maj");
-    let pwd_min = document.getElementById("pwd_min");
-    let pwd_number = document.getElementById("pwd_number");
+    //etat actuel de l'input
+    let input = $('#inputPassword').val();
 
+    //on test chacune des lignes et change leurs couleurs en fonction
     if (input === '') {
-        all.classList.add('displayNone');
-        all.classList.remove('displayBlock');
+        all.hide();
     }
     else {
-        all.classList.remove('displayNone');
-        all.classList.add('displayBlock');
+        var special = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
-        if (hasEightCharacters(input)) {
-            colorGreen(pwd_eightCar);
-        }
-        else {
-            colorRed(pwd_eightCar);
-        }
-
-        if (hasSpecialChar(input)) {
-            colorGreen(pwd_special);
-        }
-        else {
-            colorRed(pwd_special);
-        }
-
-        if (hasUpperCase(input)) {
-            colorGreen(pwd_maj);
-        }
-        else {
-            colorRed(pwd_maj);
-        }
-
-        if (hasLowerCase(input)) {
-            colorGreen(pwd_min);
-        }
-        else {
-            colorRed(pwd_min);
-        }
-
-
-        if (hasNumber(input)) {
-            colorGreen(pwd_number);
-        }
-        else {
-            colorRed(pwd_number);
-        }
+        all.show();
+        input.length > 8    ? $('#pwd_eightCar') .css('color', 'green') : $('#pwd_eightCar') .css('color', 'red');
+        special.test(input) ? $('#pwd_special')  .css('color', 'green') : $('#pwd_special')  .css('color', 'red');
+        /[A-Z]/.test(input) ? $('#pwd_maj')      .css('color', 'green') : $('#pwd_maj')      .css('color', 'red');
+        /[a-z]/.test(input) ? $('#pwd_min')      .css('color', 'green') : $('#pwd_min')      .css('color', 'red');
+        /[0-9]/.test(input) ? $('#pwd_number')   .css('color', 'green') : $('#pwd_number')   .css('color', 'red');
     }
 
-    console.log(!(hasEightCharacters(input) && hasSpecialChar(input) && hasUpperCase(input) && hasLowerCase(input) && hasNumber(input)));
-    let submitBtn = document.getElementById("submitBtn");
-    if(!(hasEightCharacters(input) && hasSpecialChar(input) && hasUpperCase(input) && hasLowerCase(input) && hasNumber(input)))
-    {
-        submitBtn.classList.add("displayNone");
-        submitBtn.classList.remove("displayBlock");
+    // si tout est rouge, on empeche le user de submit
+    if (!(
+        (input.length > 8)
+        && (/[A-Z]/.test(input))
+        && (/[a-z]/.test(input))
+        && (/[0-9]/.test(input))
+        && (special.test(input))
+    )) {
+        $('#submitBtn').prop('disabled', true);
     }
-    else{
-        all.classList.add('displayNone');
-        all.classList.remove('displayBlock');
-
-        submitBtn.classList.add("displayBlock");
-        submitBtn.classList.remove("displayNone");
+    else {
+        all.hide();
+        $('#submitBtn').prop('disabled', false);
     }
-}
-
-
-function hasEightCharacters(str) {
-    return str.length >= 8;
-}
-
-function hasSpecialChar(str) {
-    var specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-    return specialChars.test(str);
-}
-
-function hasUpperCase(str) {
-    return /[A-Z]/.test(str);
-}
-
-function hasLowerCase(str) {
-    return /[a-z]/.test(str);
-}
-
-function hasNumber(str) {
-    return /[0-9]/.test(str);
-}
-
-function colorRed(element) {
-    element.classList.remove("green");
-    element.classList.add("red");
-}
-
-function colorGreen(element) {
-    element.classList.remove("red");
-    element.classList.add("green");
 }
