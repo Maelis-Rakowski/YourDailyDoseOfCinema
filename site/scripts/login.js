@@ -1,11 +1,10 @@
 let all = $('#helpPassword');
 all.hide();
 $('#emailToolTip').hide();
-$('#submitBtn').prop('disabled', false);
 
 let boolEmail = false;
+let boolPseudo = false;
 let boolPassword = false;
-
 // On value changed de : input du password
 $('.passwordInput').on('input', checkPassword);
 $('.emailInput').on('input', checkEmail);
@@ -13,6 +12,8 @@ $('.emailInput').on('input', checkEmail);
 function checkPassword() {
 
     let input = $('.passwordInput').val();
+
+    //on test chacune des lignes et change leurs couleurs en fonction
     if (input === '') {
         all.hide();
     }
@@ -27,35 +28,31 @@ function checkPassword() {
         /[0-9]/.test(input) ? $('#pwd_number').css('color', 'green') : $('#pwd_number').css('color', 'red');
     }
 
-    if ((input.length > 8) && (/[A-Z]/.test(input)) && (/[a-z]/.test(input)) && (/[0-9]/.test(input)) && (special.test(input))
-    ) {
-        boolPassword = true
-        all.hide();
+    // si tout est rouge, on empeche le user de submit
+    if (!(
+        (input.length > 8)
+        && (/[A-Z]/.test(input))
+        && (/[a-z]/.test(input))
+        && (/[0-9]/.test(input))
+        && (special.test(input))
+    )) {
+        $('#submitBtn').prop('disabled', true);
     }
     else {
-        boolPassword = false;
+        all.hide();
+        $('#submitBtn').prop('disabled', false);
     }
-    checkSubmit();
 }
 
 function checkEmail() {
     var mail_ER = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (mail_ER.test($('.emailInput').val())) {
         $('#emailToolTip').hide();
-        boolEmail = true;
+        $('#submitBtn').prop('disabled', false);
+
     }
     else {
         $('#emailToolTip').show().css('color', 'red');
-        boolEmail = false;
-    }
-    checkSubmit();
-}
-
-function checkSubmit() {
-    if (boolEmail && boolPassword) {
-        $('#submitBtn').prop('disabled', false);
-    }
-    else {
         $('#submitBtn').prop('disabled', true);
     }
 }
