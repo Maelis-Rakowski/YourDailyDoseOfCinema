@@ -207,7 +207,7 @@ class ControllerLogin {
 
         $this->_view = new View(array('view','login','viewMail.php'));
         //Generate the view without data
-        $this->_view->generate(array('token'=>$token));
+        $this->_view->generate(array('token'=>$token, 'email'=>$email));
 
 
 

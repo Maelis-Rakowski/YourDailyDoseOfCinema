@@ -1,4 +1,4 @@
 <h1>Connected</h1>
 
 
-<a href="disconnect">Disconnect</a>
+<a href="/login/disconnect">Disconnect</a>
