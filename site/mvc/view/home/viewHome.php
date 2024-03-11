@@ -5,7 +5,7 @@
 
     <div>
         <div>
-            <h1>Home Page UWU</h1>
+            <h2>Home Page UWU</h2>
             <p>Home Page Description</p>
         </div>
     </div>
