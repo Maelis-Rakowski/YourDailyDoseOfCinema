@@ -16,9 +16,14 @@
         }
 
         public function details() {
-            $this->_view = new View(array('view', 'movie', 'viewMovie.php'));
-            $movie = MovieModel::getMovieById($_GET["id"]);
-            $this->_view->generate(array('movie'=>$movie));
+            if (isset($_GET["id"])) {
+                $this->_view = new View(array('view', 'movie', 'viewMovie.php'));
+                $movie = MovieModel::getMovieById($_GET["id"]);
+                $this->_view->generate(array('movie'=>$movie));
+            } else {
+                $this->_view = new View(array('view', '404.php'));
+                $this->_view->generate(array());
+            }
         }
     }
 ?>

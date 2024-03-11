@@ -119,13 +119,13 @@ class MovieModel extends Model {
      */
     private function getMovieJoinedPropertyById($propertyTableName, $field, $joinField, $movieId) {
         $joinTableName = "movie" . ucfirst($propertyTableName);
-        $sql = "SELECT $field FROM $propertyTableName t JOIN $joinTableName jt ON jt.$joinField = t.id WHERE jt.idMovie = :movieId";
+        $sql = "SELECT t.$field FROM $propertyTableName t JOIN $joinTableName jt ON jt.$joinField = t.id WHERE jt.idMovie = :movieId";
         $req = Model::getPDO()->prepare($sql);
         $values = array(
             "movieId" => $movieId
         );
         $req->execute($values);
-        return $req->fetchAll();
+        return $req->fetchAll(PDO::FETCH_COLUMN);
     }
     
     public function getMovieDirectorsByMovieId($movieId) {
@@ -151,8 +151,6 @@ class MovieModel extends Model {
             "overview" => $overview,
             "tagline" => $overview
         );
-
-
     }
 
     public static function getMovieById($id) {
