@@ -3,7 +3,7 @@ require_once FILE::build_path(array('model','Model.php'));
 class MovieModel extends Model {
     private $id;
     private $title;
-    private $realeaseDate;
+    private $releaseDate;
     private $runtime;
     private $posterPath;
     private $overview;
@@ -24,7 +24,7 @@ class MovieModel extends Model {
             $this->setTagline($tagline);
         }
     }
-
+//GETTER AND SETTER
     public function getId() {
         return $this->id;
     }
@@ -42,11 +42,11 @@ class MovieModel extends Model {
     }
 
     public function getReleaseDate() {
-        return $this->realeaseDate;
+        return $this->releaseDate;
     }
 
-    public function setReleaseDate($realeaseDate) {
-        $this->realeaseDate = $realeaseDate;
+    public function setReleaseDate($releaseDate) {
+        $this->releaseDate = $releaseDate;
     }
 
     public function getRuntime() {
@@ -81,6 +81,37 @@ class MovieModel extends Model {
         $this->tagline = $tagline;
     }
 
+    public function getCountries() {
+        return $this->countries;
+    }
+
+    public function setCountries($countries) {
+        $this->countries = $countries;
+
+        return $this;
+    }
+
+    public function getDirectors() {
+        return $this->directors;
+    }
+
+    public function setDirectors($directors) {
+        $this->directors = $directors;
+
+        return $this;
+    }
+
+    public function getGenres() {
+        return $this->genres;
+    }
+ 
+    public function setGenres($genres) {
+        $this->genres = $genres;
+
+        return $this;
+    }
+    
+//Model methods
     /**
      * Get joined properties such as : countries, directors and genres
      * @param string $propertyTableName property table name (must be plurial) 
@@ -88,7 +119,7 @@ class MovieModel extends Model {
      */
     private function getMovieJoinedPropertyById($propertyTableName, $field, $joinField, $movieId) {
         $joinTableName = "movie" . ucfirst($propertyTableName);
-        $sql = "SELECT $field FROM $propertyTableName t JOIN $joinTableName jt md ON jt.$joinField = t.id WHERE md.idMovie = :movieId";
+        $sql = "SELECT $field FROM $propertyTableName t JOIN $joinTableName jt ON jt.$joinField = t.id WHERE jt.idMovie = :movieId";
         $req = Model::getPDO()->prepare($sql);
         $values = array(
             "movieId" => $movieId
@@ -109,24 +140,12 @@ class MovieModel extends Model {
         return $this->getMovieJoinedPropertyById("genres", "genre", "idGenre", $movieId);
     }
 
-    private function joinDirector($movieId, $directorName) {
-
-    }
-
-    private function joinCountry($movieId, $countryName) {
-
-    }
-
-    private function joinGenre($movieId, $genre) {
-
-    }
-
-    public function createMovie($title, $realeaseDate, $runtime, $posterPath, $overview, $tagline, $countries, $directors, $genres) {
+    public function createMovie($title, $releaseDate, $runtime, $posterPath, $overview, $tagline, $countries, $directors, $genres) {
         $sql = "INSERT INTO movies (title, realeseDate, runtime, posterPAth, overview, tagline) VALUES (:title, :realeseDate, :runtime, :posterPAth, :overview, :tagline)";
         $req = Model::getPDO()->prepare($sql);
         $values = array(
             "title" => $title,
-            "releaseDate" => $realeaseDate,
+            "releaseDate" => $releaseDate,
             "runtime" => $runtime,
             "posterPath" => $posterPath,
             "overview" => $overview,
@@ -134,6 +153,27 @@ class MovieModel extends Model {
         );
 
 
+    }
+
+    public static function getMovieById($id) {
+        $sql = "SELECT * FROM movies WHERE id=:id";
+        $values = array("id" => $id);
+        $req_prep = Model::getPDO()->prepare($sql);
+        $req_prep->setFetchMode(PDO::FETCH_CLASS, "MovieModel");
+        $req_prep->execute($values);
+        $movie = $req_prep->fetchAll()[0];
+        $movie->completeJoinedValues();
+        return $movie;
+    }
+
+    private function completeJoinedValues() {
+        $id = $this->getId();
+        $directors = $this->getMovieDirectorsByMovieId($id);
+        $genres = $this->getMovieGenresByMovieId($id);
+        $countries = $this->getMovieCountriesByMovieId($id);
+        $this->setDirectors($directors);
+        $this->setGenres($genres);
+        $this->setCountries($countries);
     }
     
 }
