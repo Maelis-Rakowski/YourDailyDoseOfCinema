@@ -14,7 +14,7 @@
             </li>
             <li>
                 <label for="new_user_email">New email : </label><br>
-                <input name="new_user_email" type="text" value="<?=$user_email?>"><br><br>
+                <input name="new_user_email" type="email" value="<?=$user_email?>"><br><br>
             </li>
             <li>
                 <label for="new_user_isAdmin">Admininistrator : </label> 

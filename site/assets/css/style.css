@@ -3,22 +3,52 @@
     padding: 0;
     box-sizing: border-box;
   }
-  
-  body {
-    font-family: 'Arial', sans-serif;
-    background-color: #fff;
+
+  @font-face {
+    font-family: 'movie';
+    src: 
+      url("../font/film_premieres/Film\ Premieres.otf") format(opentype);
   }
   
-  header {
-    background-color: #333;
+  body {
+  }
+  
+  header a {
+    text-decoration: none;
+    font-family: sans-serif;
     color: #fff;
-    padding: 20px;
+    margin: auto;
+    height: 100%;
     text-align: center;
   }
 
+  header nav {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    width: 30vw;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  header h1 {
+    font-family: 'movie';
+    font-size: 50px;
+    text-align: left;
+    color: red;
+    font-weight: lighter;
+  }
+
+  header {
+    padding: 20px;
+    text-align: center;
+    background-color: black;
+  }
+
   footer {
-    background-color: #333;
-    color: #fff;
     padding: 20px;
     text-align: center;
     position: fixed;
@@ -26,23 +56,24 @@
     width: 100%;
   }
 
-/* Style de base pour la balise <a> */
-a {
-  text-decoration: none; /* Supprimer la soulignement par défaut */
-  color: #fff; /* Couleur du texte */
-  background-color: #c4832d; /* Couleur de fond */
-  padding: 5px 10px; /* Espacement interne */
-  border: 2px solid #d8ac1e; /* Bordure solide */
-  border-radius: 5px; /* Coins arrondis */
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Transition fluide pour les changements */
-  margin: 20px;
-}
+  main {
+    width: 70vw;
+    margin: auto;
+  }
 
-/* Style au survol de la souris */
-a:hover {
-  background-color: #0056b3; /* Nouvelle couleur de fond au survol */
-  border-color: #0056b3; /* Nouvelle couleur de bordure au survol */
-}
+  table {
+    width: 100%;
+  }
+
+  th{
+      text-align: center;
+      border: solid black 1px;
+  }
+
+  td{
+      text-align: center;
+      border: solid black 1px;
+  }
   
 /*======================
     404 page
@@ -73,3 +104,16 @@ a:hover {
     margin-top:-50px;
     text-align: center;
   }
+
+
+  /*======================
+    dynamique
+=======================*/
+
+.displayNone {
+  display: none;
+}
+
+.displayBlock {
+  display: block;
+}
