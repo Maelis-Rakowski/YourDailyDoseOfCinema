@@ -25,7 +25,6 @@ class ControllerLogin {
             $this->connected();
             exit;
         }
-
         $this->_view = new View(array('view','login','viewSignUp.php'));
         //Generate the view without data
         $this->_view->generate(array(null));
@@ -33,14 +32,12 @@ class ControllerLogin {
 
     //View for SignIn (connect)
     public function signInView(){
-
         //If the user is already connected, it shows the view connected, else signInView
         session_start();
         if($this->checkSessionAlreadyExists()==true){
             $this->connected();
             exit;
         }
-     
         $this->_view = new View(array('view','login','viewSignIn.php'));
         //Generate the view without data
         $this->_view->generate(array(null));
@@ -76,10 +73,8 @@ class ControllerLogin {
         if(isset($_POST["pseudo"]) && isset($_POST["password"])) {
             $pseudo = $_POST["pseudo"];
             $password = $_POST["password"];
-    
             // Récupérer l'utilisateur correspondant au pseudo
             $users = UserModel::getUserByPseudo($pseudo);
-    
             // Vérifier si l'utilisateur existe
             if(!empty($users)) {
                 $user = $users[0];
@@ -131,18 +126,13 @@ class ControllerLogin {
             echo("email non reconnu");
             return;
         }
-
         $user = $users[0];
-        
         $current_date = date('Y-m-d H:i:s'); // Obtenir la date et l'heure actuelles
         $random_string = bin2hex(random_bytes(16)); // Générer une chaîne de caractères aléatoire
-
         $token_data =  $user->getId() . $current_date . $random_string . $email;
         $token = hash('sha256', $token_data);
 
         UserModel::updateUserToken($user->getId(), $token, $current_date);
-
-
         $this->_view = new View(array('view','login','viewMail.php'));
         //Generate the view without data
         $this->_view->generate(array('token'=>$token, 'email'=>$email));
@@ -162,9 +152,7 @@ class ControllerLogin {
     
         return $hashedKey;
     }
-
-
-
+    
     public function updatePassword(){
         $email = $_POST['email'];
         $users = UserModel::getUserByEmail($email);
