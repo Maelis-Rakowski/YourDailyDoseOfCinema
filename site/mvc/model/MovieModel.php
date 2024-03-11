@@ -80,5 +80,61 @@ class MovieModel extends Model {
     public function setTagline($tagline) {
         $this->tagline = $tagline;
     }
+
+    /**
+     * Get joined properties such as : countries, directors and genres
+     * @param string $propertyTableName property table name (must be plurial) 
+     * @param string $field wanted field
+     */
+    private function getMovieJoinedPropertyById($propertyTableName, $field, $joinField, $movieId) {
+        $joinTableName = "movie" . ucfirst($propertyTableName);
+        $sql = "SELECT $field FROM $propertyTableName t JOIN $joinTableName jt md ON jt.$joinField = t.id WHERE md.idMovie = :movieId";
+        $req = Model::getPDO()->prepare($sql);
+        $values = array(
+            "movieId" => $movieId
+        );
+        $req->execute($values);
+        return $req->fetchAll();
+    }
+    
+    public function getMovieDirectorsByMovieId($movieId) {
+        return $this->getMovieJoinedPropertyById("directors", "name", "idDirector", $movieId);
+    }
+
+    public function getMovieCountriesByMovieId($movieId) {
+        return $this->getMovieJoinedPropertyById("countries", "name", "idCountry", $movieId);
+    }
+
+    public function getMovieGenresByMovieId($movieId) {
+        return $this->getMovieJoinedPropertyById("genres", "genre", "idGenre", $movieId);
+    }
+
+    private function joinDirector($movieId, $directorName) {
+
+    }
+
+    private function joinCountry($movieId, $countryName) {
+
+    }
+
+    private function joinGenre($movieId, $genre) {
+
+    }
+
+    public function createMovie($title, $realeaseDate, $runtime, $posterPath, $overview, $tagline, $countries, $directors, $genres) {
+        $sql = "INSERT INTO movies (title, realeseDate, runtime, posterPAth, overview, tagline) VALUES (:title, :realeseDate, :runtime, :posterPAth, :overview, :tagline)";
+        $req = Model::getPDO()->prepare($sql);
+        $values = array(
+            "title" => $title,
+            "releaseDate" => $realeaseDate,
+            "runtime" => $runtime,
+            "posterPath" => $posterPath,
+            "overview" => $overview,
+            "tagline" => $overview
+        );
+
+
+    }
+    
 }
 ?>
