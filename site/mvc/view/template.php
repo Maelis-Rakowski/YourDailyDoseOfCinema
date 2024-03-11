@@ -19,13 +19,13 @@
         </header>
 
         <main>
-            <!-- Content of the view -->
             <?= $content ?>
-
         </main>
 
         <footer>
             ©Copyright 2024 Your daily dose of Cinema
         </footer>
     </body>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="/scripts/login.js"></script>
 </html>
