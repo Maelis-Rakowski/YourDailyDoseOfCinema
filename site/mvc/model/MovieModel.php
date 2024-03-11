@@ -97,7 +97,6 @@ class MovieModel extends Model {
 
     public function setDirectors($directors) {
         $this->directors = $directors;
-
         return $this;
     }
 
@@ -107,7 +106,6 @@ class MovieModel extends Model {
  
     public function setGenres($genres) {
         $this->genres = $genres;
-
         return $this;
     }
     
