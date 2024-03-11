@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  @font-face {
+    font-family: 'movie';
+    src: 
+      url("../font/film_premieres/Film\ Premieres.otf") format(opentype);
+  }
+  
+  body {
+  }
+  
+  header a {
+    text-decoration: none;
+    font-family: sans-serif;
+    color: #fff;
+    margin: auto;
+    height: 100%;
+    text-align: center;
+  }
+
+  header nav {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    width: 30vw;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  header h1 {
+    font-family: 'movie';
+    font-size: 50px;
+    text-align: left;
+    color: red;
+    font-weight: lighter;
+  }
+
+  header {
+    padding: 20px;
+    text-align: center;
+    background-color: black;
+  }
+
+  footer {
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+
+  main {
+    width: 70vw;
+    margin: auto;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  th{
+      text-align: center;
+      border: solid black 1px;
+  }
+
+  td{
+      text-align: center;
+      border: solid black 1px;
+  }
+  
+/*======================
+    404 page
+=======================*/
+  
+  .four_zero_four_bg{
+    background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    height: 400px;
+    background-position: center;
+    background-repeat: no-repeat; 
+    text-align: center;
+  }
+   
+   
+  .four_zero_four_bg h1 {
+    font-size:80px;
+  }
+         
+  .link_404{			 
+    color: #fff!important;
+    padding: 10px 20px;
+    background: #39ac31;
+    margin: 20px 0;
+    display: inline-block;
+  }
+
+  .contant_box_404{ 
+    margin-top:-50px;
+    text-align: center;
+  }
+
+
+  /*======================
+    dynamique
+=======================*/
+
+.displayNone {
+  display: none;
+}
+
+.displayBlock {
+  display: block;
+}
