@@ -73,3 +73,23 @@ a:hover {
     margin-top:-50px;
     text-align: center;
   }
+
+  /*======================
+    dynamique
+=======================*/
+
+.red {
+  color: red;
+}
+
+.green {
+  color: rgb(45, 174, 45);
+}
+
+.displayNone {
+  display: none;
+}
+
+.displayBlock {
+  display: block;
+}
