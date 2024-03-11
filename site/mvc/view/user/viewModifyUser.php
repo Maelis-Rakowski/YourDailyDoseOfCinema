@@ -1,7 +1,7 @@
 <main>
 
     <h2>Modification du User id : <?=$user_id?></h2>
-    <form action="?controller=user&action=modifyUser" method="POST">
+    <form action="/user/modifyUser" method="POST">
         <ul>
             <input type="hidden" name="user_id" value=" <?= $user_id ?>">
             <li>
@@ -14,7 +14,7 @@
             </li>
             <li>
                 <label for="new_user_email">New email : </label><br>
-                <input name="new_user_email" type="text" value="<?=$user_email?>"><br><br>
+                <input name="new_user_email" type="email" value="<?=$user_email?>"><br><br>
             </li>
             <li>
                 <label for="new_user_isAdmin">Admininistrator : </label> 

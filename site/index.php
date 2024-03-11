@@ -3,17 +3,18 @@
 
     $url = $_SERVER['REQUEST_URI'];
     $url = ltrim($url, '/');
-    $urlParts = explode('/', $url);
+    $urlParts = explode('?', $url);
+    $urlPaths = explode('/', $urlParts[0]);
     $controller = null;
     $action = null;
 
-    switch (count($urlParts)) {
+    switch (count($urlPaths)) {
         case 1:
-            $controller = $urlParts[0];
+            $controller = $urlPaths[0];
             break;
         case 2:
-            $controller = $urlParts[0];
-            $action = $urlParts[1];
+            $controller = $urlPaths[0];
+            $action = $urlPaths[1];
             break;
         default:
             $controller = "404";
