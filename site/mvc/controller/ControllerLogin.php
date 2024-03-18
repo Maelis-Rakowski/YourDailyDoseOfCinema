@@ -18,9 +18,7 @@ class ControllerLogin {
 
     //View for SignUp (create new user)
     public function signUpView(){
-
         //If the user is already connected, it shows the view connected, else signUpView
-        session_start();
         if($this->checkSessionAlreadyExists()==true){
             $this->connected();
             exit;
@@ -32,8 +30,9 @@ class ControllerLogin {
 
     //View for SignIn (connect)
     public function signInView(){
+        var_dump($_SESSION);
+
         //If the user is already connected, it shows the view connected, else signInView
-        session_start();
         if($this->checkSessionAlreadyExists()==true){
             $this->connected();
             exit;
@@ -50,7 +49,7 @@ class ControllerLogin {
     }
 
     public function disconnect(){
-        session_start();
+        session_unset();
         session_destroy();
         $this->signInView();
     }

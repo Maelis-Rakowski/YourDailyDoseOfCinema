@@ -1,6 +1,7 @@
 <?php
     require 'mvc'.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'File.php';//File.php
 
+    session_start();
     $url = $_SERVER['REQUEST_URI'];
     $url = ltrim($url, '/');
     $urlParts = explode('?', $url);
