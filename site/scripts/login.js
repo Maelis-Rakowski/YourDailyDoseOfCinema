@@ -1,16 +1,14 @@
 let all = $('#helpPassword');
 all.hide();
 $('#emailToolTip').hide();
+$('#pwdMatchTooltip').hide();
 
-let boolEmail = false;
-let boolPseudo = false;
-let boolPassword = false;
 // On value changed de : input du password
 $('.passwordInput').on('input', checkPassword);
 $('.emailInput').on('input', checkEmail);
+$('.confirmPassword').on('input', checkIfPasswordMatch);
 
 function checkPassword() {
-
     let input = $('.passwordInput').val();
 
     //on test chacune des lignes et change leurs couleurs en fonction
@@ -55,4 +53,10 @@ function checkEmail() {
         $('#emailToolTip').show().css('color', 'red');
         $('#submitBtn').prop('disabled', true);
     }
+}
+
+function checkIfPasswordMatch() {
+    let tooltip = $('#pwdMatchTooltip');
+    tooltip.css('color', 'red');
+    $('.passwordInput').val() != $('.confirmPassword').val() ? tooltip.show() : tooltip.hide();
 }

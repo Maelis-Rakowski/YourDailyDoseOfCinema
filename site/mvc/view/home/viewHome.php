@@ -14,7 +14,7 @@
                     </ul>
                 </form>
             </div>
-            <div class="result">>
+            <div class="result">
             </div>
         </div>
         

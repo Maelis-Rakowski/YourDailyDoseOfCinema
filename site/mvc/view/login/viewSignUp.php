@@ -1,5 +1,5 @@
-<main class="signUp">
-<h2>Sign In</h3>
+<main class="form-container">
+<h2>Sign Up</h2>
     <form method="POST" action="/login/signUp">
         <ul>
             <li>
@@ -24,6 +24,11 @@
                 </div>      
             </li>
             <li>
+                <label for="password2" confirmPassword>Confirm password</label>
+                <input required class="confirmPassword" name="password2" type="password">    
+                <p id="pwdMatchTooltip">Passwords doesnt match</p>  
+            </li>
+            <li>
                 <input disabled id="submitBtn" type="submit" value="Sign Up">
             </li>
         </ul>   
@@ -31,10 +36,9 @@
     </form>
     <br>
     <br>
-    <div>Already have an acccount ?</div>
     <div>
-       
-    <a href="/login/signInView">Sign In</a>
+        Already have an acccount ?       
+        <a class="link" href="/login/signInView">Sign In</a>
     </div>
 </main>
 
