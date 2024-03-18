@@ -9,7 +9,7 @@
 
         public function readAll() {
             $datamovies = [];
-            $this->_view = new View(array('view', 'tmdb', 'viewTmdb.php'));
+            $this->_view = new View(array('view', 'admin', 'tmdb', 'viewTmdb.php'));
             $this->_view->generate(array('datamovies'=>$datamovies));
             
         }

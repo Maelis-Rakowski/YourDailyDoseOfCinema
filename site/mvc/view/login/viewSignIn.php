@@ -1,4 +1,5 @@
-<main>
+<main class="form-container">
+    <h2>Sign In</h2>
     <form method="POST" action="/login/signIn">
         <ul>
             <li>
@@ -16,13 +17,8 @@
         
     </form>
 
-
-    <br>
-    <br>
-
-    <div>
-   Forgot Password ?
-    </div>
+    <br><br>
+    <h2>Forgot Password ?</h2>
     <form method="POST" action="sendEmail" target="_blank">
         <ul>
             <li>
@@ -33,10 +29,6 @@
             <li>
                 <input type="submit" value="Send Mail">
             </li>
-        </ul>   
-        
+        </ul>       
     </form>
-
-
-
 </main>

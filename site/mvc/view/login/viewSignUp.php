@@ -1,17 +1,19 @@
-<main>
+<main class="form-container">
+<h2>Sign Up</h2>
     <form method="POST" action="/login/signUp">
         <ul>
             <li>
                 <label for="pseudo">Pseudo</label>
-                <input name="pseudo" type="text">
+                <input required name="pseudo" type="text">
             </li>
             <li>
                 <label for="email">E-mail</label>
-                <input name="email" type="email">
+                <input required class="emailInput" name="email" type="email">
+                <div id="emailToolTip">Veuillez selectionner une adresse mail valide.</div>
             </li>
             <li>
                 <label for="password">Password</label>
-                <input id="inputPassword" name="password" type="password">
+                <input required class="passwordInput" name="password" type="password">
                 <br>
                 <div id="helpPassword">
                     <p id = "pwd_eightCar"> Le mot de passe doit contenir au moins 8 caractères           </p>
@@ -22,6 +24,11 @@
                 </div>      
             </li>
             <li>
+                <label for="password2" confirmPassword>Confirm password</label>
+                <input required class="confirmPassword" name="password2" type="password">    
+                <p id="pwdMatchTooltip">Passwords doesnt match</p>  
+            </li>
+            <li>
                 <input disabled id="submitBtn" type="submit" value="Sign Up">
             </li>
         </ul>   
@@ -29,10 +36,9 @@
     </form>
     <br>
     <br>
-    <div>Already have an acccount ?</div>
     <div>
-       
-    <a href="/login/signInView">Sign In</a>
+        Already have an acccount ?       
+        <a class="link" href="/login/signInView">Sign In</a>
     </div>
 </main>
 

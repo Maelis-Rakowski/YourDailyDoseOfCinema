@@ -1,4 +1,4 @@
-<main>
+<main class="dataList">
 <table>
     <tr>
         <th>Title</th>

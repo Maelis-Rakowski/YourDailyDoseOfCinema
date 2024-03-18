@@ -1,6 +1,6 @@
 <?php
 require_once FILE::build_path(array('view','view.php'));
-class Controller404 {
+class ControllerError {
     private $_view;
     public function __construct() {
       
@@ -8,6 +8,11 @@ class Controller404 {
 
     public function show404() {
         $this->_view = new View(array('view', '404.php'));
+        $this->_view->generate(array(null));
+    }
+
+    public function show401() {
+        $this->_view = new View(array('view', '401.php'));
         $this->_view->generate(array(null));
     }
 }

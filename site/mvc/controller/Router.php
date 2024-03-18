@@ -2,7 +2,7 @@
 
 //Require all the controllers
 require_once File::build_path(array("controller","ControllerHome.php"));
-require_once File::build_path(array("controller", "Controller404.php"));
+require_once File::build_path(array("controller", "ControllerError.php"));
 require_once File::build_path(array("controller", "ControllerUser.php"));
 require_once File::build_path(array("controller", "ControllerLogin.php"));
 require_once File::build_path(array("controller", "ControllerMovie.php"));
@@ -37,7 +37,7 @@ class Router{
             $this->_controller->$action();
         } catch (\Throwable $th) {
             if(!class_exists($controller_class) | !method_exists($controller_class, $action)) {
-                $this->_controller = new Controller404();
+                $this->_controller = new ControllerError();
                 $this->_controller->show404();
             }
             echo $th;

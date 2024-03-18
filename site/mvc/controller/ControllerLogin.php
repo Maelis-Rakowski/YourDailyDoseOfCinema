@@ -18,9 +18,7 @@ class ControllerLogin {
 
     //View for SignUp (create new user)
     public function signUpView(){
-
         //If the user is already connected, it shows the view connected, else signUpView
-        session_start();
         if($this->checkSessionAlreadyExists()==true){
             $this->connected();
             exit;
@@ -33,7 +31,6 @@ class ControllerLogin {
     //View for SignIn (connect)
     public function signInView(){
         //If the user is already connected, it shows the view connected, else signInView
-        session_start();
         if($this->checkSessionAlreadyExists()==true){
             $this->connected();
             exit;
@@ -50,7 +47,7 @@ class ControllerLogin {
     }
 
     public function disconnect(){
-        session_start();
+        session_unset();
         session_destroy();
         $this->signInView();
     }
@@ -61,11 +58,16 @@ class ControllerLogin {
         $email = $_POST["email"];
         $pseudo = $_POST["pseudo"];
         $password = $_POST["password"];
+        $confirmPassword = $_POST["password2"];
 
-        UserModel::create($email,$pseudo,$password);
-
-        $this->createSession($pseudo,$password);
-        $this->connected();
+        if($password != $confirmPassword) {
+            echo("Mot de passe non identique");
+        }
+        else {
+            UserModel::create($email, $pseudo, $password);
+            $this->createSession($pseudo, $password, false);
+            $this->connected();
+        }
     }
 
     //Try connect
@@ -82,7 +84,7 @@ class ControllerLogin {
                 // Vérifier si le mot de passe correspond
                 if(password_verify($password, $user->getPassword())) {
                     // Mot de passe valide, connecter l'utilisateur
-                    $this->createSession($pseudo, $user->getPassword());
+                    $this->createSession($pseudo, $user->getPassword(), $user->getIsAdmin());
                     $this->connected();
                 } else {
                     // Mot de passe invalide, afficher la vue de connexion
@@ -105,10 +107,10 @@ class ControllerLogin {
         return false;
     }
 
-    public function createSession($pseudo,$password){
-        session_start();
-        $_SESSION['pseudo'] = $pseudo ;
-        $_SESSION['password'] = $password ;
+    public function createSession($pseudo, $password, $isAdmin){
+        $_SESSION['pseudo'] = $pseudo;
+        $_SESSION['password'] = $password;
+        $_SESSION['isAdmin'] = $isAdmin;
     }
 
     public function resetPassword(){
@@ -138,7 +140,6 @@ class ControllerLogin {
         $this->_view->generate(array('token'=>$token, 'email'=>$email));
     }
 
-
     function generatePrivateKey($email) {
         // Générer une clé privée en concaténant l'email et la date actuelle
         $privateKey = $email . "_" . date("Y-m-d H:i:s");
@@ -159,43 +160,41 @@ class ControllerLogin {
     
         if($users==null){
             echo("email non reconnu");
-            return;
         }
-        $user = $users[0];
+        else {
+            $user = $users[0];
+        }
+
         //If confirm password not same as new password, abort
         if($_POST['newPassword']!=$_POST['confirmPassword']){
-            echo("Mot de passe non identique");
-            return;
+            echo("Passwords must match");
         }
-
-        if($_POST['token']!=$user->getToken()){
+        else if($_POST['token']!=$user->getToken()){
             echo("Token incorrect");
-            return;
         }
-        
-        // Récupérer la dernière date et heure de demande de token de l'utilisateur
-        $lastRequestedDate = $user->getLastRequestedDate();
+        else {
+            // Récupérer la dernière date et heure de demande de token de l'utilisateur
+            $lastRequestedDate = $user->getLastRequestedDate();
 
-        // Créer un objet DateTime pour la dernière date et heure de demande de token
-        $lastRequestedDateTime = new DateTime($lastRequestedDate);
-        // Ajouter 15 minutes à la dernière date et heure de demande de token
-        $lastRequestedDateTime->add(new DateInterval('PT15M'));
+            // Créer un objet DateTime pour la dernière date et heure de demande de token
+            $lastRequestedDateTime = new DateTime($lastRequestedDate);
+            // Ajouter 15 minutes à la dernière date et heure de demande de token
+            $lastRequestedDateTime->add(new DateInterval('PT15M'));
 
-        // Créer un objet DateTime pour la date et l'heure actuelles
-        $currentDateTime = new DateTime();
-        
-        // Vérifier si la date et l'heure actuelles sont supérieures à 15 minutes après la dernière demande de token
-        if ($currentDateTime > $lastRequestedDateTime) {
-            // Le token a expiré
-            echo("Token expiré, renouvellez votre demande de mot de passe");
-            return;
+            // Créer un objet DateTime pour la date et l'heure actuelles
+            $currentDateTime = new DateTime();
+            
+            // Vérifier si la date et l'heure actuelles sont supérieures à 15 minutes après la dernière demande de token
+            if ($currentDateTime > $lastRequestedDateTime) {
+                // Le token a expiré
+                echo("Token expiré, renouvellez votre demande de mot de passe");
+            }
+            else {
+                //update the new password and then go back to signInView
+                UserModel::updateUser($user->getId(), $_POST['newPassword'], $user->getEmail(),$user->getPseudo(), $user->getIsAdmin());
+                $this->signInView();
+            }
         }
-
-        //update the new password and then go back to signInView
-        UserModel::updateUser($user->getId(), $_POST['newPassword'], $user->getEmail(),$user->getPseudo(), $user->getIsAdmin());
-        $this->signInView();
-
     }
-    
 }
 ?>

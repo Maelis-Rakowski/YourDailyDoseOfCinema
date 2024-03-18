@@ -15,7 +15,7 @@
                                 
                                 <p>the page you are looking for is not avaible!</p>
                                 
-                                <a href="/home" class="link_404">Go to Home</a>
+                                <a href="/home" class="link_404">Go back Home</a>
                             </div>
                         </div>
                     </div>

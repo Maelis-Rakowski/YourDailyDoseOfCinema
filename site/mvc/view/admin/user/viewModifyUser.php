@@ -1,4 +1,4 @@
-<main>
+<main class="form-container">
 
     <h2>Modification du User id : <?=$user_id?></h2>
     <form action="/user/modifyUser" method="POST">
@@ -7,10 +7,6 @@
             <li>
                 <label for="new_user_pseudo">New Pseudo : </label><br>
                 <input name="new_user_pseudo" type="text" value="<?=$user_pseudo?>"><br><br>
-            </li>
-            <li>
-                <label for="new_user_password">New password : </label><br>
-                <input name="new_user_password" type="password" value="<?=$user_password?>"><br><br>
             </li>
             <li>
                 <label for="new_user_email">New email : </label><br>

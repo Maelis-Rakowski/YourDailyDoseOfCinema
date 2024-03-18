@@ -1,119 +1,385 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  @font-face {
-    font-family: 'movie';
-    src: 
-      url("../font/film_premieres/Film\ Premieres.otf") format(opentype);
-  }
-  
-  body {
-  }
-  
-  header a {
-    text-decoration: none;
-    font-family: sans-serif;
-    color: #fff;
-    margin: auto;
-    height: 100%;
-    text-align: center;
-  }
-
-  header nav {
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-    width: 30vw;
-  }
-  
-  header {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  header h1 {
-    font-family: 'movie';
-    font-size: 50px;
-    text-align: left;
-    color: red;
-    font-weight: lighter;
-  }
-
-  header {
-    padding: 20px;
-    text-align: center;
-    background-color: black;
-  }
-
-  footer {
-    padding: 20px;
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
-
-  main {
-    width: 70vw;
-    margin: auto;
-  }
-
-  table {
-    width: 100%;
-  }
-
-  th{
-      text-align: center;
-      border: solid black 1px;
-  }
-
-  td{
-      text-align: center;
-      border: solid black 1px;
-  }
-  
-/*======================
-    404 page
-=======================*/
-  
-  .four_zero_four_bg{
-    background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
-    height: 400px;
-    background-position: center;
-    background-repeat: no-repeat; 
-    text-align: center;
-  }
-   
-   
-  .four_zero_four_bg h1 {
-    font-size:80px;
-  }
-         
-  .link_404{			 
-    color: #fff!important;
-    padding: 10px 20px;
-    background: #39ac31;
-    margin: 20px 0;
-    display: inline-block;
-  }
-
-  .contant_box_404{ 
-    margin-top:-50px;
-    text-align: center;
-  }
-
-
-  /*======================
-    dynamique
-=======================*/
-
-.displayNone {
-  display: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
 }
 
-.displayBlock {
-  display: block;
+@font-face {
+  font-family: 'movie';
+  src: 
+    url("../font/film_premieres/Film\ Premieres.otf") format(opentype);
+}
+
+
+@font-face {
+  font-family: 'movie';
+  src: 
+    url("../font/film_premieres/Film\ Premieres.otf") format(opentype);
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+  font-family: sans-serif;
+  padding-right: 20px;
+
+}
+
+header nav {
+  float: right;
+  display: flex;
+  justify-content: space-between;
+}
+
+header {
+  background-color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-family: 'movie';
+  font-size: 50px;
+  text-align: left;
+  color: red;
+}
+
+header {
+  padding-top: 50px;
+  padding-bottom: 10px;
+  text-align: center;
+  background-color: black;
+}
+
+footer {
+  padding-top: 50px;
+  text-align: center;
+  width: 100%;
+  font-size: 10px;
+}
+
+a {
+text-decoration: none;
+color: black;
+font-weight: 600;
+font-size: large;
+transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+margin: 20px;
+}
+
+/*======================
+  404 page
+=======================*/
+
+.four_zero_four_bg{
+  background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+  height: 400px;
+  background-position: center;
+  background-repeat: no-repeat; 
+  text-align: center;
+}
+  
+  
+.four_zero_four_bg h1 {
+  font-size:80px;
+}
+        
+.link_404{			 
+  color: #fff!important;
+  padding: 10px 20px;
+  background: #39ac31;
+  margin: 20px 0;
+  display: inline-block;
+}
+
+.contant_box_404{ 
+  margin-top:-50px;
+  text-align: center;
+}
+
+/*======================
+  401 page
+=======================*/
+
+.four_zero_one_bg{
+  height: 400px;
+  background-position: center;
+  background-repeat: no-repeat; 
+  text-align: center;
+}
+
+
+.four_zero_one_bg h1 {
+  font-size:80px;
+}
+      
+.link_401{			 
+  color: #fff!important;
+  padding: 10px 20px;
+  background: #39ac31;
+  margin: 20px 0;
+  display: inline-block;
+}
+
+.contant_box_401{ 
+  margin-top:-50px;
+  text-align: center;
+}
+
+
+/*======================
+  Home Page
+=======================*/
+
+#home {
+width: 65%;
+margin: 0 auto;
+padding: 50px;
+text-align: center;
+height: 100%;
+}
+
+#home h2 {
+color: #333;
+margin-bottom: 50px;
+}
+
+#home .content {
+min-height: 250px;
+width: 100%;
+display: inline-block;
+border-radius: 5px;
+padding: 25px;
+padding-bottom: 50px;
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+position: relative; /* positionnement relatif pour le conteneur de l'input field et de la liste */
+}
+
+#home form input[type="text"] {
+width: 100%;
+padding: 10px;
+font-size: 16px;
+border: 1px solid #ccc;
+border-radius: 5px;
+z-index: 2; /* indice z-index élevé pour que l'input field soit au-dessus de la liste */
+}
+
+#home .guess {
+width: 70%;
+margin: 0 auto;
+}
+
+#home form input[type="text"]:focus {
+outline: none;
+border-color: #939393;
+border-radius: 5px 5px 0 0;
+}
+
+#home ul {
+width: 100%;
+background-color: #fff;
+box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+z-index: 1; 
+list-style-type: none;
+margin: 0;
+
+/*TO REMOVE*/
+display: none;
+}
+
+/*TO REMOVE*/
+#home form input[type="text"]:focus + ul {
+display: block;
+}
+
+#home ul li {
+padding: 10px 20px;
+font-size: 16px;
+color: #333;
+border-bottom: 1px solid #eee;
+text-align: left;
+}
+
+#home ul li:nth-child(even) { /* sélecteur pour cibler les éléments pairs de la liste */
+background-color: #f9f9f9; /* couleur de fond légèrement plus claire pour les éléments pairs */
+}
+
+#home ul li:last-child {
+border-bottom: none;
+}
+
+#home ul li:hover {
+background-color: #f3f3f3; /* couleur de fond légèrement plus claire pour l'élément survolé */
+}
+
+#home ul li.displayNone {
+display: none;
+}
+
+
+/*======================
+  table de data (user, movie)
+=======================*/
+
+
+.dataList {
+width: 80%;
+margin: 0 auto;
+padding: 50px;
+}
+
+.dataList table {
+width: 100%;
+border-collapse: collapse;
+margin: 0 auto;
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dataList th, .dataList td {
+padding: 15px;
+text-align: left;
+border-bottom: 1px solid #ddd;
+}
+
+.dataList th {
+background-color: #f3f3f3;
+font-size: 18px;
+color: #333;
+}
+
+.dataList tr:hover {
+background-color: #f9f9f9;
+}
+
+.dataList form {
+display: inline-block;
+}
+
+.dataList input[type="submit"] {
+background-color: #333;
+color: #fff;
+padding: 5px 10px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+margin-right: 10px;
+}
+
+.dataList input[type="submit"]:hover {
+background-color: #555;
+}
+
+
+/*======================
+  Formulaire
+=======================*/
+
+
+/* Conteneur commun pour les formulaires */
+.form-container {
+width: 80%;
+margin: 0 auto;
+padding: 50px;
+text-align: center;
+}
+
+/* Titres des formulaires */
+.form-container h1,
+.form-container h2 {
+font-size: 24px;
+color: #333;
+margin-bottom: 30px;
+}
+
+/* Formulaires */
+.form-container form {
+width: 80%;
+border-radius: 5px;
+padding: 20px;
+padding-bottom: 0;
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+display: inline-block;
+text-align: left;
+}
+
+/* Liste des champs des formulaires */
+.form-container form ul {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+/* Champs des formulaires */
+.form-container form ul li {
+margin-bottom: 20px;
+}
+
+/* Étiquettes des champs des formulaires */
+.form-container form ul li label {
+font-size: 18px;
+color: #333;
+display: block;
+margin-bottom: 5px;
+}
+
+/* Champs de texte, email et mot de passe des formulaires */
+.form-container form ul li input[type="text"],
+.form-container form ul li input[type="email"],
+.form-container form ul li input[type="password"] {
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+font-size: 16px;
+}
+
+/* Boutons des formulaires */
+.form-container form ul li input[type="submit"] {
+background-color: #333;
+color: #fff;
+border: none;
+padding: 10px 20px;
+border-radius: 5px;
+cursor: pointer;
+font-size: 16px;
+display: block;
+margin: 0 auto;
+margin-top: 20px;
+}
+
+/* État au survol des boutons des formulaires */
+.form-container form ul li input[type="submit"]:hover {
+background-color: #555;
+}
+
+/* État désactivé des boutons des formulaires */
+.form-container form ul li input[type="submit"]:disabled {
+background-color: #ccc;
+color: #666;
+cursor: not-allowed;
+}
+
+.form-container form ul.my-list li:last-child {
+  padding-bottom: 0;
+}
+
+/* Texte d'aide du formulaire de réinitialisation de mot de passe */
+.resetPassword #helpPassword {
+font-size: 14px;
+color: #666;
+margin-top: 10px;
+display: none;
+}
+
+/* Liens */
+.link {
+text-decoration: none;
+color: black;
+padding: 5px 10px;
+border: 2px solid black;
+border-radius: 5px;
+cursor: pointer;
+margin-right: 10px;
 }
