@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded',function(){
     // Ajoute un eventclick sur le bouton avec l'id "envoyer"
     // Ce bouton se trouve dans le viewTmdb du formulaire de recherche du film
-    $("#envoyer").click(function(e){ 
+    $("#movieInput").on('input',function(e){ 
         e.preventDefault(); // On empêche le navigateur d'envoyer le formulaire, on fait le post nous même
         $.post(//Syntaxe améliorée de la fonction $.ajax() de base commentée dessous
                 'tmdb/callTMDBJson', // Appelle la fonction callTMDBJson du controller tmdb

@@ -39,7 +39,7 @@
             $apiKey = '0168e4ae77bb634f0e51abb40d08f608';
             //$url = 'https://api.themoviedb.org/3/movie/details?api_key='.$apiKey.'&language=en-EN';
             $query = $_POST['movieInput'];
-            $url = 'https://api.themoviedb.org/3/search/movie?api_key='.$apiKey.'&query='.$query.'&include_adult=true&language=en-US';
+            $url = 'https://api.themoviedb.org/3/search/movie?api_key='.$apiKey.'&query='.$query.'&include_adult=false&language=en-US';
 
 
             // Faire la requête à l'API
