@@ -10,28 +10,32 @@
       url("../font/film_premieres/Film\ Premieres.otf") format(opentype);
   }
   
-  body {
+
+  @font-face {
+    font-family: 'movie';
+    src: 
+      url("../font/film_premieres/Film\ Premieres.otf") format(opentype);
   }
   
   header a {
+    color: #fff;
     text-decoration: none;
     font-family: sans-serif;
-    color: #fff;
-    margin: auto;
-    height: 100%;
-    text-align: center;
+    padding-right: 20px;
+
   }
 
   header nav {
+    float: right;
     display: flex;
-    justify-content: center;
-    align-items: center; 
-    width: 30vw;
+    justify-content: space-between;
   }
   
   header {
+    background-color: black;
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   header h1 {
@@ -39,7 +43,6 @@
     font-size: 50px;
     text-align: left;
     color: red;
-    font-weight: lighter;
   }
 
   header {
@@ -49,31 +52,22 @@
   }
 
   footer {
-    padding: 20px;
+    padding: 5px;
     text-align: center;
     position: fixed;
     bottom: 0;
     width: 100%;
+    font-size: 10px;
   }
 
-  main {
-    width: 70vw;
-    margin: auto;
-  }
-
-  table {
-    width: 100%;
-  }
-
-  th{
-      text-align: center;
-      border: solid black 1px;
-  }
-
-  td{
-      text-align: center;
-      border: solid black 1px;
-  }
+a {
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+  font-size: large;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  margin: 20px;
+}
   
 /*======================
     404 page
@@ -106,14 +100,464 @@
   }
 
 
-  /*======================
-    dynamique
+/*======================
+    Home Page
 =======================*/
 
-.displayNone {
+#home {
+  width: 65%;
+  margin: 0 auto;
+  padding: 50px;
+  text-align: center;
+}
+
+#home h2 {
+  color: #333;
+  margin-bottom: 50px;
+}
+
+#home .content {
+  min-height: 250px;
+  width: 100%;
+  display: inline-block;
+  border-radius: 5px;
+  padding: 25px;
+  padding-bottom: 50px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  position: relative; /* positionnement relatif pour le conteneur de l'input field et de la liste */
+}
+
+#home form input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  z-index: 2; /* indice z-index élevé pour que l'input field soit au-dessus de la liste */
+}
+
+#home .guess {
+  width: 70%;
+  margin: 0 auto;
+}
+
+#home form input[type="text"]:focus {
+  outline: none;
+  border-color: #939393;
+  border-radius: 5px 5px 0 0;
+}
+
+#home ul {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1; 
+  list-style-type: none;
+  margin: 0;
+
+  /*TO REMOVE*/
   display: none;
 }
 
-.displayBlock {
+/*TO REMOVE*/
+#home form input[type="text"]:focus + ul {
   display: block;
+}
+
+#home ul li {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+#home ul li:nth-child(even) { /* sélecteur pour cibler les éléments pairs de la liste */
+  background-color: #f9f9f9; /* couleur de fond légèrement plus claire pour les éléments pairs */
+}
+
+#home ul li:last-child {
+  border-bottom: none;
+}
+
+#home ul li:hover {
+  background-color: #f3f3f3; /* couleur de fond légèrement plus claire pour l'élément survolé */
+}
+
+#home ul li.displayNone {
+  display: none;
+}
+
+
+/*======================
+    table de data (user, movie)
+=======================*/
+
+
+.dataList {
+  width: 80%;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+.dataList table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dataList th, .dataList td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.dataList th {
+  background-color: #f3f3f3;
+  font-size: 18px;
+  color: #333;
+}
+
+.dataList tr:hover {
+  background-color: #f9f9f9;
+}
+
+.dataList form {
+  display: inline-block;
+}
+
+.dataList input[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.dataList input[type="submit"]:hover {
+  background-color: #555;
+}
+
+
+
+/*======================
+    Modify USER
+=======================*/
+
+
+
+
+.modifyUser {
+  width: 80%;
+  margin: 0 auto;
+  padding: 50px;
+  text-align: center;
+}
+
+.modifyUser h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.modifyUser form {
+  width: 80%;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  text-align: left;
+}
+
+.modifyUser form ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modifyUser form ul li {
+  margin-bottom: 20px;
+}
+
+.modifyUser form ul li label {
+  font-size: 18px;
+  color: #333;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.modifyUser form ul li input[type="text"],
+.modifyUser form ul li input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.modifyUser form ul li input[type="checkbox"] {
+  vertical-align: middle;
+}
+
+.modifyUser form ul li input[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.modifyUser form ul li input[type="submit"]:hover {
+  background-color: #555;
+}
+
+/*======================
+   SIgn Up
+=======================*/
+
+.signUp {
+  width: 80%;
+  margin: 0 auto;
+  padding: 50px;
+  text-align: center;
+}
+
+.signUp form {
+  width: 80%;
+  display: inline-block;
+  text-align: left;
+  margin-right: 20px;
+}
+
+.signUp form ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.signUp form ul li {
+  margin-bottom: 20px;
+}
+
+.signUp form ul li label {
+  font-size: 18px;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.signUp form ul li input[type="text"],
+.signUp form ul li input[type="password"],
+.signUp form ul li input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.signUp form ul li input[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.signUp form ul li input[type="submit"]:hover {
+  background-color: #555;
+}
+
+.signUp div {
+  display: inline-block;
+  font-size: 18px;
+  color: #333;
+  margin-top: 20px;
+}
+.signUp a {
+  color: rgb(39, 0, 42);
+}
+
+input[type="submit"]:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+
+/*======================
+   SIgn In
+=======================*/
+
+
+
+.signIn {
+  width: 80%;
+  margin: 0 auto;
+  padding: 50px;
+  text-align: center;
+}
+
+.signIn form {
+  display: block;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.signIn form ul {
+  width: 80%;
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.signIn form ul li {
+  margin-bottom: 20px;
+}
+
+.signIn form ul li label {
+  font-size: 18px;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.signIn form ul li input[type="text"],
+.signIn form ul li input[type="password"],
+.signIn form ul li input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.signIn form ul li input[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.signIn form ul li input[type="submit"]:hover {
+  background-color: #555;
+}
+
+.signIn form ul li input[type="submit"]:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.signIn div {
+  display: block;
+  font-size: 18px;
+  color: #333;
+  margin-top: 20px;
+}
+
+/*======================
+   Reset Password
+=======================*/
+
+
+.resetPassword {
+  width: 80%;
+  margin: 0 auto;
+  padding: 50px;
+  text-align: center;
+}
+
+.resetPassword h1 {
+  font-size: 36px;
+  color: #333;
+  margin-bottom: 50px;
+}
+
+.resetPassword form {
+  display: inline-block;
+  text-align: left;
+}
+
+.resetPassword form ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.resetPassword form ul li {
+  margin-bottom: 20px;
+}
+
+.resetPassword form ul li label {
+  font-size: 18px;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.resetPassword form ul li input[type="hidden"] {
+  display: none;
+}
+
+.resetPassword form ul li input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.resetPassword form ul li input[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.resetPassword form ul li input[type="submit"]:hover {
+  background-color: #555;
+}
+
+.resetPassword form ul li input[type="submit"]:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.resetPassword #helpPassword {
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+  display: none;
+}
+
+.resetPassword #helpPassword p {
+  margin: 0;
 }

@@ -1,3 +1,5 @@
+<main class ="resetPassword">
+
 <h1>Reset Password</h1>
 <form method="POST" action="/login/updatePassword">
         <ul>
@@ -31,3 +33,4 @@
         </ul>   
         
     </form>
+    </main>

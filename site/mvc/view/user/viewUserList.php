@@ -1,4 +1,4 @@
-<main>
+<main class="dataList" >
     <table>
         <tr>
             <th>Login</th>
@@ -10,6 +10,7 @@
         </tr>
         
         <?php foreach ($users as $obj): ?>
+            <tr>
                 <td><?= htmlspecialchars($obj->getId()) ?></td>
                 <td><?= htmlspecialchars($obj->getEmail()) ?></td>
                 <td><?= htmlspecialchars($obj->getPseudo()) ?></td>
