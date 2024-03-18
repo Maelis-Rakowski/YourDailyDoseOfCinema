@@ -17,29 +17,3 @@ document.addEventListener('DOMContentLoaded',function(){
 
     });
 });
-
-
-// document.addEventListener('DOMContentLoaded',function(){
-//     $("#envoyer").click(function(e){
-//         console.log(e);
-//         e.preventDefault(); // On empêche le navigateur d'envoyer le formulaire
-//         $.ajax({
-//             url : 'http://yddoc/tmdb/callTMDBJson',
-//             type : 'POST',
-//             data : 'movieInput=' + movieInput,
-//             dataType : 'json',
-//             success : function(reponse_json, statut){
-//             console.log(reponse_json); // On passe reponse_html à jQuery() qui va créer l'arbre DOM
-//             },
-//             erreur : function(resultat, statut, erreur){
-//                 alert(erreur);
-//             },
-//             complete : function(resultat, statut){
-//             }
-//          });
-
-//     function fonction_retour(reponse_json){
-//         console.log(reponse_json);
-//         }
-//     });
-// });
