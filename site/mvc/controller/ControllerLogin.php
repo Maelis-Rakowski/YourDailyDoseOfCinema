@@ -191,7 +191,7 @@ class ControllerLogin {
             }
             else {
                 //update the new password and then go back to signInView
-                UserModel::updateUser($user->getId(), $_POST['newPassword'], $user->getEmail(),$user->getPseudo(), $user->getIsAdmin());
+                UserModel::updateUserPassword($user->getId(), $_POST['newPassword']);
                 $this->signInView();
             }
         }

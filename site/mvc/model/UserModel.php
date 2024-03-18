@@ -56,6 +56,21 @@ class UserModel extends Model {
         return $rep->fetchAll();
     }
 
+    public static function updateUserPassword($user_id,$password){
+        $sql = "UPDATE users 
+        SET password = :user_password
+        WHERE id = :user_id";
+        $rep = Model::getPDO() -> prepare($sql);
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $value = array(
+            "user_id" => $user_id,
+            "user_password" => $password
+        );
+        $rep->execute($value);
+        $rep->setFetchMode(PDO::FETCH_CLASS, "UserModel");
+        return $rep->fetchAll();
+    }
+
     public static function updateUserToken($user_id, $token, $lastRequestedDate){
         $sql = "UPDATE users 
         SET token = :token, lastRequestedDate = :lastRequestedDate
