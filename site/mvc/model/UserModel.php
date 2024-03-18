@@ -39,18 +39,14 @@ class UserModel extends Model {
         $rep->execute($value);
     }
 
-    public static function updateUser($user_id, $user_password, $user_email, $user_pseudo, $user_isAdmin) {
+    public static function updateUser($user_id, $user_email, $user_pseudo, $user_isAdmin) {
         $sql = "UPDATE users 
-        SET email = :user_email, pseudo = :user_pseudo, password = :user_password, isAdmin = :user_isAdmin
+        SET email = :user_email, pseudo = :user_pseudo, isAdmin = :user_isAdmin
         WHERE id = :user_id";
         $rep = Model::getPDO() -> prepare($sql);
 
-        //Hashage du password
-        $user_password = password_hash($user_password, PASSWORD_DEFAULT);
-
         $value = array(
             "user_id" => $user_id,
-            "user_password" => $user_password,
             "user_email" => $user_email,
             "user_pseudo" => $user_pseudo,
             "user_isAdmin" => $user_isAdmin
