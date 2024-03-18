@@ -9,7 +9,6 @@ $('.emailInput').on('input', checkEmail);
 $('.confirmPassword').on('input', checkIfPasswordMatch);
 
 function checkPassword() {
-    console.log("uwuwuwuwuwuwu");
     let input = $('.passwordInput').val();
 
     //on test chacune des lignes et change leurs couleurs en fonction
