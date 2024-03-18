@@ -1,17 +1,19 @@
-<main>
+<main class="signUp">
+<h2>Sign In</h3>
     <form method="POST" action="/login/signUp">
         <ul>
             <li>
                 <label for="pseudo">Pseudo</label>
-                <input name="pseudo" type="text">
+                <input required name="pseudo" type="text">
             </li>
             <li>
                 <label for="email">E-mail</label>
-                <input name="email" type="email">
+                <input required class="emailInput" name="email" type="email">
+                <div id="emailToolTip">Veuillez selectionner une adresse mail valide.</div>
             </li>
             <li>
                 <label for="password">Password</label>
-                <input id="inputPassword" name="password" type="password">
+                <input required class="passwordInput" name="password" type="password">
                 <br>
                 <div id="helpPassword">
                     <p id = "pwd_eightCar"> Le mot de passe doit contenir au moins 8 caractères           </p>
