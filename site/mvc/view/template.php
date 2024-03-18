@@ -12,8 +12,12 @@
             <h1>YOUR DAILY DOSE OF CINEMA</h1>
             <nav >
                 <a href="/home">Home</a>
-                <a href="/user">User</a>
-                <a href="/movie">Movies</a>
+                <?php 
+                    if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"]) {
+                        echo '<a href="/admin/user">User</a>';
+                        echo '<a href="/admin/movie">Movies</a>';
+                    }
+                ?>
                 <a href="/login">Sign In</a>
             </nav>
         </header>

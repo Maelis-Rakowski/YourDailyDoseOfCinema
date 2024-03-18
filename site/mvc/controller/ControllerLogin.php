@@ -18,9 +18,7 @@ class ControllerLogin {
 
     //View for SignUp (create new user)
     public function signUpView(){
-
         //If the user is already connected, it shows the view connected, else signUpView
-        session_start();
         if($this->checkSessionAlreadyExists()==true){
             $this->connected();
             exit;
@@ -33,7 +31,6 @@ class ControllerLogin {
     //View for SignIn (connect)
     public function signInView(){
         //If the user is already connected, it shows the view connected, else signInView
-        session_start();
         if($this->checkSessionAlreadyExists()==true){
             $this->connected();
             exit;
@@ -50,7 +47,7 @@ class ControllerLogin {
     }
 
     public function disconnect(){
-        session_start();
+        session_unset();
         session_destroy();
         $this->signInView();
     }
@@ -62,9 +59,9 @@ class ControllerLogin {
         $pseudo = $_POST["pseudo"];
         $password = $_POST["password"];
 
-        UserModel::create($email,$pseudo,$password);
+        UserModel::create($email, $pseudo, $password);
 
-        $this->createSession($pseudo,$password);
+        $this->createSession($pseudo, $password, false);
         $this->connected();
     }
 
@@ -82,7 +79,7 @@ class ControllerLogin {
                 // Vérifier si le mot de passe correspond
                 if(password_verify($password, $user->getPassword())) {
                     // Mot de passe valide, connecter l'utilisateur
-                    $this->createSession($pseudo, $user->getPassword());
+                    $this->createSession($pseudo, $user->getPassword(), $user->getIsAdmin());
                     $this->connected();
                 } else {
                     // Mot de passe invalide, afficher la vue de connexion
@@ -105,10 +102,10 @@ class ControllerLogin {
         return false;
     }
 
-    public function createSession($pseudo,$password){
-        session_start();
-        $_SESSION['pseudo'] = $pseudo ;
-        $_SESSION['password'] = $password ;
+    public function createSession($pseudo, $password, $isAdmin){
+        $_SESSION['pseudo'] = $pseudo;
+        $_SESSION['password'] = $password;
+        $_SESSION['isAdmin'] = $isAdmin;
     }
 
     public function resetPassword(){
