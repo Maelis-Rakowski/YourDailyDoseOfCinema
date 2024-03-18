@@ -7,6 +7,8 @@ class UserModel extends Model {
     private $email;
     private $pseudo;    
     private $isAdmin;
+    private $token;
+    private $lastRequestedDate;
 
     //constructor    
     public function __construct($id = NULL, $email = NULL, $pseudo = NULL, $password = NULL, $isAdmin = NULL) {
@@ -37,18 +39,36 @@ class UserModel extends Model {
         $rep->execute($value);
     }
 
-    public static function updateUser($user_id, $user_password, $user_email, $user_pseudo, $user_isAdmin) {
+    public static function updateUser($user_id, $user_email, $user_pseudo, $user_isAdmin) {
         $sql = "UPDATE users 
-        SET email = :user_email, pseudo = :user_pseudo, password = :user_password, isAdmin = :user_isAdmin
+        SET email = :user_email, pseudo = :user_pseudo, isAdmin = :user_isAdmin
         WHERE id = :user_id";
         $rep = Model::getPDO() -> prepare($sql);
+
         $value = array(
             "user_id" => $user_id,
-            "user_password" => $user_password,
             "user_email" => $user_email,
             "user_pseudo" => $user_pseudo,
             "user_isAdmin" => $user_isAdmin
         );
+        $rep->execute($value);
+        $rep->setFetchMode(PDO::FETCH_CLASS, "UserModel");
+        return $rep->fetchAll();
+    }
+
+    public static function updateUserToken($user_id, $token, $lastRequestedDate){
+        $sql = "UPDATE users 
+        SET token = :token, lastRequestedDate = :lastRequestedDate
+        WHERE id = :user_id";
+        $rep = Model::getPDO() -> prepare($sql);
+
+
+        $value = array(
+            "user_id" => $user_id,
+            "token"=>$token,
+            "lastRequestedDate"=>$lastRequestedDate
+        );
+        
         $rep->execute($value);
         $rep->setFetchMode(PDO::FETCH_CLASS, "UserModel");
         return $rep->fetchAll();
@@ -72,7 +92,7 @@ class UserModel extends Model {
     }
 
     //TEMP
-    public static function getUser($pseudo){
+    public static function getUserByPseudo($pseudo){
         $sql = "SELECT * FROM users
         WHERE pseudo = :pseudo";
         $rep = Model::getPDO() -> prepare($sql);
@@ -80,6 +100,20 @@ class UserModel extends Model {
 
         $values = array(
             "pseudo" => $pseudo,
+        );
+        $rep->execute($values);
+        return $rep->fetchAll();
+    }
+
+       //TEMP
+       public static function getUserByEmail($email){
+        $sql = "SELECT * FROM users
+        WHERE email = :email";
+        $rep = Model::getPDO() -> prepare($sql);
+        $rep->setFetchMode(PDO::FETCH_CLASS, 'UserModel');
+
+        $values = array(
+            "email" => $email,
 
         );
         $rep->execute($values);
@@ -124,6 +158,22 @@ class UserModel extends Model {
     }
     public function getIsAdmin(){
         return $this->isAdmin;
+    }
+
+    //token
+    public function setToken($token){
+        $this->token = $token;
+    }
+    public function getToken(){
+        return $this->token;
+    }
+
+    //lastRequestedDate
+    public function setLastRequestedDate($lastRequestedDate){
+        $this->lastRequestedDate = $lastRequestedDate;
+    }
+    public function getLastRequestedDate(){
+        return $this->lastRequestedDate;
     }
 }
 ?>

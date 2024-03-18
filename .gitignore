@@ -22,3 +22,6 @@
 
 sketch.html
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
+
+#jquery
+node_modules/

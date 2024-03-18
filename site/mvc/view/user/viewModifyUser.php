@@ -9,12 +9,8 @@
                 <input name="new_user_pseudo" type="text" value="<?=$user_pseudo?>"><br><br>
             </li>
             <li>
-                <label for="new_user_password">New password : </label><br>
-                <input name="new_user_password" type="password" value="<?=$user_password?>"><br><br>
-            </li>
-            <li>
                 <label for="new_user_email">New email : </label><br>
-                <input name="new_user_email" type="text" value="<?=$user_email?>"><br><br>
+                <input name="new_user_email" type="email" value="<?=$user_email?>"><br><br>
             </li>
             <li>
                 <label for="new_user_isAdmin">Admininistrator : </label> 

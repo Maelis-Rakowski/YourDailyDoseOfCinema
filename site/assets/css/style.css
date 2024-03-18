@@ -10,6 +10,13 @@
       url("../font/film_premieres/Film\ Premieres.otf") format(opentype);
   }
   
+
+  @font-face {
+    font-family: 'movie';
+    src: 
+      url("../font/film_premieres/Film\ Premieres.otf") format(opentype);
+  }
+  
   body {
   }
   
@@ -43,6 +50,7 @@
   header {
     padding: 20px;
     text-align: center;
+    background-color: black;
   }
 
   footer {
@@ -92,3 +100,16 @@ a {
     margin-top:-50px;
     text-align: center;
   }
+
+
+  /*======================
+    dynamique
+=======================*/
+
+.displayNone {
+  display: none;
+}
+
+.displayBlock {
+  display: block;
+}

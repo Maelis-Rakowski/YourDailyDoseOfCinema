@@ -11,21 +11,21 @@
         <header>
             <h1>YOUR DAILY DOSE OF CINEMA</h1>
             <nav >
-            <a href="/home">Home</a>
-            <a href="/user">User</a>
-            <a href="/login/signInView">Sign In</a>
-            <a href="/login/signUpView">Sign Up</a>
+                <a href="/home">Home</a>
+                <a href="/user">User</a>
+                <a href="/movie">Movies</a>
+                <a href="/login">Sign In</a>
             </nav>
         </header>
 
         <main>
-            <!-- Content of the view -->
             <?= $content ?>
-
         </main>
 
         <footer>
             ©Copyright 2024 Your daily dose of Cinema
         </footer>
     </body>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="/scripts/login.js"></script>
 </html>
