@@ -1,4 +1,5 @@
-<main>
+<main class="signUp">
+<h2>Sign In</h3>
     <form method="POST" action="/login/signUp">
         <ul>
             <li>
