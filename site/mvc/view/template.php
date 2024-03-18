@@ -15,6 +15,7 @@
                 <a href="/user">User</a>
                 <a href="/movie">Movies</a>
                 <a href="/login">Sign In</a>
+                <a href="/tmdb">TMDB</a>
             </nav>
         </header>
 
@@ -28,4 +29,5 @@
     </body>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="/scripts/login.js"></script>
+
 </html>

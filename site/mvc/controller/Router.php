@@ -6,6 +6,7 @@ require_once File::build_path(array("controller", "Controller404.php"));
 require_once File::build_path(array("controller", "ControllerUser.php"));
 require_once File::build_path(array("controller", "ControllerLogin.php"));
 require_once File::build_path(array("controller", "ControllerMovie.php"));
+require_once File::build_path(array("controller", "ControllerTmdb.php"));
 
 class Router{
 
