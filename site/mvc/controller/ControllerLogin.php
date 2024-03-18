@@ -58,7 +58,7 @@ class ControllerLogin {
         $email = $_POST["email"];
         $pseudo = $_POST["pseudo"];
         $password = $_POST["password"];
-        $confirmPassword = $_POST["confirmPassword"];
+        $confirmPassword = $_POST["password2"];
 
         if($password != $confirmPassword) {
             echo("Mot de passe non identique");

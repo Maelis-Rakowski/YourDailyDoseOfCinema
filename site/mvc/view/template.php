@@ -16,6 +16,7 @@
                     if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"]) {
                         echo '<a href="/admin/user">User</a>';
                         echo '<a href="/admin/movie">Movies</a>';
+                        echo '<a href="/admin/tmdb">TMDB</a>';
                     }
                 ?>
                 <a href="/login/signInView">Sign In</a>
@@ -33,4 +34,5 @@
     </body>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="/scripts/login.js"></script>
+
 </html>
