@@ -30,8 +30,6 @@ class ControllerLogin {
 
     //View for SignIn (connect)
     public function signInView(){
-        var_dump($_SESSION);
-
         //If the user is already connected, it shows the view connected, else signInView
         if($this->checkSessionAlreadyExists()==true){
             $this->connected();
