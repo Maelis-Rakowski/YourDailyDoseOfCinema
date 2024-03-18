@@ -18,7 +18,8 @@
                         echo '<a href="/admin/movie">Movies</a>';
                     }
                 ?>
-                <a href="/login">Sign In</a>
+                <a href="/login/signInView">Sign In</a>
+                <a href="/login">Sign Up</a>
             </nav>
         </header>
 

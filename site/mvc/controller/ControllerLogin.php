@@ -58,9 +58,14 @@ class ControllerLogin {
         $email = $_POST["email"];
         $pseudo = $_POST["pseudo"];
         $password = $_POST["password"];
+        $confirmPassword = $_POST["confirmPassword"];
+
+        if($password != $confirmPassword) {
+            echo("Mot de passe non identique");
+            return;
+        }
 
         UserModel::create($email, $pseudo, $password);
-
         $this->createSession($pseudo, $password, false);
         $this->connected();
     }
@@ -135,7 +140,6 @@ class ControllerLogin {
         $this->_view->generate(array('token'=>$token, 'email'=>$email));
     }
 
-
     function generatePrivateKey($email) {
         // Générer une clé privée en concaténant l'email et la date actuelle
         $privateKey = $email . "_" . date("Y-m-d H:i:s");
@@ -192,7 +196,6 @@ class ControllerLogin {
         UserModel::updateUser($user->getId(), $_POST['newPassword'], $user->getEmail(),$user->getPseudo(), $user->getIsAdmin());
         $this->signInView();
 
-    }
-    
+    }    
 }
 ?>

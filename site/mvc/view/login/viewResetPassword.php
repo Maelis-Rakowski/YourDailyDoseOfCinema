@@ -1,4 +1,4 @@
-<main class ="resetPassword">
+<main class ="form-container">
 
 <h1>Reset Password</h1>
 <form method="POST" action="/login/updatePassword">
@@ -25,7 +25,8 @@
             </li>
             <li>
                 <label for="confirmPassword">Confirm Password</label>
-                <input required name="confirmPassword" type="password">
+                <input required name="confirmPassword" class ="confirmPassword" type="password">
+                <p id="pwdMatchTooltip">Passwords doesnt match</p>  
             </li>
             <li>
                 <input type="submit" value="New Password">

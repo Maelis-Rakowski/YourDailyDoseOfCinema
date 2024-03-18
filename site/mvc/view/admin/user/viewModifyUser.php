@@ -1,4 +1,4 @@
-<main class="modifyUser">
+<main class="form-container">
 
     <h2>Modification du User id : <?=$user_id?></h2>
     <form action="/user/modifyUser" method="POST">

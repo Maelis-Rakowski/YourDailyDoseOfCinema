@@ -1,5 +1,5 @@
-<main class="signIn">
-    <h3>Sign In</h3>
+<main class="form-container">
+    <h2>Sign In</h2>
     <form method="POST" action="/login/signIn">
         <ul>
             <li>
@@ -18,7 +18,7 @@
     </form>
 
     <br><br>
-    <h3>Forgot Password ?</h3>
+    <h2>Forgot Password ?</h2>
     <form method="POST" action="sendEmail" target="_blank">
         <ul>
             <li>

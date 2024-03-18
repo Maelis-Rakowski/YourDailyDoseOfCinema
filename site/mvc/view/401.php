@@ -14,7 +14,7 @@
                                     
                                     <p>you're not authorized here</p>
                                     
-                                    <a href="/home" class="link_401">Go to Home</a>
+                                    <a href="/home" class="link_401">Go back Home</a>
                                 </div>
                             </div>
                             
