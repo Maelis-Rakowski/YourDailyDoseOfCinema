@@ -55,9 +55,7 @@
                     echo '<img src="' . $imageUrl . '" alt="' . $movie['title'] . '">';
                     echo '<br><br>';
                 }
-            // Le foreach génère du code html qui va être récupéré par la fonction done(function(reponse_html)) du post ajax
-
-           
+            // Le foreach génère du code html qui va être récupéré par la fonction done(function(reponse_html)) du post ajax          
         }
     }
 ?>
