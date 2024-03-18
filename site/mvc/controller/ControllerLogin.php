@@ -62,9 +62,9 @@ class ControllerLogin {
         $pseudo = $_POST["pseudo"];
         $password = $_POST["password"];
 
-        UserModel::create($email,$pseudo,$password);
+        UserModel::create($email, $pseudo, $password);
 
-        $this->createSession($pseudo,$password);
+        $this->createSession($pseudo, $password, false);
         $this->connected();
     }
 
@@ -82,7 +82,7 @@ class ControllerLogin {
                 // Vérifier si le mot de passe correspond
                 if(password_verify($password, $user->getPassword())) {
                     // Mot de passe valide, connecter l'utilisateur
-                    $this->createSession($pseudo, $user->getPassword());
+                    $this->createSession($pseudo, $user->getPassword(), $user->getIsAdmin());
                     $this->connected();
                 } else {
                     // Mot de passe invalide, afficher la vue de connexion
@@ -105,10 +105,10 @@ class ControllerLogin {
         return false;
     }
 
-    public function createSession($pseudo,$password){
-        session_start();
-        $_SESSION['pseudo'] = $pseudo ;
-        $_SESSION['password'] = $password ;
+    public function createSession($pseudo, $password, $isAdmin){
+        $_SESSION['pseudo'] = $pseudo;
+        $_SESSION['password'] = $password;
+        $_SESSION['isAdmin'] = $isAdmin;
     }
 
     public function resetPassword(){

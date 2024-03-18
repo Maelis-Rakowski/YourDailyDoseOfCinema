@@ -10,15 +10,15 @@
         }
 
         public function readAll() {
-            $this->_view = new View(array('view', 'user', 'viewUserList.php'));
+            $this->_view = new View(array('view', 'admin', 'user', 'viewUserList.php'));
             //Generate the view without data
             $users = UserModel::selectAll("users", "UserModel");
             $this->_view->generate(array('users'=>$users));
         }
 
-        public function deleteUser() {
+        public function delete() {
             $userIdToDelete = $_POST["user_id"];
-            $this->_view = new View(array('view', 'user', 'viewUserList.php'));
+            $this->_view = new View(array('view', 'admin', 'user', 'viewUserList.php'));
             UserModel::deleteUserById($userIdToDelete);
             $users = UserModel::selectAll("users", "UserModel");
             $this->_view->generate(array('users'=>$users));
@@ -31,20 +31,20 @@
             $user_pseudo = $_POST["new_user_pseudo"];
             $user_isAdmin = isset($_POST['new_user_isAdmin']) ? 1 : 0;            
             
-            $this->_view = new View(array('view', 'user', 'viewUserList.php'));
+            $this->_view = new View(array('view', 'admin', 'user', 'viewUserList.php'));
             UserModel::updateUser($user_id, $user_password, $user_email, $user_pseudo, $user_isAdmin);
             $users = UserModel::selectAll("users", "UserModel");
             $this->_view->generate(array('users'=>$users));
         }        
 
-        public function openViewToModifyUser() {
+        public function edit() {
             $user_id = $_POST["user_id"];
             $user_password = $_POST["user_password"];
             $user_email = $_POST["user_email"];
             $user_pseudo = $_POST["user_pseudo"];
             $user_isAdmin = $_POST["user_isAdmin"];
 
-            $this->_view = new View(array('view', 'user', 'viewModifyUser.php'));
+            $this->_view = new View(array('view', 'admin', 'user', 'viewModifyUser.php'));
             $this->_view->generate(array(
                 'user_id'=>$user_id,
                 'user_password'=>$user_password,
