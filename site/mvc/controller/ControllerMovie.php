@@ -25,5 +25,19 @@
                 $this->_view->generate(array());
             }
         }
+
+        public function searchMoviesByTitle() {
+            $query = $_GET['query'];
+            $movies = MovieModel::searchByTitle($query);
+    
+            $results = [];
+            foreach ($movies as $movie) {
+                $results[] = [
+                    'id' => $movie->getId(),
+                    'label' => $movie->getTitle()
+                ];
+            } 
+            echo json_encode($results);
+        }
     }
 ?>

@@ -6,6 +6,10 @@
         <meta name="description" content="Your daily dose of cinema is the best website ever">
         <link rel="stylesheet" type="text/css" href="/assets/css/style.css ">
         <title><?= $t ?></title>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     </head>
     <body>
         <header>
@@ -31,6 +35,5 @@
             ©Copyright 2024 Your daily dose of Cinema
         </footer>
     </body>
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="/scripts/login.js"></script>
 </html>

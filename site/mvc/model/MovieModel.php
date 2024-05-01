@@ -24,6 +24,20 @@ class MovieModel extends Model {
             $this->setTagline($tagline);
         }
     }
+
+    public function toJson()
+    {
+        return json_encode([
+            'id' => $this->id,
+            'title' => $this->title,
+            'releaseDate' => $this->releaseDate,
+            'runtime' => $this->runtime,
+            'posterPath' => $this->posterPath,
+            'overview' => $this->overview,
+            'tagline' => $this->tagline
+        ]);
+    }
+    
 //GETTER AND SETTER
     public function getId() {
         return $this->id;
@@ -149,6 +163,8 @@ class MovieModel extends Model {
             "overview" => $overview,
             "tagline" => $overview
         );
+
+        $req->execute($values);
     }
 
     public static function getMovieById($id) {
@@ -172,5 +188,35 @@ class MovieModel extends Model {
         $this->setCountries($countries);
     }
     
+    public static function getRandomMovie() {
+        $sql = "SELECT * from movies order by rand() limit 1";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $req_prep->setFetchMode(PDO::FETCH_CLASS, "MovieModel");
+        $req_prep->execute();
+        $movies = $req_prep->fetchAll();
+        return $movies[0];
+    }
+
+    public static function searchByTitle($query) {
+        $query = "%" . $query . "%";
+        $sql = "SELECT * from movies where LOWER(title) like :query";
+        $values = array(
+            "query" => $query
+        );
+        $req_prep = Model::getPDO()->prepare($sql);
+        $req_prep->setFetchMode(PDO::FETCH_CLASS, "MovieModel");
+        $req_prep->execute($values);
+        $movies = $req_prep->fetchAll();
+        return $movies;
+    }
+
+    public static function getCurrentMovie() {
+        $sql = "SELECT m.* FROM movies m WHERE id = (select idMovie from dailyMovie dm where date = DATE( CURDATE() ))";
+        $req_prep = Model::getPDO()->prepare($sql);
+        $req_prep->setFetchMode(PDO::FETCH_CLASS, "MovieModel");
+        $req_prep->execute();
+        return $req_prep->fetchAll()[0];
+    }
+
 }
 ?>

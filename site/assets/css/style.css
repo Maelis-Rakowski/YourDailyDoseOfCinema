@@ -134,88 +134,85 @@ margin: 20px;
 =======================*/
 
 #home {
-width: 65%;
-margin: 0 auto;
-padding: 50px;
-text-align: center;
-height: 100%;
+  width: 65%;
+  margin: 0 auto;
+  padding: 50px;
+  text-align: center;
+  height: 100%;
 }
 
 #home h2 {
-color: #333;
-margin-bottom: 50px;
+  color: #333;
+  margin-bottom: 50px;
 }
 
 #home .content {
-min-height: 250px;
-width: 100%;
-display: inline-block;
-border-radius: 5px;
-padding: 25px;
-padding-bottom: 50px;
-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-position: relative; /* positionnement relatif pour le conteneur de l'input field et de la liste */
+  min-height: 250px;
+  width: 100%;
+  display: inline-block;
+  border-radius: 5px;
+  padding: 25px;
+  padding-bottom: 50px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  position: relative; /* positionnement relatif pour le conteneur de l'input field et de la liste */
 }
 
-#home form input[type="text"] {
-width: 100%;
-padding: 10px;
-font-size: 16px;
-border: 1px solid #ccc;
-border-radius: 5px;
-z-index: 2; /* indice z-index élevé pour que l'input field soit au-dessus de la liste */
+#home input[type="text"] {
+  width: 100%;
+  height: 20px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  z-index: 2; /* indice z-index élevé pour que l'input field soit au-dessus de la liste */
 }
 
 #home .guess {
-width: 70%;
-margin: 0 auto;
+  width: 70%;
+  margin: 0 auto;
 }
 
-#home form input[type="text"]:focus {
-outline: none;
-border-color: #939393;
-border-radius: 5px 5px 0 0;
+#home input[type="text"]:focus {
+  outline: none;
+  border-color: #939393;
+  border-radius: 5px 5px 0 0;
 }
 
 #home ul {
-width: 100%;
-background-color: #fff;
-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-z-index: 1; 
-list-style-type: none;
-margin: 0;
-
-/*TO REMOVE*/
-display: none;
+  width: 60%;
+  background-color: #fff;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1; 
+  list-style-type: none;
+  margin: 0;
 }
 
-/*TO REMOVE*/
-#home form input[type="text"]:focus + ul {
-display: block;
+#home #result {
+  margin: 30px;
 }
 
 #home ul li {
-padding: 10px 20px;
-font-size: 16px;
-color: #333;
-border-bottom: 1px solid #eee;
-text-align: left;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  text-align: left;
 }
 
 #home ul li:nth-child(even) { /* sélecteur pour cibler les éléments pairs de la liste */
-background-color: #f9f9f9; /* couleur de fond légèrement plus claire pour les éléments pairs */
-}
+  background-color: #f9f9f9; /* couleur de fond légèrement plus claire pour les éléments pairs */
+} 
 
 #home ul li:last-child {
-border-bottom: none;
+  border-bottom: none;
 }
 
 #home ul li:hover {
-background-color: #f3f3f3; /* couleur de fond légèrement plus claire pour l'élément survolé */
+  background-color: #f3f3f3; /* couleur de fond légèrement plus claire pour l'élément survolé */
 }
 
 #home ul li.displayNone {
-display: none;
+  display: none;
 }
 
 
@@ -225,32 +222,33 @@ display: none;
 
 
 .dataList {
-width: 80%;
-margin: 0 auto;
-padding: 50px;
+  width: 80%;
+  margin: 0 auto;
+  padding: 50px;
 }
 
 .dataList table {
-width: 100%;
-border-collapse: collapse;
-margin: 0 auto;
-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.dataList th, .dataList td {
-padding: 15px;
-text-align: left;
-border-bottom: 1px solid #ddd;
+.dataList th,
+.dataList td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 .dataList th {
-background-color: #f3f3f3;
-font-size: 18px;
-color: #333;
+  background-color: #f3f3f3;
+  font-size: 18px;
+  color: #333;
 }
 
 .dataList tr:hover {
-background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
 .dataList form {
@@ -258,17 +256,17 @@ display: inline-block;
 }
 
 .dataList input[type="submit"] {
-background-color: #333;
-color: #fff;
-padding: 5px 10px;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-margin-right: 10px;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
 }
 
 .dataList input[type="submit"]:hover {
-background-color: #555;
+  background-color: #555;
 }
 
 
@@ -279,86 +277,86 @@ background-color: #555;
 
 /* Conteneur commun pour les formulaires */
 .form-container {
-width: 80%;
-margin: 0 auto;
-padding: 50px;
-text-align: center;
+  width: 80%;
+  margin: 0 auto;
+  padding: 50px;
+  text-align: center;
 }
 
 /* Titres des formulaires */
 .form-container h1,
 .form-container h2 {
-font-size: 24px;
-color: #333;
-margin-bottom: 30px;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 30px;
 }
 
 /* Formulaires */
 .form-container form {
-width: 80%;
-border-radius: 5px;
-padding: 20px;
-padding-bottom: 0;
-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-display: inline-block;
-text-align: left;
+  width: 80%;
+  border-radius: 5px;
+  padding: 20px;
+  padding-bottom: 0;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  text-align: left;
 }
 
 /* Liste des champs des formulaires */
 .form-container form ul {
-list-style: none;
-padding: 0;
-margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 /* Champs des formulaires */
 .form-container form ul li {
-margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 /* Étiquettes des champs des formulaires */
 .form-container form ul li label {
-font-size: 18px;
-color: #333;
-display: block;
-margin-bottom: 5px;
+  font-size: 18px;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
 }
 
 /* Champs de texte, email et mot de passe des formulaires */
 .form-container form ul li input[type="text"],
 .form-container form ul li input[type="email"],
 .form-container form ul li input[type="password"] {
-width: 100%;
-padding: 10px;
-border: 1px solid #ccc;
-border-radius: 5px;
-font-size: 16px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 /* Boutons des formulaires */
 .form-container form ul li input[type="submit"] {
-background-color: #333;
-color: #fff;
-border: none;
-padding: 10px 20px;
-border-radius: 5px;
-cursor: pointer;
-font-size: 16px;
-display: block;
-margin: 0 auto;
-margin-top: 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 
 /* État au survol des boutons des formulaires */
 .form-container form ul li input[type="submit"]:hover {
-background-color: #555;
+  background-color: #555;
 }
 
 /* État désactivé des boutons des formulaires */
 .form-container form ul li input[type="submit"]:disabled {
-background-color: #ccc;
-color: #666;
-cursor: not-allowed;
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
 }
 
 .form-container form ul.my-list li:last-child {
@@ -367,19 +365,19 @@ cursor: not-allowed;
 
 /* Texte d'aide du formulaire de réinitialisation de mot de passe */
 .resetPassword #helpPassword {
-font-size: 14px;
-color: #666;
-margin-top: 10px;
-display: none;
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+  display: none;
 }
 
 /* Liens */
 .link {
-text-decoration: none;
-color: black;
-padding: 5px 10px;
-border: 2px solid black;
-border-radius: 5px;
-cursor: pointer;
-margin-right: 10px;
+  text-decoration: none;
+  color: black;
+  padding: 5px 10px;
+  border: 2px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
 }
