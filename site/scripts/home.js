@@ -42,11 +42,11 @@ $(document).ready(function() {
                 data: { guess: submissionId },
                 dataType: 'json',
                 success: function(data) {
-                    var messageDiv = $('#result'); // get the message div
-                    if (data) { // if the response is true
+                    var messageDiv = $('#result');
+                    if (data) {
                         messageDiv.html('Bravo mon ptit bozo !');
                         messageDiv.css('color', 'green');
-                    } else { // if the response is false
+                    } else {
                         messageDiv.html('Essais encore nullos !');
                         messageDiv.css('color', 'red');
                     }

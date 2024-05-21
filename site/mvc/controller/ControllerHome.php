@@ -25,7 +25,7 @@ class ControllerHome {
     }
 
     public function pickTodayMovie() {
-        if (count(MovieModel::getCurrentMovie()) == 0) {
+        if (!MovieModel::getCurrentMovie()) {
             $movie = MovieModel::getRandomMovie();
             DailyMovieModel::createDailyMovie(date('Y-m-d'), $movie->getId());
             echo json_encode("picked");

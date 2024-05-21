@@ -215,7 +215,11 @@ class MovieModel extends Model {
         $req_prep = Model::getPDO()->prepare($sql);
         $req_prep->setFetchMode(PDO::FETCH_CLASS, "MovieModel");
         $req_prep->execute();
-        return $req_prep->fetchAll()[0];
+        if (empty($req_prep)){
+            return false;
+        } else {            
+            return $req_prep->fetchAll()[0];
+        }
     }
 
 }
