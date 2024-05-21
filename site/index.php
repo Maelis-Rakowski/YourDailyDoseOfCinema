@@ -10,6 +10,7 @@
     if ($urlPaths[0] == "admin") {
         if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"]) {
             unset($urlPaths[0]);
+            $urlPaths[1] = "Admin" . ucfirst($urlPaths[1]);
             redirect($urlPaths, 1);
         } else {
             $controller = "error";

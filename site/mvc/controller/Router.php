@@ -3,10 +3,11 @@
 //Require all the controllers
 require_once File::build_path(array("controller","ControllerHome.php"));
 require_once File::build_path(array("controller", "ControllerError.php"));
-require_once File::build_path(array("controller", "ControllerUser.php"));
+require_once File::build_path(array("controller", "admin", "ControllerAdminUser.php"));
 require_once File::build_path(array("controller", "ControllerLogin.php"));
 require_once File::build_path(array("controller", "ControllerMovie.php"));
 require_once File::build_path(array("controller", "ControllerTmdb.php"));
+require_once File::build_path(array("controller", "admin", "ControllerAdminMovie.php"));
 
 class Router{
 
