@@ -11,7 +11,7 @@ function checkInput() {
         }
 }
 
-init();
+initialisation_Guesses_Liste();
 $(document).ready(function() {
     $.ajax({
         url:'home/pickTodayMovie',
@@ -82,7 +82,7 @@ $(document).ready(function() {
                         data[7][0],
                         data[8][0]
                     ]
-                    insert(
+                    insert_guess_in_guesses_liste(
                         data[9][1],
                         data[1][1],
                         data[5][1],
@@ -106,7 +106,7 @@ $(document).ready(function() {
 });
 
 
-function init() {
+function initialisation_Guesses_Liste() {
     const parent = $('#guesses');
   
     const guessesContainer = $('<div/>', { class: 'guesses_container' });
@@ -134,22 +134,7 @@ function init() {
     parent.append(guessesContainer);
 }
 
-                    //          +====+==============================+==============================+
-                    //          | #  |      0 -  Comparison         |      1 - Guess Value         |
-                    //          +====+==============================+==============================+
-                    //          | 0  | isTheMovieOfTheDay           |        $guess.id             |
-                    //          | 1  | isSame__title                |        $guess.title          |
-                    //          | 2  | isSame__director             |        $guess.director       |
-                    //          | 3  | isSame__country              |        $guess.country        |
-                    //          | 4  | isSame__genre                |        $guess.value          |
-                    //          | 5  | isSame__date                 |        $guess.date           |
-                    //          | 6  | isSame__time                 |        $guess.time           |
-                    //          | 7  | is_guess_older               |        $guess.date           |
-                    //          | 8  | is_guess_longer              |        $guess.time           |
-                    //          | 9  | has_a_poster                 |        $guess.poster         |
-                    //          +====+==============================+==============================+
-
-function insert(col1, col2, col3, col4, col5, col6, col7, colors) {
+function insert_guess_in_guesses_liste(col1, col2, col3, col4, col5, col6, col7, colors) {
     const container = $(".td_container");
     const row = $("<div></div>").attr("class", "td_row");
 
