@@ -1,5 +1,7 @@
 <?php
 require_once FILE::build_path(array('view', 'view.php'));
+require_once FILE::build_path(array('model', 'MovieModel.php'));
+require_once FILE::build_path(array('model', 'DailyMovieModel.php'));
 class ControllerHome {
 
     //variable of the view to generate
@@ -12,5 +14,26 @@ class ControllerHome {
         //Generate the view without data
         $this->_view->generate(array(null));
     }
+
+    public function submitGuess() {
+        // on récupère le guess
+        $guess = $_POST["guess"];
+        // on récupère le guess du jour
+        $movie = MovieModel::getCurrentMovie();
+        // retourner la comparaison des ids des films
+        echo json_encode($movie->getId() == $guess);
+    }
+
+    public function pickTodayMovie() {
+        if (!MovieModel::getCurrentMovie()) {
+            $movie = MovieModel::getRandomMovie();
+            DailyMovieModel::createDailyMovie(date('Y-m-d'), $movie->getId());
+            echo json_encode("picked");
+        }
+        else {
+            echo json_encode("already picked");
+        }
+    }
+
 }
 ?>
