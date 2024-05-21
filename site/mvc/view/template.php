@@ -22,9 +22,13 @@
                         echo '<a href="/admin/movie">Movies</a>';
                         echo '<a href="/admin/tmdb">TMDB</a>';
                     }
+                    if (!isset($_SESSION["pseudo"])) {
+                        echo '<a href="/login/signInView">Sign In</a>';
+                        echo '<a href="/login">Sign Up</a>';
+                    } else {
+                        echo '<a href="/login/disconnect">Disconnect</a>';
+                    }
                 ?>
-                <a href="/login/signInView">Sign In</a>
-                <a href="/login">Sign Up</a>
             </nav>
         </header>
 
