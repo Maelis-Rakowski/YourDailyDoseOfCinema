@@ -82,7 +82,7 @@ $(document).ready(function() {
                         data[7][0],
                         data[8][0]
                     ]
-                    
+
                     insertGuessInGuessesListe(
                         data[9][1],
                         data[1][1],
@@ -140,43 +140,43 @@ function insertGuessInGuessesListe(col1, col2, col3, col4, col5, col6, col7, col
     const row = $("<div></div>").attr("class", "td_row");
 
     // Title
-    row.append("<div class='td_column picture'>"    + col1 + "</div>");
+    row.append("<div class='td_column picture'>" + col1 + "</div>");
 
     if(colors[1])
-        row.append("<div class='td_column name green'>"       + col2 + "</div>");
+        row.append("<div class='td_column name green'>" + col2 + "</div>");
     else
-        row.append("<div class='td_column name red'>"       + col2 + "</div>");
+        row.append("<div class='td_column name red'>" + col2 + "</div>");
 
     // Date
     if(colors[5])
-        row.append("<div class='td_column date green'>"             + col3 + "</div>");
+        row.append("<div class='td_column date green'>" + col3 + "</div>");
     else if(colors[7])
-        row.append("<div class='td_column date bot_arrow'>"       + col3 + "</div>");
+        row.append("<div class='td_column date bot_arrow'>" + col3 + "</div>");
     else
-        row.append("<div class='td_column date top_arrow'>"       + col3 + "</div>");
+        row.append("<div class='td_column date top_arrow'>" + col3 + "</div>");
 
 
     // Time
     if(colors[6])
-        row.append("<div class='td_column time green'>"             + col4 + "</div>");
+        row.append("<div class='td_column time green'>" + col4 + "</div>");
     else if(colors[8])
-        row.append("<div class='td_column time top_arrow'>"       + col4 + "</div>");
+        row.append("<div class='td_column time bot_arrow'>" + col4 + "</div>");
     else
-        row.append("<div class='td_column time bot_arrow'>"       + col4 + "</div>");
+        row.append("<div class='td_column time top_arrow'>" + col4 + "</div>");
     
 
     // Genre
     if(colors[4])
-        row.append("<div class='td_column genre green'>"      + col5 + "</div>");
+        row.append("<div class='td_column genre green'>" + col5 + "</div>");
     else
-        row.append("<div class='td_column genre red'>"      + col5 + "</div>");
+        row.append("<div class='td_column genre red'>" + col5 + "</div>");
     
 
     // Pays
     if(colors[3])
-        row.append("<div class='td_column pays green'>"       + col6 + "</div>");
+        row.append("<div class='td_column pays green'>" + col6 + "</div>");
     else
-        row.append("<div class='td_column pays red'>"       + col6 + "</div>");
+        row.append("<div class='td_column pays red'>" + col6 + "</div>");
     
 
     // Director
