@@ -25,8 +25,8 @@ class ControllerHome {
         $current_date = $movie->getReleaseDate();
         $current_date = intval(substr($current_date, 0, 4));
         
-        $ed = $guess["date"];
-        $ed = intval(substr($ed, 0, 4));
+        $guessed_date = $guess["date"];
+        $guessed_date = intval(substr($guessed_date, 0, 4));
     
         //retourner la comparaison des films
         $isTheMovieOfTheDay = $movie->getId()           == $guess["id"];
@@ -35,11 +35,11 @@ class ControllerHome {
         $isSame__country    = $movie->getCountries()    == $guess["country"];
         $isSame__genre      = $movie->getGenres()       == $guess["genre"];        
         $isSame__time       = $movie->getRuntime()      == $guess["time"];
-        $isSame__date       = $current_date             == $ed;
+        $isSame__date       = $current_date             == $guessed_date;
         $has_a_poster       = true;        
 
-        $current_time1 = intval($movie->getRuntime());        
-        $guessed_time2 = intval($guess["time"]);
+        $current_time = intval($movie->getRuntime());        
+        $guessed_time = intval($guess["time"]);
 
         //au cas ou pb avec format des dates
         try {
@@ -49,13 +49,13 @@ class ControllerHome {
         }
 
         try {
-            $is_guess_longer = $current_time1 <= $guessed_time2;
+            $is_guess_longer = $current_time <= $guessed_time;
         } catch (Exception $e) {
             $is_guess_older = false;
         }
         
 
-        $guessed_time2String = convertTimeFormatHM($guessed_time2)
+        $guess2String = convertTimeFormatHM($guessed_time)
 
         $comparisonResults = [
             [ $isTheMovieOfTheDay,  $guess["id"]            ],
@@ -63,10 +63,10 @@ class ControllerHome {
             [ $isSame__director,    $guess["director"]      ],
             [ $isSame__country,     $guess["country"]       ],
             [ $isSame__genre,       $guess["genre"]         ],
-            [ $isSame__date,        $ed                     ],
-            [ $isSame__time,        $guessed_time2String    ],
-            [ $is_guess_older,      $ed                     ],
-            [ $is_guess_longer,     $guessed_time2String    ],
+            [ $isSame__date,        $guessed_date           ],
+            [ $isSame__time,        $guess2String           ],
+            [ $is_guess_older,      $guessed_date           ],
+            [ $is_guess_longer,     $guess2String           ],
             [ $has_a_poster,        $guess["image"]         ]
         ];
 
@@ -74,16 +74,16 @@ class ControllerHome {
     }
 
     public function convertTimeFormatHM($minute) {
-        $hours = floor($guessed_time2 / 60);
-        $remainingMinutes = $guessed_time2 % 60;
-        if ($guessed_time2 < 1) {
-            $guessed_time2String = "0min";
+        $hours = floor($guessed_time / 60);
+        $remainingMinutes = $guessed_time % 60;
+        if ($guessed_time < 1) {
+            $guess2String = "0min";
         } elseif ($hours >= 1) {
-            $guessed_time2String = $hours . "h " . $remainingMinutes . "min";
+            $guess2String = $hours . "h " . $remainingMinutes . "min";
         } else {
-            $guessed_time2String = $remainingMinutes . "min";
+            $guess2String = $remainingMinutes . "min";
         }
-        return $guessed_time2String;
+        return $guess2String;
     }
 
     public function pickTodayMovie() {

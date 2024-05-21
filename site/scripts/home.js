@@ -11,7 +11,7 @@ function checkInput() {
         }
 }
 
-initialisation_Guesses_Liste();
+initialisationGuessesListe();
 $(document).ready(function() {
     $.ajax({
         url:'home/pickTodayMovie',
@@ -82,7 +82,8 @@ $(document).ready(function() {
                         data[7][0],
                         data[8][0]
                     ]
-                    insert_guess_in_guesses_liste(
+                    
+                    insertGuessInGuessesListe(
                         data[9][1],
                         data[1][1],
                         data[5][1],
@@ -106,7 +107,7 @@ $(document).ready(function() {
 });
 
 
-function initialisation_Guesses_Liste() {
+function initialisationGuessesListe() {
     const parent = $('#guesses');
   
     const guessesContainer = $('<div/>', { class: 'guesses_container' });
@@ -134,7 +135,7 @@ function initialisation_Guesses_Liste() {
     parent.append(guessesContainer);
 }
 
-function insert_guess_in_guesses_liste(col1, col2, col3, col4, col5, col6, col7, colors) {
+function insertGuessInGuessesListe(col1, col2, col3, col4, col5, col6, col7, colors) {
     const container = $(".td_container");
     const row = $("<div></div>").attr("class", "td_row");
 
