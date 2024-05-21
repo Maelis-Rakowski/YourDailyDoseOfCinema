@@ -33,8 +33,14 @@
             $results = [];
             foreach ($movies as $movie) {
                 $results[] = [
-                    'id' => $movie->getId(),
-                    'label' => $movie->getTitle()
+                    'id'        => $movie->getId(),
+                    'image'     => $movie->getPosterPath(),
+                    'label'     => $movie->getTitle(),
+                    'date'      => $movie->getReleaseDate(),
+                    'time'      => $movie->getRuntime(),
+                    'director'  => $movie->getDirectors(),
+                    'country'   => $movie->getCountries(),
+                    'genre'     => $movie->getGenres()                    
                 ];
             } 
             echo json_encode($results);

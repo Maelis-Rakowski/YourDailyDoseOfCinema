@@ -11,7 +11,6 @@
     url("../font/film_premieres/Film\ Premieres.otf") format(opentype);
 }
 
-
 @font-face {
   font-family: 'movie';
   src: 
@@ -23,7 +22,6 @@ header a {
   text-decoration: none;
   font-family: sans-serif;
   padding-right: 20px;
-
 }
 
 header nav {
@@ -47,8 +45,7 @@ header h1 {
 }
 
 header {
-  padding-top: 50px;
-  padding-bottom: 10px;
+padding: 20px;
   text-align: center;
   background-color: black;
 }
@@ -179,17 +176,90 @@ margin: 20px;
 }
 
 #home ul {
-  width: 60%;
-  background-color: #fff;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1; 
-  list-style-type: none;
-  margin: 0;
+width: 100%;
+background-color: #fff;
+box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+z-index: 1; 
+list-style-type: none;
+margin: 0;
+display: none;
 }
 
-#home #result {
-  margin: 30px;
+#home form {
+  position: relative;
 }
+
+/*TO REMOVE*/
+#home form input[type="text"]:focus + ul {
+display: block;
+position: absolute;
+}
+
+.guesses_container {
+width: 80%;
+margin: 0 auto;
+padding-top: 50px;
+}
+
+.th_container, .td_row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.th_container{
+  margin-bottom: 15px;
+}
+
+.td_container {
+  display: block;
+}
+
+.th_column {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: solid 3px black;
+}
+
+.td_column, .th_column {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  width: 88px;
+  padding: 5px;
+  margin: 2.5px;
+}
+.td_column {
+  height:  88px;
+}
+
+.red {
+  background-color: red;
+  color: white;
+}
+
+.top_arrow {
+  background: linear-gradient(red, red), url('../images/arrow_top.png');
+  background-blend-mode: multiply;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+}
+
+.bot_arrow {
+  background: linear-gradient(red, red), url('../images/arrow_bot.png');
+  background-blend-mode: multiply;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+}
+
+.green {
+  background-color: #1dd42c;
+  color: white;
+}
+
+
+
 
 #home ul li {
   padding: 10px 20px;
@@ -199,9 +269,9 @@ margin: 20px;
   text-align: left;
 }
 
-#home ul li:nth-child(even) { /* sélecteur pour cibler les éléments pairs de la liste */
-  background-color: #f9f9f9; /* couleur de fond légèrement plus claire pour les éléments pairs */
-} 
+#home ul li:nth-child(even) {
+background-color: #f9f9f9;
+}
 
 #home ul li:last-child {
   border-bottom: none;
