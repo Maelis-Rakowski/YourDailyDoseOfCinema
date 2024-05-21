@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        
     </head>
     <body>
         <header>
@@ -42,4 +43,5 @@
     </body>
     <script src="/scripts/login.js"></script>
 
+    <script src="/scripts/guesses.js"></script>
 </html>
