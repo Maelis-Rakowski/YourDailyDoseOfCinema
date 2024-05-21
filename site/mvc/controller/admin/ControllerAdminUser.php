@@ -1,7 +1,7 @@
 <?php
     require_once FILE::build_path(array('view','view.php'));
     require_once FILE::build_path(array('model','UserModel.php'));
-    class ControllerUser {
+    class ControllerAdminUser {
 
         //variable of the view to generate
         private $_view;
