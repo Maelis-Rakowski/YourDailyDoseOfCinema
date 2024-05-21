@@ -152,18 +152,76 @@ class MovieModel extends Model {
         return $this->getMovieJoinedPropertyById("genres", "genre", "idGenre", $movieId);
     }
 
-    public function createMovie($title, $releaseDate, $runtime, $posterPath, $overview, $tagline, $countries, $directors, $genres) {
-        $sql = "INSERT INTO movies (title, realeseDate, runtime, posterPAth, overview, tagline) VALUES (:title, :realeseDate, :runtime, :posterPAth, :overview, :tagline)";
+    public static function createMovie($idtmdb,$title, $releaseDate, $runtime, $posterPath, $overview, $tagline) {
+        $sql = "INSERT INTO movies (idtmdb,title, releaseDate, runtime, posterPath, overview, tagline) VALUES (:idtmdb,:title, :releaseDate, :runtime, :posterPath, :overview, :tagline)";
         $req = Model::getPDO()->prepare($sql);
         $values = array(
+            "idtmdb" => $idtmdb,
             "title" => $title,
             "releaseDate" => $releaseDate,
             "runtime" => $runtime,
             "posterPath" => $posterPath,
             "overview" => $overview,
-            "tagline" => $overview
+            "tagline" => $tagline
         );
 
+        $req->execute($values);
+    }
+
+    public static function createDirector($idtmdb,$name){
+        $sql = "INSERT INTO directors (idtmdb,name) VALUES (:idtmdb,:name)";
+        $req = Model::getPDO()->prepare($sql);
+        $values = array(
+            "idtmdb" => $idtmdb,
+            "name" => $name,
+        );
+        $req->execute($values);
+    }
+    public static function createMovieDirector($idMovie,$idDirector){
+        $sql = "INSERT INTO movieDirectors (idMovie,idDirector) VALUES (:idMovie,:idDirector)";
+        $req = Model::getPDO()->prepare($sql);
+        $values = array(
+            "idMovie" => $idMovie,
+            "idDirector" => $idDirector,
+        );
+        $req->execute($values);
+    }
+
+    public static function createGenre($genre){
+        $sql = "INSERT INTO genres (genre) VALUES (:genre)";
+        $req = Model::getPDO()->prepare($sql);
+        $values = array(
+            "genre" => $genre,
+        );
+        $req->execute($values);
+    }
+
+    public static function createMovieGenre($idMovie,$idGenre){
+        $sql = "INSERT INTO movieGenres (idMovie,idGenre) VALUES (:idMovie,:idGenre)";
+        $req = Model::getPDO()->prepare($sql);
+        $values = array(
+            "idMovie" => $idMovie,
+            "idGenre" => $idGenre,
+        );
+        $req->execute($values);
+    }
+
+    public static function createCountry($name){
+        $sql = "INSERT INTO countries (name) VALUES (:name)";
+        $req = Model::getPDO()->prepare($sql);
+        $values = array(
+            "name" => $name,
+        );
+        $req->execute($values);
+    }
+
+    public static function createMovieCountry($idMovie,$idCountry){
+        $sql = "INSERT INTO movieCountries (idMovie,idCountry) VALUES (:idMovie,:idCountry)";
+        $req = Model::getPDO()->prepare($sql);
+        $values = array(
+            "idMovie" => $idMovie,
+            "idCountry" => $idCountry,
+        );
         $req->execute($values);
     }
 

@@ -39,5 +39,13 @@
             } 
             echo json_encode($results);
         }
+
+        // public function addMovieToDb($movie){
+        //     MovieModel::create(
+        //     $movie->getTitle(),$movie->getReleaeDate(),$movie->getRuntime(),$movie->getPosterPath(),
+        //     $movie->getOverview(),$movie->getTagline(),$movie->getCountries(),$movie->getDirectors(),
+        //     $movie->getGenres()
+        //     );
+        // }
     }
 ?>
