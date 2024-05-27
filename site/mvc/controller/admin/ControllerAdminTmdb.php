@@ -40,7 +40,6 @@
             // CAR çA PREND TROP DE TEMPS DE FAIRE LA REQUETE DETAILS SUR TOUS LES FILMS
             //!!!!!!!!!!!!!!!!!!!!!!!!!!
             $datamovies = json_decode($response, true);
-
             $this->_view = new View(array('view', 'admin', 'tmdb', 'viewList.php'));
             $this->_view->generate(array('datamovies'=>$datamovies),false);
         }
