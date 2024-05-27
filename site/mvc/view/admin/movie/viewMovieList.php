@@ -1,4 +1,4 @@
-<main class="dataList">
+<div class="dataList">
 <?php $this->_t="Movie List"?>
 
 <table>
@@ -25,4 +25,4 @@
         </tr>
     <?php endforeach;?>
 </table>
-</main>
+</div>

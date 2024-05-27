@@ -1,4 +1,4 @@
-<main class ="form-container">
+<div class ="form-container">
 <?php $this->_t="ResetPassword"?>
 <h1>Reset Password</h1>
 <form method="POST" action="/login/updatePassword">
@@ -34,4 +34,5 @@
         </ul>   
         
     </form>
-    </main>
+    </div>
+    <script src="/scripts/login.js"></script>

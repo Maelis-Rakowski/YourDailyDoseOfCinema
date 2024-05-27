@@ -1,5 +1,5 @@
 <?php $this->_t="ModifyUser"?>
-<main class="form-container">
+<div class="form-container">
 
     <h2>Modification du User id : <?=$user_id?></h2>
     <form action="/user/modifyUser" method="POST">
@@ -26,4 +26,4 @@
             </li>
         </ul>
     </form>
-</main>
+</div>

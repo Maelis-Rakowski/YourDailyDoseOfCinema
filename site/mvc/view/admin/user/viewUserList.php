@@ -1,5 +1,5 @@
 <?php $this->_t="UserList"?>
-<main class="dataList" >
+<div class="dataList" >
     <table>
         <tr>
             <th>Login</th>
@@ -35,4 +35,4 @@
             </tr>
         <?php endforeach;?>
     </table>
-</main>
+</div>
