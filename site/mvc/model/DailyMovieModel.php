@@ -5,7 +5,7 @@ class DailyMovieModel extends Model {
     private $movie;
 
     public static function createDailyMovie($date, $idMovie) {
-        $sql = "INSERT into dailyMovie (date, idMovie) values (:date, :idMovie)";
+        $sql = "INSERT into dailymovie (date, idMovie) values (:date, :idMovie)";
         $values = array(
             "date" => $date,
             "idMovie" => $idMovie

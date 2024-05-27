@@ -1,6 +1,8 @@
 <?php
     require 'mvc'.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'File.php';//File.php
 
+    $_ENV = parse_ini_file(File::build_path(array("conf", ".env")));
+
     session_start();
     $url = $_SERVER['REQUEST_URI'];
     $url = ltrim($url, '/');
