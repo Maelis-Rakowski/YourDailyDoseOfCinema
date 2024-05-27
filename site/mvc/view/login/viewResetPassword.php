@@ -1,5 +1,5 @@
 <main class ="form-container">
-
+<?php $this->_t="ResetPassword"?>
 <h1>Reset Password</h1>
 <form method="POST" action="/login/updatePassword">
         <ul>
@@ -14,7 +14,7 @@
             <li>
                 <label for="newPassword" >New Password</label>
                 <input required name="newPassword" class="passwordInput" type="password">
-                <br>
+                
                 <div id="helpPassword">
                     <p id = "pwd_eightCar"> Le mot de passe doit contenir au moins 8 caractères           </p>
                     <p id = "pwd_special">  Le mot de passe doit contenir au moins un caractère special   </p>

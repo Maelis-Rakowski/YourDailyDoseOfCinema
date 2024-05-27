@@ -1,3 +1,4 @@
+<?php $this->_t="UserList"?>
 <main class="dataList" >
     <table>
         <tr>

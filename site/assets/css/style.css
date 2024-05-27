@@ -67,6 +67,29 @@ a {
 }
 
 /*======================
+  Profile page
+=======================*/
+
+.profile {
+  width: 65%;
+  margin: 0 auto;
+  padding: 50px;
+  height: 100%;
+}
+
+.profile h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.profile p {
+  color: #333;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+/*======================
   404 page
 =======================*/
 
@@ -145,7 +168,7 @@ a {
   margin-bottom: 50px;
 }
 
-#home .content {
+.content {
   min-height: 250px;
   width: 100%;
   display: inline-block;
@@ -234,10 +257,7 @@ padding-top: 50px;
   height:  88px;
 }
 
-.red {
-  background-color: red;
-  color: white;
-}
+
 
 .top_arrow {
   background: linear-gradient(red, red), url('../images/arrow_top.png');
@@ -258,10 +278,20 @@ padding-top: 50px;
 .green {
   background-color: #1dd42c;
   color: white;
+  font-size: x-small;
 }
 
+.red {
+  background-color: red;
+  color: white;
+  font-size: x-small;
+}
 
-
+.orange {
+  background-color: #daa00e;
+  color: white;
+  font-size: x-small;
+}
 
 #home ul li {
   padding: 10px 20px;

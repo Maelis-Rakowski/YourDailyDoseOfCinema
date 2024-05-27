@@ -140,13 +140,13 @@ function initialisationGuessesListe() {
     const tdContainer = $('<div/>', { class: 'td_container' });
   
     const thColumns = [
-        'affiche',
-        'name',
-        'Année',
-        'Durée',
-        'Genre',
-        'Pays',
-        'Réalisateur'
+        'Poster',
+        'Title',
+        'Year',
+        'Duration',
+        'Genres',
+        'Countries',
+        'Directors'
     ];
   
     thColumns.forEach(column => {
@@ -197,26 +197,32 @@ function insertGuessInGuessesListe(col1, col2, col3, col4, col5, col6, col7, col
         row.append("<div class='td_column time top_arrow'>" + col4 + "</div>");
     
 
-    // Genre
-    if(colors[4])
+   // Genres
+    if (colors[4] === 1) {
         row.append("<div class='td_column genre green'>" + col5 + "</div>");
-    else
+    } else if (colors[4] === 0.5) {
+        row.append("<div class='td_column genre orange'>" + col5 + "</div>");
+    } else if (colors[4] === 0) {
         row.append("<div class='td_column genre red'>" + col5 + "</div>");
+    }
     
-
-    // Pays
-    if(colors[3])
+    // Counties
+    if (colors[3] === 1) {
         row.append("<div class='td_column pays green'>" + col6 + "</div>");
-    else
+    } else if (colors[3] === 0.5) {
+        row.append("<div class='td_column pays orange'>" + col6 + "</div>");
+    } else if (colors[3] === 0) {
         row.append("<div class='td_column pays red'>" + col6 + "</div>");
+    }
     
-
-    // Director
-    if(colors[2])
-        row.append("<div class='td_column real green'>"       + col7 + "</div>");
-    else
-        row.append("<div class='td_column real red'>"       + col7 + "</div>");
+    // Directors
+    if (colors[2] === 1) {
+        row.append("<div class='td_column pays green'>" + col7 + "</div>");
+    } else if (colors[2] === 0.5) {
+        row.append("<div class='td_column pays orange'>" + col7 + "</div>");
+    } else if (colors[2] === 0) {
+        row.append("<div class='td_column pays red'>" + col7 + "</div>");
+    }
     
-
     container.prepend(row);
 }

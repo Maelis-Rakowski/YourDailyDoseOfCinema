@@ -1,13 +1,17 @@
 <main class="dataList">
+<?php $this->_t="Movie List"?>
+
 <table>
     <tr>
         <th>Title</th>
         <th>Release Date</th>
         <th>Runtime</th>
         <th>Overview</th>
+        <th></th>
     </tr>
     
     <?php foreach ($movies as $movie): ?>
+        <tr>
             <td><?= htmlspecialchars($movie->getTitle()) ?></td>
             <td><?= htmlspecialchars($movie->getReleaseDate()) ?></td>
             <td><?= htmlspecialchars($movie->getRuntime()) ?></td>
@@ -18,5 +22,7 @@
                     <input type="submit" value="Détails">
                 </form>
             </td>
+        </tr>
     <?php endforeach;?>
+</table>
 </main>

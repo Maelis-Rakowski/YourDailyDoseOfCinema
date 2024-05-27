@@ -7,11 +7,11 @@ class Model {
 
 
     public static function init() {
-        $conf = new Conf();
-        $hostname = $conf -> getHostname();
-        $database_name = $conf -> getDatabase();
-        $login = $conf -> getLogin();
-        $password = $conf -> getPassword();
+        $conf = Conf::init();
+        $hostname = Conf::getHostname();
+        $database_name = Conf::getDatabase();
+        $login = Conf::getLogin();
+        $password = Conf::getPassword();
 
         self::$pdo = new PDO("mysql:host=$hostname;dbname=$database_name", $login, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         // On active le mode d'affichage des erreurs, et le lancement d'exception en cas d'erreur
