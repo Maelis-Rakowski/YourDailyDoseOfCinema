@@ -43,6 +43,4 @@
         </footer>
     </body>
     <script src="/scripts/login.js"></script>
-
-    <script src="/scripts/guesses.js"></script>
 </html>

@@ -1,0 +1,5 @@
+ALTER TABLE directors
+ADD COLUMN idtmdb integer UNIQUE NOT NULL;
+
+ALTER TABLE movies
+ADD COLUMN idtmdb integer UNIQUE NOT NULL;
