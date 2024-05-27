@@ -1,3 +1,4 @@
+<?php $this->_t="SignUp"?>
 <main class="form-container">
 <h2>Sign Up</h2>
     <form method="POST" action="/login/signUp">
@@ -15,7 +16,7 @@
             <li>
                 <label for="password">Password</label>
                 <input required class="passwordInput" name="password" type="password">
-                <br>
+                
                 <div id="helpPassword">
                     <p id = "pwd_eightCar"> Le mot de passe doit contenir au moins 8 caractères           </p>
                     <p id = "pwd_special">  Le mot de passe doit contenir au moins un caractère special   </p>
@@ -35,8 +36,6 @@
         </ul>   
         
     </form>
-    <br>
-    <br>
     <div>
         Already have an acccount ?       
         <a class="link" href="/login/signInView">Sign In</a>
