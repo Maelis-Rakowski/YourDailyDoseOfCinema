@@ -61,7 +61,7 @@ $(document).ready(function() {
 
                     // Verif : Est-ce que le guess est le film du jour ?
                     console.log("tableau converti en json : ", data);
-                    var messageDiv = initPosterDiv();
+                    var messageDiv = createMessageDiv();
 
                     if (data[0][0]) {
                         messageDiv.html('Félicitation !');
@@ -69,7 +69,7 @@ $(document).ready(function() {
 
                         var posterUrl = "https://image.tmdb.org/t/p/w500" + data[9][1];
                     
-                        var posterDiv = CreatePoster(posterUrl, messageDiv);
+                        var posterDiv = createPoster(posterUrl, messageDiv);
 
                     } else {
                         messageDiv.html('Try again!');
@@ -113,7 +113,7 @@ $(document).ready(function() {
 });
 
 
-function initPosterDiv() {
+function createMessageDiv() {
     var messageDiv = $('#result');
     messageDiv.css('display', 'flex');
     messageDiv.css('align-items', 'center');
@@ -122,7 +122,7 @@ function initPosterDiv() {
     return messageDiv;
 }
 
-function CreatePoster(url) {
+function createPoster(url) {
     var posterDiv = document.createElement("div");                    
     posterDiv.style.width = "250px";
     posterDiv.style.height = "350px";
