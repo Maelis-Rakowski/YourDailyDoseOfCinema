@@ -11,19 +11,17 @@ class View {
     }
 
     //GENERE ET AFFICHE LA VUE
-    public function generate($data) {
-
+    public function generate($data,$generateTemplate=true) {
 
         //PARTIE SPECIFIQUE DE LA VUE (sans header ni footer)
-        $content = $this->generateFile($this->_file, $data);
-
-
-        //TEMPLATE
-        $template = File::build_path(array('view', 'template.php'));
-        $view = $this->generateFile($template, array('t' => $this->_t, 'content' => $content));
+        $view = $this->generateFile($this->_file, $data);
+        if($generateTemplate){
+            //TEMPLATE
+            $template = File::build_path(array('view', 'template.php'));
+            $view = $this->generateFile($template, array('t' => $this->_t, 'content' => $view));
+        }
         echo $view;
        
-
     }
 
     //GENERE UN FICHIER VUE ET RENVOIE LE RESULTAT PRODUIT

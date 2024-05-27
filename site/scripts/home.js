@@ -138,6 +138,7 @@ function initialisationGuessesListe() {
 function insertGuessInGuessesListe(col1, col2, col3, col4, col5, col6, col7, colors) {
     const container = $(".td_container");
     const row = $("<div></div>").attr("class", "td_row");
+    col1 = "https://image.tmdb.org/t/p/w500"+col1;
 
 
     const titleDiv = $("<div></div>").attr("class", "td_column picture");
