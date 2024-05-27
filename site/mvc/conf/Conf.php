@@ -1,11 +1,15 @@
 <?php
   class Conf{
-    static private $databases= array(
-    'hostname' => 'localhost',
-    'database' => 'yddoc',
-    'login' => 'yddoc',
-    'password' => 'QfqWbB25e7K(kS?s'
-  );
+    static private $databases;
+
+    static public function init() {
+      self::$databases = array(
+          'hostname' => $_ENV["db_host"],
+          'database' => $_ENV["db_name"],
+          'login' => $_ENV["db_user"],
+          'password' => $_ENV["db_password"]
+      );
+  }
 
   private static $debug = true;
   static public function getDebug(){

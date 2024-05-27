@@ -142,7 +142,7 @@ class MovieModel extends Model {
      * @param string $field wanted field
      */
     private static function getMovieJoinedPropertyById($propertyTableName, $field, $joinField, $movieId) {
-        $joinTableName = "movie" . ucfirst($propertyTableName);
+        $joinTableName = "movie" . $propertyTableName;
         $sql = "SELECT t.$field FROM $propertyTableName t JOIN $joinTableName jt ON jt.$joinField = t.id WHERE jt.idMovie = :movieId";
         $req = Model::getPDO()->prepare($sql);
         $values = array(
@@ -190,7 +190,7 @@ class MovieModel extends Model {
         $req->execute($values);
     }
     public static function createMovieDirector($idMovie,$idDirector){
-        $sql = "INSERT INTO movieDirectors (idMovie,idDirector) VALUES (:idMovie,:idDirector)";
+        $sql = "INSERT INTO moviedirectors (idMovie,idDirector) VALUES (:idMovie,:idDirector)";
         $req = Model::getPDO()->prepare($sql);
         $values = array(
             "idMovie" => $idMovie,
@@ -209,7 +209,7 @@ class MovieModel extends Model {
     }
 
     public static function createMovieGenre($idMovie,$idGenre){
-        $sql = "INSERT INTO movieGenres (idMovie,idGenre) VALUES (:idMovie,:idGenre)";
+        $sql = "INSERT INTO moviegenres (idMovie,idGenre) VALUES (:idMovie,:idGenre)";
         $req = Model::getPDO()->prepare($sql);
         $values = array(
             "idMovie" => $idMovie,
@@ -228,7 +228,7 @@ class MovieModel extends Model {
     }
 
     public static function createMovieCountry($idMovie,$idCountry){
-        $sql = "INSERT INTO movieCountries (idMovie,idCountry) VALUES (:idMovie,:idCountry)";
+        $sql = "INSERT INTO moviecountries (idMovie,idCountry) VALUES (:idMovie,:idCountry)";
         $req = Model::getPDO()->prepare($sql);
         $values = array(
             "idMovie" => $idMovie,
@@ -281,7 +281,7 @@ class MovieModel extends Model {
     }
 
     public static function getCurrentMovie() {
-        $sql = "SELECT m.* FROM movies m WHERE id = (select idMovie from dailyMovie dm where date = DATE( CURDATE() ))";
+        $sql = "SELECT m.* FROM movies m WHERE id = (select idMovie from dailymovie dm where date = DATE( CURDATE() ))";
         $req_prep = Model::getPDO()->prepare($sql);
         $req_prep->setFetchMode(PDO::FETCH_CLASS, "MovieModel");
         $req_prep->execute();
