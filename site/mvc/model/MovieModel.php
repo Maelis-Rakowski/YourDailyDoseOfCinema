@@ -310,6 +310,8 @@ class MovieModel extends Model {
         }
     }
 
+    // Cette fonction générique permet les entités (pays,directeurs,genres) entre les tables correspondantes du film ajouté
+    // Il suffit de les appeler comme dans ControllerAdminTmdb->addMovie();
     public static function handleEntity($entities, $entityKey, $tableName, $searchColumn, $createEntityFunction, $createRelationFunction, $movieID) {
         foreach ($entities as $entity) {
             // Préparer la requête pour vérifier si l'entité existe déjà

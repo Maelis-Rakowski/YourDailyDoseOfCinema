@@ -53,8 +53,8 @@
             $credits=json_decode(file_get_contents('https://api.themoviedb.org/3/movie/' . $idmovie . '/credits?api_key=' . $this->apiKey), true);
             
             $return = MovieModel::addMovie($movie);
+            //Gestion d'erreur d'existance
             if($return==-1){
-                //SI LE FILM EST DEJA DANS LA DB ALORS INUTILE DE LE RECREER, ABORTAGE
                 $text = "LE FILM EXISTE DEJA DANS LA BDD ALORS ANNULATION DE L'INSERTION";
                 $this->_view = new View(array('view', 'admin', 'tmdb', 'viewResponse.php'));
                 $this->_view->generate(array('text'=>$text));
