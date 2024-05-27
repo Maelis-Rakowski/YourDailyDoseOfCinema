@@ -27,6 +27,7 @@
                         echo '<a href="/login/signInView">Sign In</a>';
                         echo '<a href="/login">Sign Up</a>';
                     } else {
+                        echo '<a href="/user/details">Profile</a>';
                         echo '<a href="/login/disconnect">Disconnect</a>';
                     }
                 ?>
@@ -38,7 +39,7 @@
         </main>
 
         <footer>
-            ©Copyright 2024 Your daily dose of Cinema
+            <p>©Copyright 2024 Your daily dose of Cinema</p>
         </footer>
     </body>
     <script src="/scripts/login.js"></script>
