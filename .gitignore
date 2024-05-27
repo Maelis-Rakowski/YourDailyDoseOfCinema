@@ -27,4 +27,4 @@ sketch.html
 node_modules/
 
 # Conf
-conf/
+.env
