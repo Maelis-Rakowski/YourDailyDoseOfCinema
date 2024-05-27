@@ -1,7 +1,5 @@
 <?php
 
-
-
 foreach ($datamovies['results'] as $movie) {
     // Construire l'URL de l'image à partir du chemin fourni
     $imageUrl = 'https://image.tmdb.org/t/p/w500' . $movie['poster_path'];
