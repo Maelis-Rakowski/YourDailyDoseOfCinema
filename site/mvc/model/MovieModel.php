@@ -13,8 +13,10 @@ class MovieModel extends Model {
     private $directors;
     private $genres;
 
-    public function __construct($id = NULL, $title = NULL, $releaseDate = NULL, $runtime = NULL, $posterPath = NULL, $overview = NULL, $tagline = NULL) {
-        if (!is_null($id) && !is_null($title) && !is_null($releaseDate) && !is_null($runtime) && !is_null($posterPath) && !is_null($overview) && !is_null($tagline)) {
+    private $idtmdb;
+
+    public function __construct($id = NULL, $title = NULL, $releaseDate = NULL, $runtime = NULL, $posterPath = NULL, $overview = NULL, $tagline = NULL, $idtmdb = NULL) {
+        if (!is_null($id) && !is_null($title) && !is_null($releaseDate) && !is_null($runtime) && !is_null($posterPath) && !is_null($overview) && !is_null($tagline)&& !is_null($idtmdb)) {
             $this->setId($id);
             $this->setTitle($title);
             $this->setReleaseDate($releaseDate);
@@ -22,6 +24,7 @@ class MovieModel extends Model {
             $this->setPosterPath($posterPath);
             $this->setOverview($overview);
             $this->setTagline($tagline);
+            $this->setIdtmdb($idtmdb);
         }
     }
 
@@ -122,6 +125,15 @@ class MovieModel extends Model {
         $this->genres = $genres;
         return $this;
     }
+
+    public function setIdtmdb($idtmdb){
+        $this->idtmdb = $idtmdb;
+        return $this;
+    }
+
+    public function getIdtmdb($idtmdb){
+        return $this->idtmdb;
+    }
     
 //Model methods
     /**
@@ -152,18 +164,76 @@ class MovieModel extends Model {
         return $this->getMovieJoinedPropertyById("genres", "genre", "idGenre", $movieId);
     }
 
-    public function createMovie($title, $releaseDate, $runtime, $posterPath, $overview, $tagline, $countries, $directors, $genres) {
-        $sql = "INSERT INTO movies (title, realeseDate, runtime, posterPAth, overview, tagline) VALUES (:title, :realeseDate, :runtime, :posterPAth, :overview, :tagline)";
+    public static function createMovie($idtmdb,$title, $releaseDate, $runtime, $posterPath, $overview, $tagline) {
+        $sql = "INSERT INTO movies (idtmdb,title, releaseDate, runtime, posterPath, overview, tagline) VALUES (:idtmdb,:title, :releaseDate, :runtime, :posterPath, :overview, :tagline)";
         $req = Model::getPDO()->prepare($sql);
         $values = array(
+            "idtmdb" => $idtmdb,
             "title" => $title,
             "releaseDate" => $releaseDate,
             "runtime" => $runtime,
             "posterPath" => $posterPath,
             "overview" => $overview,
-            "tagline" => $overview
+            "tagline" => $tagline
         );
 
+        $req->execute($values);
+    }
+
+    public static function createDirector($idtmdb,$name){
+        $sql = "INSERT INTO directors (idtmdb,name) VALUES (:idtmdb,:name)";
+        $req = Model::getPDO()->prepare($sql);
+        $values = array(
+            "idtmdb" => $idtmdb,
+            "name" => $name,
+        );
+        $req->execute($values);
+    }
+    public static function createMovieDirector($idMovie,$idDirector){
+        $sql = "INSERT INTO movieDirectors (idMovie,idDirector) VALUES (:idMovie,:idDirector)";
+        $req = Model::getPDO()->prepare($sql);
+        $values = array(
+            "idMovie" => $idMovie,
+            "idDirector" => $idDirector,
+        );
+        $req->execute($values);
+    }
+
+    public static function createGenre($genre){
+        $sql = "INSERT INTO genres (genre) VALUES (:genre)";
+        $req = Model::getPDO()->prepare($sql);
+        $values = array(
+            "genre" => $genre,
+        );
+        $req->execute($values);
+    }
+
+    public static function createMovieGenre($idMovie,$idGenre){
+        $sql = "INSERT INTO movieGenres (idMovie,idGenre) VALUES (:idMovie,:idGenre)";
+        $req = Model::getPDO()->prepare($sql);
+        $values = array(
+            "idMovie" => $idMovie,
+            "idGenre" => $idGenre,
+        );
+        $req->execute($values);
+    }
+
+    public static function createCountry($name){
+        $sql = "INSERT INTO countries (name) VALUES (:name)";
+        $req = Model::getPDO()->prepare($sql);
+        $values = array(
+            "name" => $name,
+        );
+        $req->execute($values);
+    }
+
+    public static function createMovieCountry($idMovie,$idCountry){
+        $sql = "INSERT INTO movieCountries (idMovie,idCountry) VALUES (:idMovie,:idCountry)";
+        $req = Model::getPDO()->prepare($sql);
+        $values = array(
+            "idMovie" => $idMovie,
+            "idCountry" => $idCountry,
+        );
         $req->execute($values);
     }
 
@@ -219,6 +289,49 @@ class MovieModel extends Model {
             return false;
         } else {            
             return $req_prep->fetchAll()[0];
+        }
+    }
+
+    public static function addMovie($movie){
+        $sql = "SELECT id FROM movies WHERE idtmdb = :idtmdb";
+        $req = Model::getPDO()->prepare($sql);
+        $req->bindValue(':idtmdb', $movie['id'], PDO::PARAM_INT);
+        $req->execute();
+        $movieRow = $req->fetch();
+       
+        if(!$movieRow){
+            MovieModel::createMovie($movie['id'],$movie['title'],$movie['release_date'],$movie['runtime'],
+            $movie['poster_path'],$movie['overview'],$movie['tagline']);
+            return 1;
+        }
+        else{
+           
+            return -1;
+        }
+    }
+
+    // Cette fonction générique permet les entités (pays,directeurs,genres) entre les tables correspondantes du film ajouté
+    // Il suffit de les appeler comme dans ControllerAdminTmdb->addMovie();
+    public static function handleEntity($entities, $entityKey, $tableName, $searchColumn, $createEntityFunction, $createRelationFunction, $movieID) {
+        foreach ($entities as $entity) {
+            // Préparer la requête pour vérifier si l'entité existe déjà
+            $sql = "SELECT id FROM $tableName WHERE $searchColumn = :value";
+            $req = Model::getPDO()->prepare($sql);
+            $req->bindValue(':value', $entity[$entityKey], PDO::PARAM_STR);
+            $req->execute();
+            $entityRow = $req->fetch();
+    
+            // Si l'entité n'existe pas encore, l'insérer dans la base de données et récupérer son ID
+            if (!$entityRow) {
+                call_user_func($createEntityFunction, $entity);
+                $entityID = Model::getPDO()->lastInsertId();
+            } else {
+                // Si l'entité existe déjà, récupérer son ID à partir de la base de données
+                $entityID = $entityRow['id'];
+            }
+    
+            // Ajouter l'entité au film
+            call_user_func($createRelationFunction, $movieID, $entityID);
         }
     }
 

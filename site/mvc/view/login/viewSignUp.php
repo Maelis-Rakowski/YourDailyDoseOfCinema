@@ -4,7 +4,8 @@
         <ul>
             <li>
                 <label for="pseudo">Pseudo</label>
-                <input required name="pseudo" type="text">
+                <input required id="pseudo-sign-up"class ="pseudo"name="pseudo" type="text">
+                <div id="pseudoToolTip">Ce pseudo à déjà été prit.</div>
             </li>
             <li>
                 <label for="email">E-mail</label>

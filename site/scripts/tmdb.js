@@ -14,6 +14,5 @@ document.addEventListener('DOMContentLoaded',function(){
                     //Le paramètre reponse_html est le echo (entre autre le return) de la méthode callTMDBJson
                     $('#datas').html(reponse_html);//Remplit la balise id "datas" de la vue avec la réponse html du controller
                 })
-
     });
 });

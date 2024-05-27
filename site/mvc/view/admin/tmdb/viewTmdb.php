@@ -19,5 +19,7 @@
 </div>
 
 <div id='datas'>
-<!-- Ce div est remplit par la requete de l'utilisateur avec ajax -->
+<!-- Ce div est remplit par la requete de l'utilisateur avec ajax 
+dans ControllerAdminTmdb->callTMDBJson()
+-->
 </div>
