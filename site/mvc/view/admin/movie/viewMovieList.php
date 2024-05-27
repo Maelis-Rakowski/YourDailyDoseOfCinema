@@ -8,7 +8,7 @@
     </tr>
     
     <?php foreach ($movies as $movie): ?>
-            <td><?= htmlspecialchars($movie->getTitle()) ?></td>
+            <tr><td><?= htmlspecialchars($movie->getTitle()) ?></td>
             <td><?= htmlspecialchars($movie->getReleaseDate()) ?></td>
             <td><?= htmlspecialchars($movie->getRuntime()) ?></td>
             <td><?= htmlspecialchars($movie->getOverview()) ?></td>
@@ -17,6 +17,7 @@
                     <input type="hidden" name="id" value="<?= $movie->getId() ?>">
                     <input type="submit" value="Détails">
                 </form>
-            </td>
+            </td></tr>
     <?php endforeach;?>
+</table>
 </main>

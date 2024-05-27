@@ -82,7 +82,7 @@
             echo json_encode($comparisonResults);
         }
 
-        public function convertTimeFormatHM($minute) {
+        public function convertTimeFormatHM($guessed_time) {
             $hours = floor($guessed_time / 60);
             $remainingMinutes = $guessed_time % 60;
             if ($guessed_time < 1) {

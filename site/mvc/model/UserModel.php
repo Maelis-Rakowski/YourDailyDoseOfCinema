@@ -120,8 +120,8 @@ class UserModel extends Model {
         return $rep->fetchAll();
     }
 
-       //TEMP
-       public static function getUserByEmail($email){
+    //TEMP
+    public static function getUserByEmail($email){
         $sql = "SELECT * FROM users
         WHERE email = :email";
         $rep = Model::getPDO() -> prepare($sql);
@@ -134,7 +134,12 @@ class UserModel extends Model {
         $rep->execute($values);
         return $rep->fetchAll();
     }
-    
+
+    public static function getUserHistoric($id) {
+        $sql = "SELECT * FROM playerhistory ";
+    }
+
+//GETTER AND SETTER    
     //id
     public function setId($id){
         $this->id = $id;
