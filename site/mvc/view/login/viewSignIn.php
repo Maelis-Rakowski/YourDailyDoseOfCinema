@@ -17,12 +17,11 @@
                 ?>
             </li>
             <li>
-                <input id="" type="submit" value="Sign In">
+                <input type="submit" value="Sign In">
             </li>
         </ul>
     </form>
 
-    <br><br>
     <h2>Forgot Password ?</h2>
     <form method="POST" action="sendEmail" target="_blank">
         <ul>
