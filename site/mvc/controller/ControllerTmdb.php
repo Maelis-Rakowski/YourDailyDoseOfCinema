@@ -44,33 +44,32 @@
             // CAR çA PREND TROP DE TEMPS DE FAIRE LA REQUETE DETAILS SUR TOUS LES FILMS
             //!!!!!!!!!!!!!!!!!!!!!!!!!!
             $datamovies = json_decode($response, true);
-            foreach ($datamovies['results'] as $movie) {
-                    //$movie = json_decode(file_get_contents('https://api.themoviedb.org/3/movie/' . $movie['id'] . '?api_key=' . $apiKey), true);
 
-                    // Construire l'URL de l'image à partir du chemin fourni
-                    $imageUrl = 'https://image.tmdb.org/t/p/w500' . $movie['poster_path'];
-        
-                    echo 'Titre : ' . $movie['title'] . '<br>';
-                    echo 'Date de sortie : ' . $movie['release_date'] . '<br>';
-                   // echo 'Runtime :'. $movie['runtime']. '<br>';
-                    echo 'Overview :'. $movie['overview']. '<br>';
-                    //echo 'Tagline :'. $movie['tagline']. '<br>';
-                    foreach($movie['genre_ids'] as $genre){
-                        echo '---GenreId :'. $genre.'<br>';
-                       
-                    }
-                   
-                    echo 'Note : ' . $movie['vote_average'] . '<br>';
-                    echo 'Nombre de vote : ' . $movie['vote_count'] . '<br>';
-                    echo '<img src="' . $imageUrl . '" alt="' . $movie['title'] . '">';
-                    echo '<form action="/tmdb/addMovie" method="POST">
-                      
-                        <input type="hidden" name="idmovie" type="text" value="'.$movie['id'].'">
-                        <input type="submit" value="Ajouter ce film">
-                        </form>';
-                    echo '<br><br>';
+            foreach ($datamovies['results'] as $movie) {
+                // Construire l'URL de l'image à partir du chemin fourni
+                $imageUrl = 'https://image.tmdb.org/t/p/w500' . $movie['poster_path'];
+            
+                echo 'Titre : ' . htmlspecialchars($movie['title']) . '<br>';
+                echo 'Date de sortie : ' . htmlspecialchars($movie['release_date']) . '<br>';
+                echo 'Overview : ' . htmlspecialchars($movie['overview']) . '<br>';
+            
+                // Afficher les genres du film
+                foreach ($movie['genre_ids'] as $genre) {
+                    echo '---GenreId : ' . htmlspecialchars($genre) . '<br>';
                 }
-            // Le foreach génère du code html qui va être récupéré par la fonction done(function(reponse_html)) du post ajax          
+            
+                echo 'Note : ' . htmlspecialchars($movie['vote_average']) . '<br>';
+                echo 'Nombre de votes : ' . htmlspecialchars($movie['vote_count']) . '<br>';
+                echo '<img src="' . htmlspecialchars($imageUrl) . '" alt="' . htmlspecialchars($movie['title']) . '"><br>';
+            
+                // Formulaire pour ajouter le film
+                echo '<form action="/tmdb/addMovie" method="POST">
+                        <input type="hidden" name="idmovie" value="' . htmlspecialchars($movie['id']) . '">
+                        <input type="submit" value="Ajouter ce film">
+                      </form><br><br>';
+            }
+            
+            // Le foreach génère du code HTML qui va être récupéré par la fonction done(function(response_html)) du post AJAX
         }
 
         public function addMovie(){
@@ -81,15 +80,6 @@
             $countries=$movie['production_countries'];
 
             $credits=json_decode(file_get_contents('https://api.themoviedb.org/3/movie/' . $idmovie . '/credits?api_key=' . $apiKey), true);
-            
-            
-
-            var_dump($movie['title']);
-            var_dump($movie['release_date']);
-            var_dump($movie['runtime']);
-            var_dump($movie['poster_path']);
-            var_dump($movie['overview']);
-            var_dump($movie['tagline']);
             
             $sql = "SELECT id FROM movies WHERE idtmdb = :idtmdb";
             $req = Model::getPDO()->prepare($sql);
@@ -103,75 +93,89 @@
             }
             else{
                 //SI LE FILM EST DEJA DANS LA DB ALORS INUTILE DE LE RECREER, ABORTAGE
-                echo("LE FILM EXISTE DEJA DANS LA BDD ALORS ANNULATION DE L'INSERTION");
+                $text = "LE FILM EXISTE DEJA DANS LA BDD ALORS ANNULATION DE L'INSERTION";
+                $this->_view = new View(array('view', 'admin', 'tmdb', 'viewResponse.php'));
+                $this->_view->generate(array('text'=>$text));
                 return;
             }
 
             $movieID = Model::getPDO()->lastInsertId();
-           //ADDING INFO TO OTHER TABLES
-            foreach($credits['crew'] as $crew){
-                if($crew['job']=="Director"){
-                    // Vérifier si le réalisateur existe déjà dans la base de données
-                    $sql = "SELECT id FROM directors WHERE idtmdb = :idtmdb";
+            
+            function handleEntity($entities, $entityKey, $tableName, $searchColumn, $createEntityFunction, $createRelationFunction, $movieID) {
+                foreach ($entities as $entity) {
+                    // Préparer la requête pour vérifier si l'entité existe déjà
+                    $sql = "SELECT id FROM $tableName WHERE $searchColumn = :value";
                     $req = Model::getPDO()->prepare($sql);
-                    $req->bindValue(':idtmdb', $crew['id'], PDO::PARAM_INT);
+                    $req->bindValue(':value', $entity[$entityKey], PDO::PARAM_STR);
                     $req->execute();
-                    $director = $req->fetch();
-
-                    // Si le réalisateur n'existe pas encore, l'insérer dans la base de données et récupérer son ID
-                    if (!$director) {
-                        MovieModel::createDirector($crew['id'],$crew['name']);
-                        $directorID = Model::getPDO()->lastInsertId();
+                    $entityRow = $req->fetch();
+            
+                    // Si l'entité n'existe pas encore, l'insérer dans la base de données et récupérer son ID
+                    if (!$entityRow) {
+                        call_user_func($createEntityFunction, $entity);
+                        $entityID = Model::getPDO()->lastInsertId();
                     } else {
-                        // Si le réalisateur existe déjà, récupérer son ID à partir de la base de données
-                        $directorID = $director['id'];
+                        // Si l'entité existe déjà, récupérer son ID à partir de la base de données
+                        $entityID = $entityRow['id'];
                     }
+            
+                    // Ajouter l'entité au film
+                    call_user_func($createRelationFunction, $movieID, $entityID);
+                }
+            }
+            
+            // Utilisation de la fonction générique pour les réalisateurs
+            handleEntity(
+                array_filter($credits['crew'], function($crew) {
+                    return $crew['job'] === "Director";
+                }),
+                'id',
+                'directors',
+                'idtmdb',
+                function($crew) {
+                    MovieModel::createDirector($crew['id'], $crew['name']);
+                },
+                function($movieID, $directorID) {
                     MovieModel::createMovieDirector($movieID, $directorID);
-                }
-            }
-            foreach($movie['production_countries'] as $country){
-               // Vérifier si le pays existe déjà dans la base de données
-                $sql = "SELECT id FROM countries WHERE name = :name";
-                $req = Model::getPDO()->prepare($sql);
-                $req->bindValue(':name', $country['name'], PDO::PARAM_STR);
-                $req->execute();
-                $countryRow = $req->fetch();
-
-                // Si le pays n'existe pas encore, l'insérer dans la base de données et récupérer son ID
-                if (!$countryRow) {
+                },
+                $movieID
+            );
+            
+            // Utilisation de la fonction générique pour les pays
+            handleEntity(
+                $movie['production_countries'],
+                'name',
+                'countries',
+                'name',
+                function($country) {
                     MovieModel::createCountry($country['name']);
-                    $countryID = Model::getPDO()->lastInsertId();
-                } else {
-                    // Si le pays existe déjà, récupérer son ID à partir de la base de données
-                    $countryID = $countryRow['id'];
-                }
-
-                // Ajouter le pays au film
-                MovieModel::createMovieCountry($movieID, $countryID);
-            }
-            foreach($movie['genres'] as $genre){
-                 // Vérifier si le genre existe déjà dans la base de données
-                $sql = "SELECT id FROM genres WHERE genre = :genre";
-                $req = Model::getPDO()->prepare($sql);
-                $req->bindValue(':genre', $genre['name'], PDO::PARAM_STR);
-                $req->execute();
-                $genreRow = $req->fetch();
-
-                // Si le genre n'existe pas encore, l'insérer dans la base de données et récupérer son ID
-                if (!$genreRow) {
+                },
+                function($movieID, $countryID) {
+                    MovieModel::createMovieCountry($movieID, $countryID);
+                },
+                $movieID
+            );
+            
+            // Utilisation de la fonction générique pour les genres
+            handleEntity(
+                $movie['genres'],
+                'name',
+                'genres',
+                'genre',
+                function($genre) {
                     MovieModel::createGenre($genre['name']);
-                    $genreID = Model::getPDO()->lastInsertId();
-                } else {
-                    // Si le genre existe déjà, récupérer son ID à partir de la base de données
-                    $genreID = $genreRow['id'];
-                }
+                },
+                function($movieID, $genreID) {
+                    MovieModel::createMovieGenre($movieID, $genreID);
+                },
+                $movieID
+            );
 
-                // Ajouter le genre au film
-                MovieModel::createMovieGenre($movieID, $genreID);
-            }
-
-           
+            $text = "Le film ". $movie['title'] ." a été ajouté avec succès ^^";
+            $this->_view = new View(array('view', 'admin', 'tmdb', 'viewResponse.php'));
+            $this->_view->generate(array('text'=>$text));
           
+
         }
     }
 ?>

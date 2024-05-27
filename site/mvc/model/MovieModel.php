@@ -13,8 +13,10 @@ class MovieModel extends Model {
     private $directors;
     private $genres;
 
-    public function __construct($id = NULL, $title = NULL, $releaseDate = NULL, $runtime = NULL, $posterPath = NULL, $overview = NULL, $tagline = NULL) {
-        if (!is_null($id) && !is_null($title) && !is_null($releaseDate) && !is_null($runtime) && !is_null($posterPath) && !is_null($overview) && !is_null($tagline)) {
+    private $idtmdb;
+
+    public function __construct($id = NULL, $title = NULL, $releaseDate = NULL, $runtime = NULL, $posterPath = NULL, $overview = NULL, $tagline = NULL, $idtmdb = NULL) {
+        if (!is_null($id) && !is_null($title) && !is_null($releaseDate) && !is_null($runtime) && !is_null($posterPath) && !is_null($overview) && !is_null($tagline)&& !is_null($idtmdb)) {
             $this->setId($id);
             $this->setTitle($title);
             $this->setReleaseDate($releaseDate);
@@ -22,6 +24,7 @@ class MovieModel extends Model {
             $this->setPosterPath($posterPath);
             $this->setOverview($overview);
             $this->setTagline($tagline);
+            $this->setIdtmdb($idtmdb);
         }
     }
 
@@ -121,6 +124,15 @@ class MovieModel extends Model {
     public function setGenres($genres) {
         $this->genres = $genres;
         return $this;
+    }
+
+    public function setIdtmdb($idtmdb){
+        $this->idtmdb = $idtmdb;
+        return $this;
+    }
+
+    public function getIdtmdb($idtmdb){
+        return $this->idtmdb;
     }
     
 //Model methods
