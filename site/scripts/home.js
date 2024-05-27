@@ -33,7 +33,7 @@ $(document).ready(function() {
                 }
             });
         },
-        minLength: 2,
+        minLength: 1,
         select: function(event, ui) {
             var submissionId = ui.item; // get the selected movie name
             $.ajax({
@@ -68,10 +68,10 @@ $(document).ready(function() {
                     messageDiv.css('flex-direction', 'column');
 
                     if (data[0][0]) {
-                        messageDiv.html('Bravo mon ptit bozo !');
+                        messageDiv.html('Félicitation !');
                         messageDiv.css('color', 'green');
 
-                        var posterUrl = data[9][1];
+                        var posterUrl = "https://image.tmdb.org/t/p/w500" + data[9][1];
                     
                         var posterDiv = document.createElement("div");                    
                         posterDiv.style.width = "250px";
@@ -81,7 +81,7 @@ $(document).ready(function() {
                         posterDiv.style.paddingTop = "25px";
 
                     } else {
-                        messageDiv.html('Essais encore nullos !');
+                        messageDiv.html('Try again!');
                     }
                     messageDiv.append(posterDiv);
 
