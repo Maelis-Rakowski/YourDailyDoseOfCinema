@@ -1,6 +1,5 @@
 <?php
-
-foreach ($datamovies['results'] as $movie) {
+ foreach ($datamovies['results'] as $movie) {
     // Construire l'URL de l'image à partir du chemin fourni
     $imageUrl = 'https://image.tmdb.org/t/p/w500' . $movie['poster_path'];
 
@@ -23,7 +22,4 @@ foreach ($datamovies['results'] as $movie) {
             <input type="submit" value="Ajouter ce film">
           </form><br><br>';
 }
-
-// Le foreach génère du code HTML qui va être récupéré par la fonction done(function(response_html)) du post AJAX
-
 ?>

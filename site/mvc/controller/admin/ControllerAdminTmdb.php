@@ -3,7 +3,7 @@
     class ControllerAdminTmdb {
         //variable of the view to generate
         private $_view;
-    
+        private $apiKey = '0168e4ae77bb634f0e51abb40d08f608';
         public function __construct() {        
         }
 
@@ -15,10 +15,8 @@
         }
 
         public function callTMDB(){
-           
-            $apiKey = '0168e4ae77bb634f0e51abb40d08f608';
-            //$url = 'https://api.themoviedb.org/3/movie/details?api_key='.$apiKey.'&language=en-EN';
-            $url = 'https://api.themoviedb.org/3/movie/details?api_key='.$apiKey.'&language=en-EN';
+            
+            $url = 'https://api.themoviedb.org/3/movie/details?api_key='.$this->apiKey.'&language=en-EN';
 
             // Faire la requête à l'API
             $response = file_get_contents($url);
@@ -31,11 +29,9 @@
         public function callTMDBJson(){
            
             //Generate the view without data
-            $apiKey = '0168e4ae77bb634f0e51abb40d08f608';
             $query = $_POST['movieInput'];
             $query = str_replace(' ', '%20', $query);
-            $url = 'https://api.themoviedb.org/3/search/movie?api_key='.$apiKey.'&query='.$query.'&include_adult=false&language=en-US';
-
+            $url = 'https://api.themoviedb.org/3/search/movie?api_key='.$this->apiKey.'&query='.$query.'&include_adult=false&language=en-US';
 
             // Faire la requête à l'API
             $response = file_get_contents($url);
@@ -46,29 +42,19 @@
             $datamovies = json_decode($response, true);
 
             $this->_view = new View(array('view', 'admin', 'tmdb', 'viewList.php'));
-            $this->_view->generate(array('datamovies'=>$datamovies));       
+            $this->_view->generate(array('datamovies'=>$datamovies),false);
         }
 
         public function addMovie(){
             $idmovie=$_POST['idmovie'];
-            $apiKey = '0168e4ae77bb634f0e51abb40d08f608';
-            $movie = json_decode(file_get_contents('https://api.themoviedb.org/3/movie/' . $idmovie . '?api_key=' . $apiKey), true);
+            $movie = json_decode(file_get_contents('https://api.themoviedb.org/3/movie/' . $idmovie . '?api_key=' . $this->apiKey), true);
             
             $countries=$movie['production_countries'];
 
-            $credits=json_decode(file_get_contents('https://api.themoviedb.org/3/movie/' . $idmovie . '/credits?api_key=' . $apiKey), true);
+            $credits=json_decode(file_get_contents('https://api.themoviedb.org/3/movie/' . $idmovie . '/credits?api_key=' . $this->apiKey), true);
             
-            $sql = "SELECT id FROM movies WHERE idtmdb = :idtmdb";
-            $req = Model::getPDO()->prepare($sql);
-            $req->bindValue(':idtmdb', $movie['id'], PDO::PARAM_INT);
-            $req->execute();
-            $movieRow = $req->fetch();
-           
-            if(!$movieRow){
-                MovieModel::createMovie($movie['id'],$movie['title'],$movie['release_date'],$movie['runtime'],
-                $movie['poster_path'],$movie['overview'],$movie['tagline']);
-            }
-            else{
+            $return = MovieModel::addMovie($movie);
+            if($return==-1){
                 //SI LE FILM EST DEJA DANS LA DB ALORS INUTILE DE LE RECREER, ABORTAGE
                 $text = "LE FILM EXISTE DEJA DANS LA BDD ALORS ANNULATION DE L'INSERTION";
                 $this->_view = new View(array('view', 'admin', 'tmdb', 'viewResponse.php'));
@@ -78,31 +64,8 @@
 
             $movieID = Model::getPDO()->lastInsertId();
             
-            function handleEntity($entities, $entityKey, $tableName, $searchColumn, $createEntityFunction, $createRelationFunction, $movieID) {
-                foreach ($entities as $entity) {
-                    // Préparer la requête pour vérifier si l'entité existe déjà
-                    $sql = "SELECT id FROM $tableName WHERE $searchColumn = :value";
-                    $req = Model::getPDO()->prepare($sql);
-                    $req->bindValue(':value', $entity[$entityKey], PDO::PARAM_STR);
-                    $req->execute();
-                    $entityRow = $req->fetch();
-            
-                    // Si l'entité n'existe pas encore, l'insérer dans la base de données et récupérer son ID
-                    if (!$entityRow) {
-                        call_user_func($createEntityFunction, $entity);
-                        $entityID = Model::getPDO()->lastInsertId();
-                    } else {
-                        // Si l'entité existe déjà, récupérer son ID à partir de la base de données
-                        $entityID = $entityRow['id'];
-                    }
-            
-                    // Ajouter l'entité au film
-                    call_user_func($createRelationFunction, $movieID, $entityID);
-                }
-            }
-            
             // Utilisation de la fonction générique pour les réalisateurs
-            handleEntity(
+            MovieModel::handleEntity(
                 array_filter($credits['crew'], function($crew) {
                     return $crew['job'] === "Director";
                 }),
@@ -119,7 +82,7 @@
             );
             
             // Utilisation de la fonction générique pour les pays
-            handleEntity(
+            MovieModel::handleEntity(
                 $movie['production_countries'],
                 'name',
                 'countries',
@@ -134,7 +97,7 @@
             );
             
             // Utilisation de la fonction générique pour les genres
-            handleEntity(
+            MovieModel::handleEntity(
                 $movie['genres'],
                 'name',
                 'genres',

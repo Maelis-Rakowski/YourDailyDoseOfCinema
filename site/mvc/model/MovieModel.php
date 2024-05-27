@@ -292,5 +292,46 @@ class MovieModel extends Model {
         }
     }
 
+    public static function addMovie($movie){
+        $sql = "SELECT id FROM movies WHERE idtmdb = :idtmdb";
+        $req = Model::getPDO()->prepare($sql);
+        $req->bindValue(':idtmdb', $movie['id'], PDO::PARAM_INT);
+        $req->execute();
+        $movieRow = $req->fetch();
+       
+        if(!$movieRow){
+            MovieModel::createMovie($movie['id'],$movie['title'],$movie['release_date'],$movie['runtime'],
+            $movie['poster_path'],$movie['overview'],$movie['tagline']);
+            return 1;
+        }
+        else{
+           
+            return -1;
+        }
+    }
+
+    public static function handleEntity($entities, $entityKey, $tableName, $searchColumn, $createEntityFunction, $createRelationFunction, $movieID) {
+        foreach ($entities as $entity) {
+            // Préparer la requête pour vérifier si l'entité existe déjà
+            $sql = "SELECT id FROM $tableName WHERE $searchColumn = :value";
+            $req = Model::getPDO()->prepare($sql);
+            $req->bindValue(':value', $entity[$entityKey], PDO::PARAM_STR);
+            $req->execute();
+            $entityRow = $req->fetch();
+    
+            // Si l'entité n'existe pas encore, l'insérer dans la base de données et récupérer son ID
+            if (!$entityRow) {
+                call_user_func($createEntityFunction, $entity);
+                $entityID = Model::getPDO()->lastInsertId();
+            } else {
+                // Si l'entité existe déjà, récupérer son ID à partir de la base de données
+                $entityID = $entityRow['id'];
+            }
+    
+            // Ajouter l'entité au film
+            call_user_func($createRelationFunction, $movieID, $entityID);
+        }
+    }
+
 }
 ?>
