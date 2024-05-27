@@ -9,12 +9,17 @@
             <li>
                 <label for="password">Password</label>
                 <input name="password" type="password">
+
+                <?php 
+                    if($error == "errorConnexion") {
+                        echo("<div class='error' id='loginTooltip'>Erreur dans la saisie de votre identifiant ou de votre mot de passe</div>");
+                    }                   
+                ?>
             </li>
             <li>
-                <input type="submit" value="Sign In">
+                <input id="" type="submit" value="Sign In">
             </li>
-        </ul>   
-        
+        </ul>
     </form>
 
     <br><br>
