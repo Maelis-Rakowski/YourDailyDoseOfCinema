@@ -2,6 +2,7 @@ let all = $('#helpPassword');
 all.hide();
 $('#emailToolTip').hide();
 $('#pwdMatchTooltip').hide();
+$('#pseudoToolTip').hide();
 
 // On value changed de : input du password
 $('.passwordInput').on('input', checkPassword);
@@ -60,3 +61,39 @@ function checkIfPasswordMatch() {
     tooltip.css('color', 'red');
     $('.passwordInput').val() != $('.confirmPassword').val() ? tooltip.show() : tooltip.hide();
 }
+
+
+$(document).ready(function () {
+    $('.pseudo').autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: 'login/doesUserExists',
+                type: 'POST',
+                dataType: 'json',
+                data: { 
+                    query: request.term,
+                    pseudo: getInputFieldPseudo()
+                },
+                success: function(data) {
+                    if(data) {
+                        // Le nom d'utilisateur est disponible
+                        $('#pseudoToolTip').hide();
+                        $('#submitBtn').prop('disabled', false);
+                    }
+                    else {
+                        // Le nom d'utilisateur est déjà pris
+                        $('#pseudoToolTip').show().css('color', 'red');
+                        $('#submitBtn').prop('disabled', true);
+                    }
+                }
+            });
+        },
+        minLength: 2,
+    })
+})
+
+function getInputFieldPseudo(){
+    var input = document.getElementById('pseudo-sign-up');
+    return input.value;
+}
+

@@ -70,6 +70,15 @@ class ControllerLogin {
         }
     }
 
+    //Verifie que le user n'existe pas deja
+    public function doesUserExists() {
+        $pseudo = $_POST['pseudo'];
+        $users = UserModel::getUserByPseudo($pseudo);
+        $response = empty($users);
+        echo json_encode($response);
+    }
+    
+
     //Try connect
     public function signIn(){
         if(isset($_POST["pseudo"]) && isset($_POST["password"])) {
