@@ -135,10 +135,6 @@ class UserModel extends Model {
         return $rep->fetchAll();
     }
 
-    public static function getUserHistoric($id) {
-        $sql = "SELECT * FROM playerhistory ";
-    }
-
 //GETTER AND SETTER    
     //id
     public function setId($id){
