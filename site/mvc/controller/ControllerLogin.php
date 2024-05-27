@@ -71,9 +71,9 @@ class ControllerLogin {
     }
 
     //Verifie que le user n'existe pas deja
-    public function isUserInDB() {
-        $param1 = $_POST['param1'];
-        $users = UserModel::getUserByPseudo($param1);
+    public function doesUserExists() {
+        $pseudo = $_POST['pseudo'];
+        $users = UserModel::getUserByPseudo($pseudo);
         $response = empty($users);
         echo json_encode($response);
     }

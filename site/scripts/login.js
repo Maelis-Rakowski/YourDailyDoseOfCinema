@@ -67,12 +67,12 @@ $(document).ready(function () {
     $('.pseudo').autocomplete({
         source: function(request, response) {
             $.ajax({
-                url: 'login/isUserInDB',
+                url: 'login/doesUserExists',
                 type: 'POST',
                 dataType: 'json',
                 data: { 
                     query: request.term,
-                    param1: getInputFieldPseudo()
+                    pseudo: getInputFieldPseudo()
                 },
                 success: function(data) {
                     if(data) {
