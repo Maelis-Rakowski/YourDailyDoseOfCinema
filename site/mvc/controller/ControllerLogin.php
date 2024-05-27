@@ -41,7 +41,7 @@ class ControllerLogin {
     }
 
     public function connected(){
-        $this->_view = new View(array('view','login','viewConnected.php'));
+        $this->_view = new View(array('view', 'home', 'viewHome.php'));
         //Generate the view without data
         $this->_view->generate(array(null));
     }

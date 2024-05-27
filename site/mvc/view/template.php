@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        
     </head>
     <body>
         <header>
@@ -22,9 +23,13 @@
                         echo '<a href="/admin/movie">Movies</a>';
                         echo '<a href="/admin/tmdb">TMDB</a>';
                     }
+                    if (!isset($_SESSION["pseudo"])) {
+                        echo '<a href="/login/signInView">Sign In</a>';
+                        echo '<a href="/login">Sign Up</a>';
+                    } else {
+                        echo '<a href="/login/disconnect">Disconnect</a>';
+                    }
                 ?>
-                <a href="/login/signInView">Sign In</a>
-                <a href="/login">Sign Up</a>
             </nav>
         </header>
 
@@ -38,4 +43,5 @@
     </body>
     <script src="/scripts/login.js"></script>
 
+    <script src="/scripts/guesses.js"></script>
 </html>
