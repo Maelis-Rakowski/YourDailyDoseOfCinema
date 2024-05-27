@@ -115,13 +115,13 @@ function initialisationGuessesListe() {
     const tdContainer = $('<div/>', { class: 'td_container' });
   
     const thColumns = [
-        'Affiche',
-        'Nom',
-        'Année',
-        'Durée',
-        'Genre',
-        'Pays',
-        'Réalisateur'
+        'Poster',
+        'Title',
+        'Year',
+        'Duration',
+        'Genres',
+        'Countries',
+        'Directors'
     ];
   
     thColumns.forEach(column => {
