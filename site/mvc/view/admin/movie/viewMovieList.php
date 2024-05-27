@@ -1,4 +1,6 @@
 <main class="dataList">
+<?php $this->_t="Movie List"?>
+
 <table>
     <tr>
         <th>Title</th>
