@@ -62,13 +62,28 @@ $(document).ready(function() {
                     // Verif : Est-ce que le guess est le film du jour ?
                     console.log("tableau converti en json : ", data);
                     var messageDiv = $('#result');
+                    messageDiv.css('display', 'flex');
+                    messageDiv.css('align-items', 'center');
+                    messageDiv.css('justify-content', 'center');
+                    messageDiv.css('flex-direction', 'column');
+
                     if (data[0][0]) {
                         messageDiv.html('Bravo mon ptit bozo !');
                         messageDiv.css('color', 'green');
+
+                        var posterUrl = data[9][1];
+                    
+                        var posterDiv = document.createElement("div");                    
+                        posterDiv.style.width = "250px";
+                        posterDiv.style.height = "350px";
+                        posterDiv.style.backgroundImage = "url(" + posterUrl + ")";
+                        posterDiv.style.backgroundRepeat = "no-repeat";
+                        posterDiv.style.paddingTop = "25px";
+
                     } else {
                         messageDiv.html('Essais encore nullos !');
-                        messageDiv.css('color', 'red');
                     }
+                    messageDiv.append(posterDiv);
 
                     // Affichage des résultats
                     let colors = [ 
