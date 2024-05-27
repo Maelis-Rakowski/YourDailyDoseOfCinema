@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,5 +42,4 @@
             <p>©Copyright 2024 Your daily dose of Cinema</p>
         </footer>
     </body>
-    <script src="/scripts/login.js"></script>
 </html>

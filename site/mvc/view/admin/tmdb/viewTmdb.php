@@ -1,14 +1,13 @@
 <div>
-    <title>TMDB Request</title>
+   
 
     <!-- Chargement du script -->
     <script src="../../scripts/tmdb.js"></script>
-<?php $this->_t="TMDB"?>
-
+    <?php $this->_t="TMDB Request"?>
     <div id="tmdb">
         <h2>Guess the movie of the day !</h2>
         <!-- Forumulaire post -->
-        <form action="" method="post">
+        <form method="post">
             <input id="movieInput" type="text" name="movie_title">
             <button type="button" id="envoyer">Rechercher</button>
         </form>
