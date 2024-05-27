@@ -25,3 +25,6 @@ sketch.html
 
 #jquery
 node_modules/
+
+# Conf
+conf/
