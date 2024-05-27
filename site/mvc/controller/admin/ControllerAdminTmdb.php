@@ -1,6 +1,6 @@
 <?php
     require_once FILE::build_path(array('view','view.php'));
-    class ControllerTmdb {
+    class ControllerAdminTmdb {
         //variable of the view to generate
         private $_view;
        
@@ -64,7 +64,7 @@
                 echo '<img src="' . htmlspecialchars($imageUrl) . '" alt="' . htmlspecialchars($movie['title']) . '"><br>';
             
                 // Formulaire pour ajouter le film
-                echo '<form action="/tmdb/addMovie" method="POST">
+                echo '<form action="/admin/tmdb/addMovie" method="POST">
                         <input type="hidden" name="idmovie" value="' . htmlspecialchars($movie['id']) . '">
                         <input type="submit" value="Ajouter ce film">
                       </form><br><br>';
