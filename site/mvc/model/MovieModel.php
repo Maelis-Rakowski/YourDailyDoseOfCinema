@@ -141,7 +141,7 @@ class MovieModel extends Model {
      * @param string $propertyTableName property table name (must be plurial) 
      * @param string $field wanted field
      */
-    private function getMovieJoinedPropertyById($propertyTableName, $field, $joinField, $movieId) {
+    private static function getMovieJoinedPropertyById($propertyTableName, $field, $joinField, $movieId) {
         $joinTableName = "movie" . ucfirst($propertyTableName);
         $sql = "SELECT t.$field FROM $propertyTableName t JOIN $joinTableName jt ON jt.$joinField = t.id WHERE jt.idMovie = :movieId";
         $req = Model::getPDO()->prepare($sql);
@@ -152,16 +152,16 @@ class MovieModel extends Model {
         return $req->fetchAll(PDO::FETCH_COLUMN);
     }
     
-    public function getMovieDirectorsByMovieId($movieId) {
-        return $this->getMovieJoinedPropertyById("directors", "name", "idDirector", $movieId);
+    public static function getMovieDirectorsByMovieId($movieId) {
+        return MovieModel::getMovieJoinedPropertyById("directors", "name", "idDirector", $movieId);
     }
 
-    public function getMovieCountriesByMovieId($movieId) {
-        return $this->getMovieJoinedPropertyById("countries", "name", "idCountry", $movieId);
+    public static function getMovieCountriesByMovieId($movieId) {
+        return MovieModel::getMovieJoinedPropertyById("countries", "name", "idCountry", $movieId);
     }
 
-    public function getMovieGenresByMovieId($movieId) {
-        return $this->getMovieJoinedPropertyById("genres", "genre", "idGenre", $movieId);
+    public static function getMovieGenresByMovieId($movieId) {
+        return MovieModel::getMovieJoinedPropertyById("genres", "genre", "idGenre", $movieId);
     }
 
     public static function createMovie($idtmdb,$title, $releaseDate, $runtime, $posterPath, $overview, $tagline) {
@@ -288,7 +288,14 @@ class MovieModel extends Model {
         if (empty($req_prep)){
             return false;
         } else {            
-            return $req_prep->fetchAll()[0];
+            $movie = $req_prep->fetchAll()[0];
+            //complète les champs
+            $movie->setDirectors(MovieModel::getMovieDirectorsByMovieId($movie->getId()));
+            $movie->setGenres(MovieModel::getMovieGenresByMovieId($movie->getId()));
+            $movie->setCountries(MovieModel::getMovieCountriesByMovieId($movie->getId()));
+
+
+            return $movie;
         }
     }
 
@@ -333,6 +340,28 @@ class MovieModel extends Model {
             // Ajouter l'entité au film
             call_user_func($createRelationFunction, $movieID, $entityID);
         }
+    }
+
+    //Compare 2 listes d'élements, 1 si identique, 0.5 di au moins 1 en commun, 0 si différent exclusif
+    public static function compareLists($list1, $list2) {
+        // Convertir les listes en tableaux
+        $array1 = is_array($list1) ? $list1 : array($list1);
+        $array2 = is_array($list2) ? $list2 : array($list2);
+    
+        // Si les listes sont identiques
+        if ($array1 == $array2) {
+            return 1;
+        }
+    
+        // Vérifier s'il y a au moins un élément en commun
+        foreach ($array1 as $item1) {
+            if (in_array($item1, $array2)) {
+                return 0.5;
+            }
+        }
+    
+        // Aucun élément en commun
+        return 0;
     }
 
 }
