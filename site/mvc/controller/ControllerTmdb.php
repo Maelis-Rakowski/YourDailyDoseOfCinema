@@ -34,6 +34,7 @@
             //Generate the view without data
             $apiKey = '0168e4ae77bb634f0e51abb40d08f608';
             $query = $_POST['movieInput'];
+            $query = str_replace(' ', '%20', $query);
             $url = 'https://api.themoviedb.org/3/search/movie?api_key='.$apiKey.'&query='.$query.'&include_adult=false&language=en-US';
 
 
