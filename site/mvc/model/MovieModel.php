@@ -293,8 +293,6 @@ class MovieModel extends Model {
             $movie->setDirectors(MovieModel::getMovieDirectorsByMovieId($movie->getId()));
             $movie->setGenres(MovieModel::getMovieGenresByMovieId($movie->getId()));
             $movie->setCountries(MovieModel::getMovieCountriesByMovieId($movie->getId()));
-
-
             return $movie;
         }
     }

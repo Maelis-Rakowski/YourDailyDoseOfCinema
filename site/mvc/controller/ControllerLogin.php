@@ -28,16 +28,16 @@ class ControllerLogin {
         $this->_view->generate(array(null));
     }
 
-    //View for SignIn (connect)
-    public function signInView(){
+    
+    public function signInView($error = "") {      //si aucun parametre array(null) assigné par default
         //If the user is already connected, it shows the view connected, else signInView
         if($this->checkSessionAlreadyExists()==true){
             $this->connected();
             exit;
         }
-        $this->_view = new View(array('view','login','viewSignIn.php'));
+        $this->_view = new View(array('view', 'login', 'viewSignIn.php'));
         //Generate the view without data
-        $this->_view->generate(array(null));
+        $this->_view->generate(array('error'=>$error));
     }
 
     public function connected(){
@@ -77,7 +77,6 @@ class ControllerLogin {
         $response = empty($users);
         echo json_encode($response);
     }
-    
 
     //Try connect
     public function signIn(){
@@ -97,15 +96,15 @@ class ControllerLogin {
                     $this->connected();
                 } else {
                     // Mot de passe invalide, afficher la vue de connexion
-                    $this->signInView();
+                    $this->signInView("errorConnexion");
                 }
             } else {
                 // Utilisateur inexistant, afficher la vue de connexion
-                $this->signInView();
+                $this->signInView("errorConnexion");
             }
         } else {
             // Les champs pseudo et mot de passe n'ont pas été envoyés, afficher la vue de connexion
-            $this->signInView();
+            $this->signInView("errorConnexion");
         }
     }
 

@@ -1,5 +1,5 @@
 <div>
-<?php $this->_t="Home"?>
+<?php $this->_t="YDDOC"?>
     <div id="home">
         <div class="content">
            
