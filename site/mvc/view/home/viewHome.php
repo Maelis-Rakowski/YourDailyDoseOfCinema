@@ -3,7 +3,6 @@
     <div id="home">
         <div class="content">
            
-        
             <h2>Guess the movie of the day !</h2>
             
             <div id="tagline" hidden>
