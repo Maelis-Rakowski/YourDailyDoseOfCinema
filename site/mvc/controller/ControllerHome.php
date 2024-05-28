@@ -11,8 +11,12 @@
 
         public function readAll() {
             $this->_view = new View(array('view', 'home', 'viewHome.php'));
+            
             //Generate the view without data
-            $this->_view->generate(array(null));
+            $currentMovie= MovieModel::getCurrentMovie();
+            $tagline = $currentMovie->getTagline();
+            $overview = $currentMovie->getOverview();
+            $this->_view->generate(array("tagline" => $tagline, "overview" => $overview));
         }
 
         public function submitGuess() {
@@ -99,6 +103,25 @@
                 $guessedDateToString = $remainingMinutes . "min";
             }
             return $guessedDateToString;
+        }
+
+        //Set Nb Tries on a sessionVariable
+        public function setNbTries(){
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nbTries'])) {
+                $_SESSION['nbTries'] = (int)$_POST['nbTries'];
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Paramètre nbTries manquant']);
+            }
+        }
+
+        //Get the Nb Tries on the sessionVariable
+        public function getNbTries(){
+            if (isset($_SESSION['nbTries'])) {
+                echo json_encode(['status' => 'success', 'nbTries' => $_SESSION['nbTries']]);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'nbTries non défini']);
+            }
         }
 
         public function pickTodayMovie() {

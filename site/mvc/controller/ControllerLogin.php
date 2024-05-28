@@ -119,6 +119,7 @@ class ControllerLogin {
         $_SESSION['pseudo'] = $pseudo;
         $_SESSION['password'] = $password;
         $_SESSION['isAdmin'] = $isAdmin;
+        $_SESSION['nbTries']=0;
     }
 
     public function resetPassword(){

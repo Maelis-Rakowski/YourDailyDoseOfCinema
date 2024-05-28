@@ -19,6 +19,10 @@ $(document).ready(function() {
         dataType: 'json',
         success : function(data) {
             console.log(data);
+            //Affiche le nombre d'essais de la session
+            getNbTries(function(nbTries) {
+                setNbTriesText(nbTries);
+            });
         }
     });
     $('#movieSearch').autocomplete({
@@ -61,8 +65,9 @@ $(document).ready(function() {
 
                     // Verif : Est-ce que le guess est le film du jour ?
                     console.log("tableau converti en json : ", data);
+                    
                     var messageDiv = createMessageDiv();
-
+                   
                     if (data[0][0]) {
                         messageDiv.html('Félicitation !');
                         messageDiv.css('color', 'green');
@@ -138,6 +143,7 @@ function initialisationGuessesListe() {
     const guessesContainer = $('<div/>', { class: 'guesses_container' });
     const thContainer = $('<div/>', { class: 'th_container' });
     const tdContainer = $('<div/>', { class: 'td_container' });
+    
   
     const thColumns = [
         'Poster',
@@ -160,12 +166,81 @@ function initialisationGuessesListe() {
     parent.append(guessesContainer);
 }
 
+
+// Fonction pour récupérer nbTries depuis le serveur
+function getNbTries(callback) {
+    $.ajax({
+        url: '/home/getNbTries',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            console.log('Réponse du serveur :', response);
+            if (response.status === 'success') {
+                var nbTries = response.nbTries;
+                console.log('La valeur de nbTries a été récupérée:', nbTries);
+                callback(nbTries);
+            } else {
+                console.error('Erreur lors de la récupération de nbTries:', response.message);
+                callback(null);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Erreur lors de la requête AJAX :', xhr.responseText);
+            callback(null);
+        }
+    });
+}
+
+// Fonction pour mettre à jour nbTries sur le serveur
+function setNbTries(nbTries, callback) {
+    $.ajax({
+        url: '/home/setNbTries',
+        type: 'POST',
+        data: { nbTries: nbTries },
+        success: function(response) {
+            console.log('La variable de session nbTries a été mise à jour.');
+            callback(true);
+        },
+        error: function(xhr, status, error) {
+            console.error('Erreur lors de la mise à jour de la variable de session:', error);
+            callback(false);
+        }
+    });
+}
+
+function setNbTriesText(nbTries){
+    document.getElementById("nbTries").textContent = nbTries;
+    console.log(nbTries);
+}
+
+// Fonction principale addTry
+function addTry() {
+    getNbTries(function(nbTries) {
+        if (nbTries !== null) {
+            nbTries++;
+           
+            setNbTriesText(nbTries);
+            setNbTries(nbTries, function(success) {
+                if (success) {
+                    if (nbTries == 5) {
+                        document.getElementById("tagline").removeAttribute("hidden");
+                    }
+                    if (nbTries == 10) {
+                        document.getElementById("overview").removeAttribute("hidden");
+                    }
+                }
+            });
+        }
+    });
+}
+
+
 function insertGuessInGuessesListe(col1, col2, col3, col4, col5, col6, col7, colors) {
     const container = $(".td_container");
     const row = $("<div></div>").attr("class", "td_row");
     col1 = "https://image.tmdb.org/t/p/w500"+col1;
 
-
+    addTry();
     const titleDiv = $("<div></div>").attr("class", "td_column picture");
     titleDiv.css({
         'background-image': `url(${col1})`,
