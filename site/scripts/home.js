@@ -22,6 +22,7 @@ $(document).ready(function() {
             //Affiche le nombre d'essais de la session
             getNbTries(function(nbTries) {
                 setNbTriesText(nbTries);
+                tryShowHints(nbTries);
             });
         }
     });
@@ -222,16 +223,20 @@ function addTry() {
             setNbTriesText(nbTries);
             setNbTries(nbTries, function(success) {
                 if (success) {
-                    if (nbTries == 5) {
-                        document.getElementById("tagline").removeAttribute("hidden");
-                    }
-                    if (nbTries == 10) {
-                        document.getElementById("overview").removeAttribute("hidden");
-                    }
+                    tryShowHints(nbTries);
                 }
             });
         }
     });
+}
+
+function tryShowHints(nbTries){
+    if (nbTries >= 5) {
+        document.getElementById("tagline").removeAttribute("hidden");
+    }
+    if (nbTries >= 10) {
+        document.getElementById("overview").removeAttribute("hidden");
+    }
 }
 
 
