@@ -20,11 +20,12 @@ function checkPassword() {
         var special = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
         all.show();
-        input.length > 8 ? $('#pwd_eightCar').css('color', 'green') : $('#pwd_eightCar').css('color', 'red');
-        special.test(input) ? $('#pwd_special').css('color', 'green') : $('#pwd_special').css('color', 'red');
-        /[A-Z]/.test(input) ? $('#pwd_maj').css('color', 'green') : $('#pwd_maj').css('color', 'red');
-        /[a-z]/.test(input) ? $('#pwd_min').css('color', 'green') : $('#pwd_min').css('color', 'red');
-        /[0-9]/.test(input) ? $('#pwd_number').css('color', 'green') : $('#pwd_number').css('color', 'red');
+        input.length > 8    ? $('#pwd_eightCar').removeClass('text-danger').addClass('text-success') : $('#pwd_eightCar').removeClass('text-success').addClass('text-danger');
+        special.test(input) ? $('#pwd_special').removeClass('text-danger').addClass('text-success') : $('#pwd_special').removeClass('text-success').addClass('text-danger');
+        /[A-Z]/.test(input) ? $('#pwd_maj').removeClass('text-danger').addClass('text-success') : $('#pwd_maj').removeClass('text-success').addClass('text-danger');
+        /[a-z]/.test(input) ? $('#pwd_min').removeClass('text-danger').addClass('text-success') : $('#pwd_min').removeClass('text-success').addClass('text-danger');
+        /[0-9]/.test(input) ? $('#pwd_number').removeClass('text-danger').addClass('text-success') : $('#pwd_number').removeClass('text-success').addClass('text-danger');
+
     }
 
     // si tout est rouge, on empeche le user de submit
