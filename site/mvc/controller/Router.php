@@ -7,6 +7,7 @@ require_once File::build_path(array("controller", "admin", "ControllerAdminUser.
 require_once File::build_path(array("controller", "ControllerLogin.php"));
 require_once File::build_path(array("controller", "ControllerMovie.php"));
 require_once File::build_path(array("controller", "ControllerUser.php"));
+require_once File::build_path(array("controller", "ControllerUserHistory.php"));
 require_once File::build_path(array("controller", "admin", "ControllerAdminTmdb.php"));
 require_once File::build_path(array("controller", "admin", "ControllerAdminMovie.php"));
 
