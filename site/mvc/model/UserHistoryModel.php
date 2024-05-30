@@ -113,10 +113,21 @@ class UserHistoryModel extends Model {
         $rep->execute($values);
     } 
 
-    public static function updateTryNumber($id_user, $id_daily_movie, $try_number) {
-        $sql = "UPDATE playerhistory SET tryNumber = $try_number WHERE idUser = $id_user AND idDailyMovie = $id_daily_movie";
-        $rep = Model::getPDO() -> prepare($sql);
-        $rep->execute();
+    public static function updateTryNumberAndSuccess($id_user, $id_daily_movie, $try_number, $success) {
+        if ($success == 'true') {
+            $success = true;
+        } else {
+            $success = false;
+        }
+        $sql = "UPDATE playerhistory SET tryNumber =:tryNumber, success =:success WHERE idUser =:idUser AND idDailyMovie =:idDailyMovie";
+        $values = array(
+            "tryNumber"=> $try_number,
+            "success"=> $success,
+            "idUser"=> $id_user,
+            "idDailyMovie"=> $id_daily_movie
+        );
+        $rep = Model::getPDO()->prepare($sql);
+        $rep->execute($values);
     }
 
     public static function getUserHistoryByUser($idUser) {
@@ -132,14 +143,16 @@ class UserHistoryModel extends Model {
         return $rep->fetchAll();
     }
 
-    public static function getUserHistoryByDailyMovie($daily_movie_id) {
+    public static function getUserHistoryByDailyMovieAndUser($daily_movie_id, $idUser) {
         $sql = "SELECT * FROM playerhistory
-        WHERE idDailyMovie = :idDailyMovie";
+        WHERE idDailyMovie = :idDailyMovie
+        AND idUser = :idUser";
         $rep = Model::getPDO() -> prepare($sql);
         $rep->setFetchMode(PDO::FETCH_CLASS, 'UserHistoryModel');
 
         $values = array(
-            "idDailyMovie" => $daily_movie_id
+            "idDailyMovie" => $daily_movie_id,
+            "idUser" => $idUser
         );
         $rep->execute($values);
         $user_history = $rep->fetchAll();
