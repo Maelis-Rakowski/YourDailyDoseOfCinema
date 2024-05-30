@@ -1,6 +1,6 @@
 initialisationGuessesListe();
 const getCookieValue = (name) => (
-    document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
+    document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || null
   )
   
 function deleteAllCookies() {
@@ -120,7 +120,7 @@ $(document).ready(function() {
         }
     });
 
-    if(getCookieValue("success") != "null") {
+    if(getCookieValue("success") != null) {
         // the movie was found
         // disable the search input
         document.getElementById('movieSearch').disabled = true
