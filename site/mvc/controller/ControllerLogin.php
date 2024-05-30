@@ -41,9 +41,9 @@ class ControllerLogin {
     }
 
     public function connected(){
-        $this->_view = new View(array('view', 'home', 'viewHome.php'));
-        //Generate the view without data
-        $this->_view->generate(array(null));
+        // redirect to home
+        header('Location: /home');
+        exit();
     }
 
     public function disconnect(){
