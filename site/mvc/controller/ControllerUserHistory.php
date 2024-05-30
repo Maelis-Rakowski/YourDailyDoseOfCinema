@@ -4,23 +4,33 @@
     require_once FILE::build_path(array('model','DailyMovieModel.php'));
     require_once FILE::build_path(array('model','UserModel.php'));
 
-
     class ControllerUserHistory {
-        //Create a history for the dailymovie
+
         public static function createUserHistory() {
-            $pseudo_user=$_SESSION["pseudo"];
-            $user = UserModel::getUserByPseudo($pseudo_user)[0];
-            $today_date = date('Y-m-d');
-            $daily_movie = DailyMovieModel::getTodayDailyMovie($today_date);
-
-            $hasPlayedToday = UserHistoryModel::hasPlayedToday($user->getId(),$daily_movie->getId());
-            if ($hasPlayedToday==false) {
-                //if no user history then create one
-                //TO-DO handle movie found in COOKIE                
-                UserHistoryModel::createUserHistory($user->getId(), $daily_movie->getId(), 0, false);
-            } 
+            if (isset($_SESSION["pseudo"])) {
+                
+                $pseudo_user = $_SESSION["pseudo"];
+                $user = UserModel::getUserByPseudo($pseudo_user)[0];
+                $today_date = date('Y-m-d');
+                $daily_movie = DailyMovieModel::getTodayDailyMovie($today_date);
+                $success=false;
+                if (isset($_COOKIE["success"])){
+                    $success = $_COOKIE["success"];
+                    // convert from string to boolean
+                    if ($success == 'true') {
+                        $success = true;
+                    } else {
+                        $success = false;
+                    }
+                }
+               
+                $hasPlayedToday = UserHistoryModel::hasPlayedToday($user->getId(),$daily_movie->getId());
+                if ($hasPlayedToday==false) {
+                    //if no user history then create one             
+                    UserHistoryModel::createUserHistory($user->getId(), $daily_movie->getId(), 0, $success);
+                } 
+            }
         }
-
         //Add a try
         public static function addUserTry(){
             if(!isset($_SESSION["pseudo"])) return;
@@ -29,11 +39,16 @@
             
             $today_date = date('Y-m-d');
             $daily_movie = DailyMovieModel::getTodayDailyMovie($today_date);
-            
+            $success = $_COOKIE["success"];
+            // convert from string to boolean
+            if ($success == 'true') {
+                $success = true;
+            } else {
+                $success = false;
+            }
             $userHistory = UserHistoryModel::hasPlayedToday($user->getId(),$daily_movie->getId());
             $todayUserHistory =$userHistory->getDailyUserHistory($daily_movie->getId());
-            UserHistoryModel::updateTryNumber($user->getId(), $daily_movie->getId(), $todayUserHistory->getTryNumber() + 1);
-
+            UserHistoryModel::updateTryNumberAndSuccess($user->getId(), $daily_movie->getId(), $todayUserHistory->getTryNumber() + 1, $success);
         }
 
 

@@ -92,7 +92,6 @@
                 [ $has_a_poster,        $guessed_movie["image"]         ]
             ];
 
-           
             echo json_encode($comparisonResults);
         }
 
@@ -114,10 +113,10 @@
             if (!MovieModel::getCurrentMovie()) {
                 $movie = MovieModel::getRandomMovie();
                 DailyMovieModel::createDailyMovie(date('Y-m-d'), $movie->getId());
-                echo json_encode("picked");
+                echo json_encode(true);
             }
             else {
-                echo json_encode("already picked");
+                echo json_encode(false);
             }
         }      
     }

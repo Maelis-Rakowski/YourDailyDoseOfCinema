@@ -1,23 +1,26 @@
-function checkInput() {
-    var input = document.getElementById('movieInput').value;
-    var noGuess = document.getElementById('noGuess');
+initialisationGuessesListe();
+const getCookieValue = (name) => (
+    document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || null
+  )
   
-        if (input === '') {
-            noGuess.classList.add('displayNone');
-            noGuess.classList.remove('displayBlock');
-        } else {
-            noGuess.classList.remove('displayNone');
-            noGuess.classList.add('displayBlock');
-        }
+function deleteAllCookies() {
+    document.cookie.split(';').forEach(cookie => {
+        const eqPos = cookie.indexOf('=');
+        const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+    });
 }
 
-initialisationGuessesListe();
 $(document).ready(function() {
     $.ajax({
         url:'home/pickTodayMovie',
         type: 'POST',
         dataType: 'json',
         success : function(data) {
+            // if a new movie was picked, then delete all cookies
+            if (data) {
+                deleteAllCookies()
+            }
             //Affiche le nombre d'essais de la session
             getNbTries(function(nbTries) {
                 setNbTriesText(nbTries);
@@ -72,7 +75,12 @@ $(document).ready(function() {
 
                         var posterUrl = "https://image.tmdb.org/t/p/w500" + data[9][1];
                     
-                        var posterDiv = createPoster(posterUrl, messageDiv);
+                        var posterDiv = createPoster(posterUrl);
+                        // setting cookies for the finished daily movie view 
+                        document.cookie = "dailyMoviePosterUrl=" + posterUrl + "; path=/"
+                        document.cookie = "dailyMovieTitle=" + data[1][1]+ "; path=/"
+
+                        document.getElementById('movieSearch').disabled = true
 
                     } else {
                         messageDiv.html('Try again!');
@@ -102,6 +110,11 @@ $(document).ready(function() {
                         data[2][1],
                         colors
                     );
+                    document.cookie = "success=" + data[0][0] + "; path=/"
+                    $.ajax({
+                        url: "userHistory/createUserHistory",
+                        type: "GET"
+                    })
                 }
             });
         },
@@ -112,7 +125,25 @@ $(document).ready(function() {
             collision: "none"
         }
     });
+
+    if(getCookieValue("success") != null && getCookieValue("success") != "false") {
+        disableGame()
+    }
+
 });
+
+function disableGame() {
+    // the movie was found
+    // disable the search input
+    document.getElementById('movieSearch').disabled = true
+    // display congratulation message along with the movie name le message bravo + le nom du film
+    var messageDiv = createMessageDiv();
+    messageDiv.html('Bravooo ! The daily movie was : ' + getCookieValue("dailyMovieTitle"));
+    messageDiv.css('color', 'green');
+    // afficher le poster
+    var posterDiv = createPoster(getCookieValue("dailyMoviePosterUrl"));
+    messageDiv.append(posterDiv);
+}
 
 
 function createMessageDiv() {
