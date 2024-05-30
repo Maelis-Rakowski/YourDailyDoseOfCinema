@@ -1,4 +1,4 @@
-<main>
+<div>
     <h2><?= $movie->getTitle() ?></h2>
     <h3>Release date :</h3>
     <p> <?= $movie->getReleaseDate() ?></p>
@@ -35,4 +35,4 @@
         echo ltrim($countries_str, ', ');
     ?>
     </p>
-</main>
+</div>

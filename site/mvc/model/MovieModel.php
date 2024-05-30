@@ -283,14 +283,18 @@ class MovieModel extends Model {
     }
 
     public static function getCurrentMovie() {
-        $sql = "SELECT m.* FROM movies m WHERE id = (select idMovie from dailymovie dm where date = DATE( CURDATE() ))";
+        $sql = "SELECT m.* FROM movies m WHERE id = (select idMovie from dailymovie dm where date ='" . date('Y-m-d') . "' )";
         $req_prep = Model::getPDO()->prepare($sql);
         $req_prep->setFetchMode(PDO::FETCH_CLASS, "MovieModel");
         $req_prep->execute();
-        if (empty($req_prep)){
+        $movies = $req_prep->fetchAll();
+
+        if (sizeof($movies) == 0){
+            var_dump(date('Y-m-d'));
+            var_dump($movies);
             return false;
         } else {            
-            $movie = $req_prep->fetchAll()[0];
+            $movie = $movies[0];
             //complète les champs
             $movie->setDirectors(MovieModel::getMovieDirectorsByMovieId($movie->getId()));
             $movie->setGenres(MovieModel::getMovieGenresByMovieId($movie->getId()));

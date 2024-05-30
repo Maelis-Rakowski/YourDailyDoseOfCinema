@@ -2,6 +2,8 @@
     require_once FILE::build_path(array('view', 'view.php'));
     require_once FILE::build_path(array('model', 'MovieModel.php'));
     require_once FILE::build_path(array('model', 'DailyMovieModel.php'));
+    require_once FILE::build_path(array('controller', 'ControllerUserHistory.php'));
+
     class ControllerHome {
 
         //variable of the view to generate
@@ -29,9 +31,9 @@
             $movie = MovieModel::getCurrentMovie();
 
             //complète les chanps de guessed_movie
-            $guessed_movie["director"] = MovieModel::getMovieDirectorsByMovieId($guessed_movie["id"]) ;
-            $guessed_movie["genre"] = MovieModel::getMovieGenresByMovieId($guessed_movie["id"]) ;
-            $guessed_movie["country"] = MovieModel::getMovieCountriesByMovieId($guessed_movie["id"]) ;
+            $guessed_movie["director"] = MovieModel::getMovieDirectorsByMovieId($guessed_movie["id"]);
+            $guessed_movie["genre"] = MovieModel::getMovieGenresByMovieId($guessed_movie["id"]);
+            $guessed_movie["country"] = MovieModel::getMovieCountriesByMovieId($guessed_movie["id"]);
 
             $current_date = $movie->getReleaseDate();
             $current_date = intval(substr($current_date, 0, 4));
@@ -42,9 +44,9 @@
             //retourner la comparaison des films
             $isTheMovieOfTheDay = $movie->getId()          == $guessed_movie["id"];
             $isSame_title      = $movie->getTitle()        == $guessed_movie["label"];
-            $isSame_director   = MovieModel::compareLists($movie->getDirectors(),$guessed_movie["director"]);
-            $isSame_country    = MovieModel::compareLists($movie->getCountries(),$guessed_movie["country"]);
-            $isSame_genre      = MovieModel::compareLists($movie->getGenres(),$guessed_movie["genre"]);       
+            $isSame_director   = MovieModel::compareLists($movie->getDirectors(), $guessed_movie["director"]);
+            $isSame_country    = MovieModel::compareLists($movie->getCountries(), $guessed_movie["country"]);
+            $isSame_genre      = MovieModel::compareLists($movie->getGenres(), $guessed_movie["genre"]);       
             $isSame_time       = $movie->getRuntime()      == $guessed_movie["time"];
             $isSame_date       = $current_date             == $guessed_date;
             $has_a_poster      = true;        
@@ -66,15 +68,8 @@
             }
 
             // Conversion en string format : 8h 30min
-            $hours = floor($guessed_time / 60);
-            $remainingMinutes = $guessed_time % 60;
-            if ($guessed_time < 1) {
-                $guessedDateToString = "0min";
-            } elseif ($hours >= 1) {
-                $guessedDateToString = $hours . "h " . $remainingMinutes . "min";
-            } else {
-                $guessedDateToString = $remainingMinutes . "min";
-            }            
+            $guessedDateToString = $this->convertTimeFormatHM($guessed_time);
+                       
 
             //Création  trame
           
@@ -90,6 +85,11 @@
                 [ $is_guess_longer,     $guessedDateToString    ],
                 [ $has_a_poster,        $guessed_movie["image"]         ]
             ];
+
+            // save player guess in their history
+            if (isset($_SESSION["pseudo"])) {
+                ControllerUserHistory::createUserHistory($_SESSION["pseudo"]);
+            }
 
             echo json_encode($comparisonResults);
         }
