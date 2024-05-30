@@ -18,7 +18,6 @@ $(document).ready(function() {
         type: 'POST',
         dataType: 'json',
         success : function(data) {
-            console.log(data);
             //Affiche le nombre d'essais de la session
             getNbTries(function(nbTries) {
                 setNbTriesText(nbTries);
@@ -65,8 +64,6 @@ $(document).ready(function() {
 
 
                     // Verif : Est-ce que le guess est le film du jour ?
-                    console.log("tableau converti en json : ", data);
-                    
                     var messageDiv = createMessageDiv();
                    
                     if (data[0][0]) {
@@ -105,7 +102,6 @@ $(document).ready(function() {
                         data[2][1],
                         colors
                     );
-
                 }
             });
         },
@@ -145,7 +141,6 @@ function initialisationGuessesListe() {
     const thContainer = $('<div/>', { class: 'th_container' });
     const tdContainer = $('<div/>', { class: 'td_container' });
     
-  
     const thColumns = [
         'Poster',
         'Title',
@@ -167,7 +162,6 @@ function initialisationGuessesListe() {
     parent.append(guessesContainer);
 }
 
-
 // Fonction pour récupérer nbTries depuis le serveur
 function getNbTries(callback) {
     $.ajax({
@@ -175,10 +169,8 @@ function getNbTries(callback) {
         type: 'GET',
         dataType: 'json',
         success: function(response) {
-            console.log('Réponse du serveur :', response);
             if (response.status === 'success') {
                 var nbTries = response.nbTries;
-                console.log('La valeur de nbTries a été récupérée:', nbTries);
                 callback(nbTries);
             } else {
                 console.error('Erreur lors de la récupération de nbTries:', response.message);
@@ -199,7 +191,6 @@ function setNbTries(nbTries, callback) {
         type: 'POST',
         data: { nbTries: nbTries },
         success: function(response) {
-            console.log('La variable de session nbTries a été mise à jour.');
             callback(true);
         },
         error: function(xhr, status, error) {
@@ -211,7 +202,6 @@ function setNbTries(nbTries, callback) {
 
 function setNbTriesText(nbTries){
     document.getElementById("nbTries").textContent = nbTries;
-    console.log(nbTries);
 }
 
 // Fonction principale addTry

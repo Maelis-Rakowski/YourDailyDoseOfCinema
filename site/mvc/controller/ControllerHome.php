@@ -11,7 +11,9 @@
 
         public function readAll() {
             $this->_view = new View(array('view', 'home', 'viewHome.php'));
-            
+            if(!isset($_SESSION['nbTries'])){
+                $_SESSION['nbTries']=0;
+            }
             //Generate the view without data
             $currentMovie= MovieModel::getCurrentMovie();
             $tagline = $currentMovie->getTagline();
