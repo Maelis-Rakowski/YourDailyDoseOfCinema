@@ -18,7 +18,7 @@ $(document).ready(function() {
         dataType: 'json',
         success : function(data) {
             console.log(data);
-            // if a new movie was picked, the delete all cookies
+            // if a new movie was picked, then delete all cookies
             if (data) {
                 deleteAllCookies()
             }

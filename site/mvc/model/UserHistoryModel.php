@@ -114,11 +114,6 @@ class UserHistoryModel extends Model {
     } 
 
     public static function updateTryNumberAndSuccess($id_user, $id_daily_movie, $try_number, $success) {
-        if ($success == 'true') {
-            $success = true;
-        } else {
-            $success = false;
-        }
         $sql = "UPDATE playerhistory SET tryNumber =:tryNumber, success =:success WHERE idUser =:idUser AND idDailyMovie =:idDailyMovie";
         $values = array(
             "tryNumber"=> $try_number,

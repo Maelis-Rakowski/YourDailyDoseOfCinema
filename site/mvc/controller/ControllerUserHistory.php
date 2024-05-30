@@ -14,14 +14,19 @@
                 $daily_movie = DailyMovieModel::getTodayDailyMovie($today_date);
 
                 $todayUserHistory = UserHistoryModel::getUserHistoryByDailyMovieAndUser($daily_movie->getId(), $user->getId());
-                echo "user history = " . $_COOKIE["success"];
+                $success = $_COOKIE["success"];
+                // convert from string to boolean
+                if ($success == 'true') {
+                    $success = true;
+                } else {
+                    $success = false;
+                }
                 if (!$todayUserHistory) {
                     //if no user history then create one
-                    echo "create user history " . $_COOKIE["success"];
-                    UserHistoryModel::createUserHistory($user->getId(), $daily_movie->getId(), 1, $_COOKIE["success"]);
-                } else {
-                    echo "update user history " . $_COOKIE["success"];
-                    UserHistoryModel::updateTryNumberAndSuccess($user->getId(), $daily_movie->getId(), $todayUserHistory->getTryNumber() + 1, $_COOKIE["success"]);
+                    UserHistoryModel::createUserHistory($user->getId(), $daily_movie->getId(), 1, $success);
+                } else {    
+                    // else update the existing one                
+                    UserHistoryModel::updateTryNumberAndSuccess($user->getId(), $daily_movie->getId(), $todayUserHistory->getTryNumber() + 1, $success);
                 }
             }
         }
