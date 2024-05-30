@@ -290,8 +290,6 @@ class MovieModel extends Model {
         $movies = $req_prep->fetchAll();
 
         if (sizeof($movies) == 0){
-            var_dump(date('Y-m-d'));
-            var_dump($movies);
             return false;
         } else {            
             $movie = $movies[0];

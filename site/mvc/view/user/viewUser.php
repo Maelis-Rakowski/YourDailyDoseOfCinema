@@ -12,11 +12,12 @@
             </tr>
             <tr>
                 <td><?= date("Y-m-d"); ?></td>
-                <td><?= $_SESSION['nbTries']; ?></td>
+                <td><?= $nbTries ?></td>
                 <td></td> <!-- La colonne solution est laissée vide ou vous pouvez y ajouter des données pertinentes -->
             </tr>
             
         </table>
     </div>
 </div>
+
 

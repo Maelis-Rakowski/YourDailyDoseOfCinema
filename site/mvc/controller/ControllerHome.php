@@ -20,6 +20,12 @@
             $currentMovie= MovieModel::getCurrentMovie();
             $tagline = $currentMovie->getTagline();
             $overview = $currentMovie->getOverview();
+             // save player guess in their history
+
+             if (isset($_SESSION["pseudo"])) {
+                ControllerUserHistory::createUserHistory($_SESSION["pseudo"]);
+            }
+
             $this->_view->generate(array("tagline" => $tagline, "overview" => $overview));
         }
 
@@ -86,11 +92,7 @@
                 [ $has_a_poster,        $guessed_movie["image"]         ]
             ];
 
-            // save player guess in their history
-            if (isset($_SESSION["pseudo"])) {
-                ControllerUserHistory::createUserHistory($_SESSION["pseudo"]);
-            }
-
+           
             echo json_encode($comparisonResults);
         }
 
@@ -107,24 +109,6 @@
             return $guessedDateToString;
         }
 
-        //Set Nb Tries on a sessionVariable
-        public function setNbTries(){
-            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nbTries'])) {
-                $_SESSION['nbTries'] = (int)$_POST['nbTries'];
-                echo json_encode(['status' => 'success']);
-            } else {
-                echo json_encode(['status' => 'error', 'message' => 'Paramètre nbTries manquant']);
-            }
-        }
-
-        //Get the Nb Tries on the sessionVariable
-        public function getNbTries(){
-            if (isset($_SESSION['nbTries'])) {
-                echo json_encode(['status' => 'success', 'nbTries' => $_SESSION['nbTries']]);
-            } else {
-                echo json_encode(['status' => 'error', 'message' => 'nbTries non défini']);
-            }
-        }
 
         public function pickTodayMovie() {
             if (!MovieModel::getCurrentMovie()) {
