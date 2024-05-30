@@ -94,7 +94,7 @@ $(document).ready(function () {
 })
 
 function getInputFieldPseudo(){
-    var input = document.getElementById('pseudo-sign-up');
+    var input = document.getElementById('pseudo');
     return input.value;
 }
 
