@@ -34,7 +34,7 @@
         //Add a try
         public static function updateUserTry(){
             if(isset($_SESSION["pseudo"])){
-                $pseudo_user=$_SESSION["pseudo"];
+                $pseudo_user = $_SESSION["pseudo"];
                 $user = UserModel::getUserByPseudo($pseudo_user)[0];
                 
                 $today_date = date('Y-m-d');
@@ -53,12 +53,13 @@
         }
 
         public static function getDailyUserHistory(){
-            
-            $pseudo_user=$_SESSION["pseudo"];
-            $user = UserModel::getUserByPseudo($pseudo_user)[0];
-            $userHistory = UserHistoryModel::getUserHistoryByUser($user->getId())[0];
-            $id_date = DailyMovieModel::getTodayDailyMovie(date('Y-m-d'))->getId();
-            return $userHistory->getDailyUserHistory($id_date);
+            if(isset($_SESSION["pseudo"])){
+                $pseudo_user = $_SESSION["pseudo"];
+                $user = UserModel::getUserByPseudo($pseudo_user)[0];
+                $userHistory = UserHistoryModel::getUserHistoryByUser($user->getId())[0];
+                $id_date = DailyMovieModel::getTodayDailyMovie(date('Y-m-d'))->getId();
+                return $userHistory->getDailyUserHistory($id_date);
+            }
         }
 
         //Set Nb Tries on a sessionVariable
