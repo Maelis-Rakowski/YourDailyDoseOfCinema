@@ -19,7 +19,11 @@
                     <div class="mb-3 form-floating">
                         <input name="password" class="form-control" type="password" placeholder="password">
                         <label for="password" class="form-label">Password</label>
-                        <div id='loginTooltip' class="text-danger error form-text">Error in the entry of your username or password</div>
+                        <?php 
+                            if($error == "errorConnexion") {
+                                echo('<div id="loginTooltip" class="text-danger error form-text">Error in the entry of your username or password</div>');
+                            } 
+                        ?>                        
                     </div>
                     <button type="submit" class="btn-dark btn btn-primary mt-2">Sign In</button>
                 </form>

@@ -1,3 +1,30 @@
+const htmlStringBeginning = 
+`    <div class="col">
+        <div class="image-wrapper">
+            <div class="image-container">
+                <img
+`;
+const htmlStringMiddle = 
+`
+class="img-fluid img-thumbnail" alt="...">
+<p class="text-center">
+`;
+
+const htmlStringMiddlePoster = 
+`
+" class="img-fluid rounded img-thumbnail" style="max-width: 150px; max-height: 150px; object-fit: cover;" alt="...">
+<p class="text-center">
+`;
+
+const htmlStringEnding = 
+`
+                </p> 
+            </div>
+        </div>
+    </div>
+`;
+const parent = $('#squaresContainer');
+
 function checkInput() {
     var input = document.getElementById('movieInput').value;
     var noGuess = document.getElementById('noGuess');
@@ -11,7 +38,7 @@ function checkInput() {
         }
 }
 
-initialisationGuessesListe();
+initialisationGuessesListe_lg();
 $(document).ready(function() {
     $.ajax({
         url:'home/pickTodayMovie',
@@ -48,7 +75,7 @@ $(document).ready(function() {
                     //          +====+==============================+==============================+
                     //          | 0  | isTheMovieOfTheDay           |        $guess.id             |
                     //          | 1  | isSame__title                |        $guess.title          |
-                    //          | 2  | isSame__director             |        $guess.director       |
+                    //          | 2  | isSame__date                 |        $guess.date           |
                     //          | 3  | isSame__country              |        $guess.country        |
                     //          | 4  | isSame__genre                |        $guess.value          |
                     //          | 5  | isSame__date                 |        $guess.date           |
@@ -77,7 +104,7 @@ $(document).ready(function() {
                     messageDiv.append(posterDiv);
 
                     // Affichage des résultats
-                    let colors = [ 
+                    let resultat_condition = [ 
                         data[0][0],                       
                         data[1][0],
                         data[2][0],
@@ -97,7 +124,7 @@ $(document).ready(function() {
                         data[4][1],
                         data[3][1],
                         data[2][1],
-                        colors
+                        resultat_condition
                     );
 
                 }
@@ -132,11 +159,10 @@ function createPoster(url) {
     return(posterDiv);
 }
 
-function initialisationGuessesListe() {
-    const parent = $('#guesses');
-  
-    const guessesContainer = $('<div/>', { class: 'guesses_container' });
-    const thContainer = $('<div/>', { class: 'th_container' });
+function initialisationGuessesListe_lg() {
+    const parent = $('#movieList');  
+    const guessesContainer_lg = $('<div/>', { class: 'col guesses_container row text-center d-none d-md-block' });
+    const thContainer = $('<div/>', { class: 'flex row border-bottom pb-3' });
     const tdContainer = $('<div/>', { class: 'td_container' });
   
     const thColumns = [
@@ -150,79 +176,95 @@ function initialisationGuessesListe() {
     ];
   
     thColumns.forEach(column => {
-      const thColumn = $('<div/>', { class: 'th_column', text: column });
+      const thColumn = $('<div/>', { class: 'col fw-bold', text: column });
       thContainer.append(thColumn);
     });
   
-    guessesContainer.append(thContainer);
-    guessesContainer.append(tdContainer);
-  
-    parent.append(guessesContainer);
+    guessesContainer_lg.append(thContainer);
+    guessesContainer_lg.append(tdContainer);  
+    parent.append(guessesContainer_lg);
 }
 
-function insertGuessInGuessesListe(col1, col2, col3, col4, col5, col6, col7, colors) {
-    const container = $(".td_container");
-    const row = $("<div></div>").attr("class", "td_row");
-    col1 = "https://image.tmdb.org/t/p/w500"+col1;
 
+function insertGuessInGuessesListe(poster, title, date, time, genre, country, director, resultat_condition) {
 
-    const titleDiv = $("<div></div>").attr("class", "td_column picture");
-    titleDiv.css({
-        'background-image': `url(${col1})`,
-        'background-size': 'cover',
-    });
-    row.append(titleDiv);
-    
+    id = removeSpecialCharacters(title+date+time);
+    const htmlRow = '<div class="d_row flex row pb-3" id ="' + id +'" ></div>' ;
+    parent.append(htmlRow);
+
+    row = $("#"+id);
+
+    //Poster
+    poster = `https://image.tmdb.org/t/p/w500` + poster;
+    cubePoster = htmlStringBeginning + 'id = "' + id + '_' + "poster" + '"' + htmlStringMiddlePoster + htmlStringEnding;
+    row.append(cubePoster);
+    posterDiv = $("#" + id+"_poster");
+    posterDiv.attr('src', poster);
+
+    cubes = "";
+    const cubes_data = [title, date, time, genre, country, director];
+    for(i=0;i<6;i++) {
+        console.log("uwuwuwu");
+        cubes = cubes + htmlStringBeginning + 'id = "' + id + '_' + i + '"' + htmlStringMiddle + cubes_data[i] + htmlStringEnding;
+    }
+    row.append(cubes);
+
     // Title
-    if(colors[1])
-        row.append("<div class='td_column name green'>" + col2 + "</div>");
-    else
-        row.append("<div class='td_column name red'>" + col2 + "</div>");
+    defineColor(resultat_condition[1], id+"_0");
 
     // Date
-    if(colors[5])
-        row.append("<div class='td_column date green'>" + col3 + "</div>");
-    else if(colors[7])
-        row.append("<div class='td_column date bot_arrow'>" + col3 + "</div>");
-    else
-        row.append("<div class='td_column date top_arrow'>" + col3 + "</div>");
-
+    defineColor(resultat_condition[5], id+"_1", resultat_condition[7]);
 
     // Time
-    if(colors[6])
-        row.append("<div class='td_column time green'>" + col4 + "</div>");
-    else if(colors[8])
-        row.append("<div class='td_column time bot_arrow'>" + col4 + "</div>");
-    else
-        row.append("<div class='td_column time top_arrow'>" + col4 + "</div>");
-    
+    defineColor(resultat_condition[6], id+"_2", resultat_condition[8]);
 
-   // Genres
-    if (colors[4] === 1) {
-        row.append("<div class='td_column genre green'>" + col5 + "</div>");
-    } else if (colors[4] === 0.5) {
-        row.append("<div class='td_column genre orange'>" + col5 + "</div>");
-    } else if (colors[4] === 0) {
-        row.append("<div class='td_column genre red'>" + col5 + "</div>");
-    }
-    
+    // Genres
+    defineColor(resultat_condition[4], id+"_3");
+
     // Counties
-    if (colors[3] === 1) {
-        row.append("<div class='td_column pays green'>" + col6 + "</div>");
-    } else if (colors[3] === 0.5) {
-        row.append("<div class='td_column pays orange'>" + col6 + "</div>");
-    } else if (colors[3] === 0) {
-        row.append("<div class='td_column pays red'>" + col6 + "</div>");
-    }
-    
-    // Directors
-    if (colors[2] === 1) {
-        row.append("<div class='td_column pays green'>" + col7 + "</div>");
-    } else if (colors[2] === 0.5) {
-        row.append("<div class='td_column pays orange'>" + col7 + "</div>");
-    } else if (colors[2] === 0) {
-        row.append("<div class='td_column pays red'>" + col7 + "</div>");
-    }
-    
-    container.prepend(row);
+    defineColor(resultat_condition[3], id+"_4");
+
+    // directors
+    defineColor(resultat_condition[2], id+"_5");
 }
+
+function defineColor(condition, id, condition_arrow = -1) {
+    imageElement = $("#" + id);
+    if (condition === 1) {              //GREEN
+        imageElement.attr('src', `/assets/images/square-green.png`);
+    } 
+    else if (condition_arrow !== -1) {  //ARROWS
+        if(condition_arrow) {           // BOT
+            imageElement.attr('src', `/assets/images/square-bot.png`);
+        }
+        else {          // TOP
+            imageElement.attr('src', `/assets/images/square-top.png`);                
+        }
+    } 
+    else if (condition === 0.5) {       // ORANGE
+        imageElement.attr('src', `/assets/images/square-orange.png`);
+    } else  {                           // RED     
+        imageElement.attr('src', `/assets/images/square-red.png`);
+    }
+}
+
+// const imageElement = $(`#${imageId}`);
+
+//   // Vérifier que l'élément HTML de l'image existe
+//   if (imageElement.length) {
+//     // Définir l'attribut src de l'élément HTML de l'image
+//     imageElement.attr('src', imageSrc);
+
+
+
+function removeSpecialCharacters(inputString) {
+    // Définir une expression régulière pour les caractères spéciaux
+    const regex = /[^\w\d]/g;
+  
+    // Remplacer tous les caractères spéciaux dans la chaîne de caractères
+    // en utilisant l'expression régulière et la méthode replace()
+    const outputString = inputString.replace(regex, '');
+  
+    // Retourner la chaîne de caractères modifiée
+    return outputString;
+  }
