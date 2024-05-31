@@ -30,8 +30,7 @@ initialisationGuessesListe_lg();
   
 const getCookieValue = (name) => (
     document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || null
-  )
-
+)
   
 function deleteAllCookies() {
     document.cookie.split(';').forEach(cookie => {
@@ -40,7 +39,6 @@ function deleteAllCookies() {
         document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
     });
 }
-  
 
 $(document).ready(function() {
     $.ajax({
@@ -209,16 +207,16 @@ function insertGuessInGuessesListe(poster, title, date, time, genre, country, di
 
     //Poster
     poster = `https://image.tmdb.org/t/p/w500` + poster;
-    cubePoster = htmlStringBeginning + 'id = "' + id + '_' + "poster" + '"' + htmlStringMiddlePoster + htmlStringEnding;
+    cubePoster = cubeStart + 'id = "' + id + '_' + "poster" + '"' + htmlStringMiddlePoster + cubeEnd;
     row.append(cubePoster);
     posterDiv = $("#" + id+"_poster");
     posterDiv.attr('src', poster);
 
+    //creation des cubes de couleurs
     cubes = "";
     const cubes_data = [title, date, time, genre, country, director];
     for(i = 0; i < 6; i++) {
-        console.log("uwuwuwu");
-        cubes = cubes + htmlStringBeginning + 'id = "' + id + '_' + i + '"' + htmlStringMiddle + cubes_data[i] + htmlStringEnding;
+        cubes = cubes + cubeStart + 'id = "' + id + '_' + i + '"' + cubeMiddle + cubes_data[i] + cubeEnd;
     }
     row.append(cubes);
 
@@ -234,7 +232,7 @@ function insertGuessInGuessesListe(poster, title, date, time, genre, country, di
     // Genres
     defineColor(resultat_condition[4], id+"_3");
 
-    // Counties
+    // Countries
     defineColor(resultat_condition[3], id+"_4");
 
     // directors
