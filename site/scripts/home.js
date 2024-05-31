@@ -46,11 +46,15 @@ $(document).ready(function() {
         type: 'POST',
         dataType: 'json',
         success : function(data) {
-            console.log(data);
             // if a new movie was picked, then delete all cookies
             if (data) {
                 deleteAllCookies()
             }
+            //Affiche le nombre d'essais de la session
+            getNbTries(function(nbTries) {
+                setNbTriesText(nbTries);
+                tryShowHints(nbTries);
+            });
         }
     });
     $('#movieSearch').autocomplete({
@@ -94,9 +98,8 @@ $(document).ready(function() {
 
 
                     // Verif : Est-ce que le guess est le film du jour ?
-                    console.log("tableau converti en json : ", data);
                     var messageDiv = createMessageDiv();
-
+                   
                     if (data[0][0]) {
                         messageDiv.html('Félicitation !');
                         messageDiv.css('color', 'green');
@@ -104,8 +107,11 @@ $(document).ready(function() {
                         var posterUrl = "https://image.tmdb.org/t/p/w500" + data[9][1];
                     
                         var posterDiv = createPoster(posterUrl);
+                        // setting cookies for the finished daily movie view 
                         document.cookie = "dailyMoviePosterUrl=" + posterUrl + "; path=/"
                         document.cookie = "dailyMovieTitle=" + data[1][1]+ "; path=/"
+
+                        document.getElementById('movieSearch').disabled = true
 
                     } else {
                         messageDiv.html('Try again!');
@@ -150,7 +156,25 @@ $(document).ready(function() {
             collision: "none"
         }
     });
+
+    if(getCookieValue("success") != null && getCookieValue("success") != "false") {
+        disableGame()
+    }
+
 });
+
+function disableGame() {
+    // the movie was found
+    // disable the search input
+    document.getElementById('movieSearch').disabled = true
+    // display congratulation message along with the movie name le message bravo + le nom du film
+    var messageDiv = createMessageDiv();
+    messageDiv.html('Bravooo ! The daily movie was : ' + getCookieValue("dailyMovieTitle"));
+    messageDiv.css('color', 'green');
+    // afficher le poster
+    var posterDiv = createPoster(getCookieValue("dailyMoviePosterUrl"));
+    messageDiv.append(posterDiv);
+}
 
 function createMessageDiv() {
     var messageDiv = $('#result');
@@ -176,7 +200,7 @@ function initialisationGuessesListe_lg() {
     const guessesContainer_lg = $('<div/>', { class: 'col guesses_container row text-center d-none d-md-block' });
     const thContainer = $('<div/>', { class: 'flex row border-bottom pb-3' });
     const tdContainer = $('<div/>', { class: 'td_container' });
-  
+    
     const thColumns = [
         'Poster',
         'Title',
@@ -198,7 +222,6 @@ function initialisationGuessesListe_lg() {
 }
 
 function insertGuessInGuessesListe(poster, title, date, time, genre, country, director, resultat_condition) {
-
     //attribution d'un id à la row afin de la retrouver dans d'autres fonctions
     id = removeSpecialCharacters(title+date+time);
     const htmlRow = '<div class="d_row flex row pb-3" id ="' + id +'" ></div>' ;
@@ -220,6 +243,14 @@ function insertGuessInGuessesListe(poster, title, date, time, genre, country, di
     }
     row.append(cubes);
 
+    updateTryDataAndText();
+    const titleDiv = $("<div></div>").attr("class", "td_column picture");
+    titleDiv.css({
+        'background-image': `url(${col1})`,
+        'background-size': 'cover',
+    });
+    row.append(titleDiv);
+    
     // Title
     defineColor(resultat_condition[1], id+"_0");
 
@@ -257,6 +288,8 @@ function defineColor(condition, id, condition_arrow = -1) {
     } else  {                           // RED     
         imageElement.attr('src', `/assets/images/square-red.png`);
     }
+      
+    container.prepend(row);
 }
 
 function removeSpecialCharacters(inputString) {
@@ -270,3 +303,91 @@ function removeSpecialCharacters(inputString) {
     // Retourner la chaîne de caractères modifiée
     return outputString;
   }
+
+}
+
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+//Gestion des TryNumber
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+// Fonction pour récupérer nbTries depuis le serveur
+function getNbTries(callback) {
+    $.ajax({
+        url: 'userHistory/getNbTries',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 'success') {
+                var nbTries = response.nbTries;
+                callback(nbTries);
+            } else {
+                console.error('Erreur lors de la récupération de nbTries:', response.message);
+                callback(null);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Erreur lors de la requête AJAX :', xhr.responseText);
+            callback(null);
+        }
+    });
+}
+
+// Fonction pour mettre à jour nbTries sur le serveur
+function setNbTries(nbTries, callback) {
+    $.ajax({
+        url: 'userHistory/setNbTriesAsSessionVariable',
+        type: 'POST',
+        data: { nbTries: nbTries },
+        success: function(response) {
+        },
+        error: function(xhr, status, error) {
+            console.error('Erreur lors de la mise à jour de la variable de session:', error);
+        }
+    });
+}
+
+function setNbTriesText(nbTries){
+    document.getElementById("nbTries").textContent = nbTries;
+}
+
+function updateTryDataAndText() {
+    getNbTries(function(nbTries) {
+        if (nbTries !== null) {
+            nbTries++;
+            updateHistory();
+            setNbTriesText(nbTries);
+            setNbTries(nbTries, function(success) {
+                if (success) {
+                    tryShowHints(nbTries);
+                }
+            });
+        }
+    });
+}
+
+//ShowHint
+function tryShowHints(nbTries){
+    if (nbTries >= 5) {
+        document.getElementById("tagline").removeAttribute("hidden");
+    }
+    if (nbTries >= 10) {
+        document.getElementById("overview").removeAttribute("hidden");
+    }
+}
+
+//Création  ou Maj du userDailyMovie
+function updateHistory(){
+    $.ajax({
+        url: 'userHistory/updateUserTry', 
+        type: 'POST',
+        success: function(response) {
+            // Traitez la réponse du serveur ici
+            callback(true);
+        },
+        error: function(xhr, status, error) {
+            console.error('Erreur lors de la mise à jour de la variable de session:', error);
+            callback(false);
+        }
+    });
+}

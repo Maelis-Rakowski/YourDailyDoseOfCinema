@@ -98,7 +98,7 @@ class UserHistoryModel extends Model {
         return $this;
     }
 
-//DATABASE METHODS
+    //DATABASE METHODS
 
     public static function createUserHistory($id_user, $id_daily_movie, $try_number, $success) {
         $sql = "INSERT INTO playerhistory (idUser, idDailyMovie, tryNumber, success) VALUES (:idUser, :idDailyMovie, :tryNumber, :success)";
@@ -157,5 +157,30 @@ class UserHistoryModel extends Model {
         return false;
     }
 
+    //Return the daily history of the user if played. if not played today, return false
+    public static function hasPlayedToday($user_id,$daily_movie_id){
+        if(UserHistoryModel::getUserHistoryByUser($user_id) == null){
+            return false;
+        }
+        return UserHistoryModel::getUserHistoryByUser($user_id)[0]->getDailyUserHistory($daily_movie_id);
+    }
+
+    public function getDailyUserHistory($daily_movie_id){
+        $sql = "SELECT * FROM playerhistory WHERE idDailyMovie = :idDailyMovie AND idUser = :idUser";
+        $rep = Model::getPDO() -> prepare($sql);
+        $rep->setFetchMode(PDO::FETCH_CLASS, 'UserHistoryModel');
+        
+        $idUser= $this->getIdUser();
+        $values = array(
+            "idDailyMovie" => $daily_movie_id,
+            "idUser" => $idUser
+        );
+        $rep->execute($values);
+        $user_history = $rep->fetchAll();
+        if (sizeof($user_history) == 1) {
+            return $user_history[0];
+        }
+        return false;
+    }
 }
 ?>

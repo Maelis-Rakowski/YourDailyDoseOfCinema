@@ -13,8 +13,20 @@
 
         public function readAll() {
             $this->_view = new View(array('view', 'home', 'viewHome.php'));
+            if(!isset($_SESSION['nbTries'])){
+                $_SESSION['nbTries'] = 0;
+            }
             //Generate the view without data
-            $this->_view->generate(array(null));
+            $currentMovie= MovieModel::getCurrentMovie();
+            $tagline = $currentMovie->getTagline();
+            $overview = $currentMovie->getOverview();
+             // save player guess in their history
+
+             if (isset($_SESSION["pseudo"])) {
+                ControllerUserHistory::createUserHistory($_SESSION["pseudo"]);
+            }
+
+            $this->_view->generate(array("tagline" => $tagline, "overview" => $overview));
         }
 
         public function submitGuess() {
@@ -64,9 +76,7 @@
             // Conversion en string format : 8h 30min
             $guessedDateToString = $this->convertTimeFormatHM($guessed_time);
                        
-
             //Création  trame
-          
             $comparisonResults = [
                 [ $isTheMovieOfTheDay,  $guessed_movie["id"]            ],
                 [ $isSame_title,        $guessed_movie["label"]         ],
