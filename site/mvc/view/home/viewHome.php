@@ -6,6 +6,7 @@
             <p class="lead d-none d-md-block">Welcome to our movie guessing game! Log in to your account to start guessing the movie of the day with the least number of clues. Let's see how well you know your movies!</p>
         </div>
         <div id="guesses" class="guess form-floating mb-5">
+            <p id="nbTries"></p>
             <input name="movieSearch" class="form-control" id="movieSearch" type="text" placeholder="Guess the game of the day...">
             <label for="movieSearch" class="pl-2 seach_bar form-label">Guess the game of the day...</label>
         </div>

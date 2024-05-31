@@ -13,7 +13,7 @@ class="img-fluid img-thumbnail" alt="...">
 const htmlStringMiddlePoster = 
 `
 " class="img-fluid rounded img-thumbnail" style="max-width: 150px; max-height: 150px; object-fit: cover;" alt="...">
-<p class="text-center">
+<p class="text-center" style="word-wrap: break-word;">
 `;
 
 const cubeEnd = 
@@ -225,7 +225,7 @@ function insertGuessInGuessesListe(poster, title, date, time, genre, country, di
     //attribution d'un id à la row afin de la retrouver dans d'autres fonctions
     id = removeSpecialCharacters(title+date+time);
     const htmlRow = '<div class="d_row flex row pb-3" id ="' + id +'" ></div>' ;
-    parent.append(htmlRow);    
+    parent.prepend(htmlRow);    
     row = $("#" + id);
 
     //Poster
@@ -244,12 +244,12 @@ function insertGuessInGuessesListe(poster, title, date, time, genre, country, di
     row.append(cubes);
 
     updateTryDataAndText();
-    const titleDiv = $("<div></div>").attr("class", "td_column picture");
-    titleDiv.css({
-        'background-image': `url(${col1})`,
-        'background-size': 'cover',
-    });
-    row.append(titleDiv);
+    // const titleDiv = $("<div></div>").attr("class", "td_column picture");
+    // titleDiv.css({
+    //     'background-image': `url(${col1})`,
+    //     'background-size': 'cover',
+    // });
+    // row.append(titleDiv);
     
     // Title
     defineColor(resultat_condition[1], id+"_0");
@@ -272,7 +272,7 @@ function insertGuessInGuessesListe(poster, title, date, time, genre, country, di
 
 function defineColor(condition, id, condition_arrow = -1) {
     imageElement = $("#" + id);
-    if (condition === 1) {              //GREEN
+    if (condition == 1 || condition == true) {              //GREEN
         imageElement.attr('src', `/assets/images/square-green.png`);
     } 
     else if (condition_arrow !== -1) {  //ARROWS
@@ -288,8 +288,6 @@ function defineColor(condition, id, condition_arrow = -1) {
     } else  {                           // RED     
         imageElement.attr('src', `/assets/images/square-red.png`);
     }
-      
-    container.prepend(row);
 }
 
 function removeSpecialCharacters(inputString) {
@@ -302,8 +300,6 @@ function removeSpecialCharacters(inputString) {
   
     // Retourner la chaîne de caractères modifiée
     return outputString;
-  }
-
 }
 
 ///////////////////////////////////////////////////
