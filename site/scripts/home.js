@@ -1,10 +1,10 @@
-const htmlStringBeginning = 
+const cubeStart = 
 `    <div class="col">
         <div class="image-wrapper">
             <div class="image-container">
                 <img
 `;
-const htmlStringMiddle = 
+const cubeMiddle = 
 `
 class="img-fluid img-thumbnail" alt="...">
 <p class="text-center">
@@ -16,29 +16,18 @@ const htmlStringMiddlePoster =
 <p class="text-center">
 `;
 
-const htmlStringEnding = 
+const cubeEnd = 
 `
                 </p> 
             </div>
         </div>
     </div>
 `;
-const parent = $('#squaresContainer');
 
-function checkInput() {
-    var input = document.getElementById('movieInput').value;
-    var noGuess = document.getElementById('noGuess');
-  
-        if (input === '') {
-            noGuess.classList.add('displayNone');
-            noGuess.classList.remove('displayBlock');
-        } else {
-            noGuess.classList.remove('displayNone');
-            noGuess.classList.add('displayBlock');
-        }
-}
+const cubes_parent = $('#squaresContainer');
 
 initialisationGuessesListe_lg();
+
 $(document).ready(function() {
     $.ajax({
         url:'home/pickTodayMovie',
@@ -75,7 +64,7 @@ $(document).ready(function() {
                     //          +====+==============================+==============================+
                     //          | 0  | isTheMovieOfTheDay           |        $guess.id             |
                     //          | 1  | isSame__title                |        $guess.title          |
-                    //          | 2  | isSame__date                 |        $guess.date           |
+                    //          | 2  | isSame__director             |        $guess.director       |
                     //          | 3  | isSame__country              |        $guess.country        |
                     //          | 4  | isSame__genre                |        $guess.value          |
                     //          | 5  | isSame__date                 |        $guess.date           |
@@ -139,7 +128,6 @@ $(document).ready(function() {
     });
 });
 
-
 function createMessageDiv() {
     var messageDiv = $('#result');
     messageDiv.css('display', 'flex');
@@ -185,14 +173,13 @@ function initialisationGuessesListe_lg() {
     parent.append(guessesContainer_lg);
 }
 
-
 function insertGuessInGuessesListe(poster, title, date, time, genre, country, director, resultat_condition) {
 
+    //attribution d'un id à la row afin de la retrouver dans d'autres fonctions
     id = removeSpecialCharacters(title+date+time);
     const htmlRow = '<div class="d_row flex row pb-3" id ="' + id +'" ></div>' ;
-    parent.append(htmlRow);
-
-    row = $("#"+id);
+    parent.append(htmlRow);    
+    row = $("#" + id);
 
     //Poster
     poster = `https://image.tmdb.org/t/p/w500` + poster;
@@ -203,7 +190,7 @@ function insertGuessInGuessesListe(poster, title, date, time, genre, country, di
 
     cubes = "";
     const cubes_data = [title, date, time, genre, country, director];
-    for(i=0;i<6;i++) {
+    for(i = 0; i < 6; i++) {
         console.log("uwuwuwu");
         cubes = cubes + htmlStringBeginning + 'id = "' + id + '_' + i + '"' + htmlStringMiddle + cubes_data[i] + htmlStringEnding;
     }
@@ -247,15 +234,6 @@ function defineColor(condition, id, condition_arrow = -1) {
         imageElement.attr('src', `/assets/images/square-red.png`);
     }
 }
-
-// const imageElement = $(`#${imageId}`);
-
-//   // Vérifier que l'élément HTML de l'image existe
-//   if (imageElement.length) {
-//     // Définir l'attribut src de l'élément HTML de l'image
-//     imageElement.attr('src', imageSrc);
-
-
 
 function removeSpecialCharacters(inputString) {
     // Définir une expression régulière pour les caractères spéciaux
