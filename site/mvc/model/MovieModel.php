@@ -91,7 +91,7 @@ class MovieModel extends Model {
     }
 
     public function getTagline() {
-        if($this->tagline=="")
+        if($this->tagline == "")
             return "No TagLine for this movie -_-";
         return $this->tagline;
     }

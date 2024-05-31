@@ -145,7 +145,6 @@ function disableGame() {
     messageDiv.append(posterDiv);
 }
 
-
 function createMessageDiv() {
     var messageDiv = $('#result');
     messageDiv.css('display', 'flex');
@@ -193,14 +192,12 @@ function initialisationGuessesListe() {
     parent.append(guessesContainer);
 }
 
-
-
 function insertGuessInGuessesListe(col1, col2, col3, col4, col5, col6, col7, colors) {
     const container = $(".td_container");
     const row = $("<div></div>").attr("class", "td_row");
     col1 = "https://image.tmdb.org/t/p/w500"+col1;
 
-    addTry();
+    updateTryDataAndText();
     const titleDiv = $("<div></div>").attr("class", "td_column picture");
     titleDiv.css({
         'background-image': `url(${col1})`,
@@ -262,7 +259,6 @@ function insertGuessInGuessesListe(col1, col2, col3, col4, col5, col6, col7, col
     container.prepend(row);
 }
 
-
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
 //Gestion des TryNumber
@@ -282,7 +278,6 @@ function getNbTries(callback) {
                 console.error('Erreur lors de la récupération de nbTries:', response.message);
                 callback(null);
             }
-            console.log("GETTING");
         },
         error: function(xhr, status, error) {
             console.error('Erreur lors de la requête AJAX :', xhr.responseText);
@@ -294,17 +289,13 @@ function getNbTries(callback) {
 // Fonction pour mettre à jour nbTries sur le serveur
 function setNbTries(nbTries, callback) {
     $.ajax({
-        url: 'userHistory/setNbTries',
+        url: 'userHistory/setNbTriesAsSessionVariable',
         type: 'POST',
         data: { nbTries: nbTries },
         success: function(response) {
-            callback(true);
-            console.log("SETTING");
-
         },
         error: function(xhr, status, error) {
             console.error('Erreur lors de la mise à jour de la variable de session:', error);
-            callback(false);
         }
     });
 }
@@ -313,8 +304,7 @@ function setNbTriesText(nbTries){
     document.getElementById("nbTries").textContent = nbTries;
 }
 
-// Fonction principale addTry
-function addTry() {
+function updateTryDataAndText() {
     getNbTries(function(nbTries) {
         if (nbTries !== null) {
             nbTries++;
@@ -342,25 +332,15 @@ function tryShowHints(nbTries){
 //Création  ou Maj du userDailyMovie
 function updateHistory(){
     $.ajax({
-        url: 'userHistory/addUserTry', 
+        url: 'userHistory/updateUserTry', 
         type: 'POST',
         success: function(response) {
             // Traitez la réponse du serveur ici
             callback(true);
-            console.log(response);
         },
         error: function(xhr, status, error) {
             console.error('Erreur lors de la mise à jour de la variable de session:', error);
             callback(false);
         }
     });
-}
-
-// Définition de la fonction callback pour démonstration
-function callback(success) {
-    if (success) {
-        console.log('Historique mis à jour avec succès.');
-    } else {
-        console.log('Échec de la mise à jour de l\'historique.');
-    }
 }

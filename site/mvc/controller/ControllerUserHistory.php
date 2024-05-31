@@ -32,27 +32,28 @@
             }
         }
         //Add a try
-        public static function addUserTry(){
-            if(!isset($_SESSION["pseudo"])) return;
-            $pseudo_user=$_SESSION["pseudo"];
-            $user = UserModel::getUserByPseudo($pseudo_user)[0];
-            
-            $today_date = date('Y-m-d');
-            $daily_movie = DailyMovieModel::getTodayDailyMovie($today_date);
-            $success = $_COOKIE["success"];
-            // convert from string to boolean
-            if ($success == 'true') {
-                $success = true;
-            } else {
-                $success = false;
-            }
-            $userHistory = UserHistoryModel::hasPlayedToday($user->getId(),$daily_movie->getId());
-            $todayUserHistory =$userHistory->getDailyUserHistory($daily_movie->getId());
-            UserHistoryModel::updateTryNumberAndSuccess($user->getId(), $daily_movie->getId(), $todayUserHistory->getTryNumber() + 1, $success);
+        public static function updateUserTry(){
+            if(isset($_SESSION["pseudo"])){
+                $pseudo_user=$_SESSION["pseudo"];
+                $user = UserModel::getUserByPseudo($pseudo_user)[0];
+                
+                $today_date = date('Y-m-d');
+                $daily_movie = DailyMovieModel::getTodayDailyMovie($today_date);
+                $success = $_COOKIE["success"];
+                // convert from string to boolean
+                if ($success == 'true') {
+                    $success = true;
+                } else {
+                    $success = false;
+                }
+                $userHistory = UserHistoryModel::hasPlayedToday($user->getId(),$daily_movie->getId());
+                $todayUserHistory =$userHistory->getDailyUserHistory($daily_movie->getId());
+                UserHistoryModel::updateTryNumberAndSuccess($user->getId(), $daily_movie->getId(), $todayUserHistory->getTryNumber() + 1, $success);
+            }   
         }
 
-
         public static function getDailyUserHistory(){
+            
             $pseudo_user=$_SESSION["pseudo"];
             $user = UserModel::getUserByPseudo($pseudo_user)[0];
             $userHistory = UserHistoryModel::getUserHistoryByUser($user->getId())[0];
@@ -61,7 +62,7 @@
         }
 
         //Set Nb Tries on a sessionVariable
-        public function setNbTries(){
+        public function setNbTriesAsSessionVariable(){
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nbTries'])) {
                 $_SESSION['nbTries'] = (int)$_POST['nbTries'];
                 echo json_encode(['status' => 'success']);

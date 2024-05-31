@@ -98,7 +98,7 @@ class UserHistoryModel extends Model {
         return $this;
     }
 
-//DATABASE METHODS
+    //DATABASE METHODS
 
     public static function createUserHistory($id_user, $id_daily_movie, $try_number, $success) {
         $sql = "INSERT INTO playerhistory (idUser, idDailyMovie, tryNumber, success) VALUES (:idUser, :idDailyMovie, :tryNumber, :success)";
@@ -159,7 +159,7 @@ class UserHistoryModel extends Model {
 
     //Return the daily history of the user if played. if not played today, return false
     public static function hasPlayedToday($user_id,$daily_movie_id){
-        if(UserHistoryModel::getUserHistoryByUser($user_id)==null){
+        if(UserHistoryModel::getUserHistoryByUser($user_id) == null){
             return false;
         }
         return UserHistoryModel::getUserHistoryByUser($user_id)[0]->getDailyUserHistory($daily_movie_id);
@@ -182,6 +182,5 @@ class UserHistoryModel extends Model {
         }
         return false;
     }
-
 }
 ?>

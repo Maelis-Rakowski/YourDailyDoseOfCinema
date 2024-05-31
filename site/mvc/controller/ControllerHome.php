@@ -14,7 +14,7 @@
         public function readAll() {
             $this->_view = new View(array('view', 'home', 'viewHome.php'));
             if(!isset($_SESSION['nbTries'])){
-                $_SESSION['nbTries']=0;
+                $_SESSION['nbTries'] = 0;
             }
             //Generate the view without data
             $currentMovie= MovieModel::getCurrentMovie();
@@ -76,9 +76,7 @@
             // Conversion en string format : 8h 30min
             $guessedDateToString = $this->convertTimeFormatHM($guessed_time);
                        
-
             //Création  trame
-          
             $comparisonResults = [
                 [ $isTheMovieOfTheDay,  $guessed_movie["id"]            ],
                 [ $isSame_title,        $guessed_movie["label"]         ],
@@ -107,7 +105,6 @@
             }
             return $guessedDateToString;
         }
-
 
         public function pickTodayMovie() {
             if (!MovieModel::getCurrentMovie()) {
