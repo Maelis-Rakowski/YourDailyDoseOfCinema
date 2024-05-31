@@ -13,11 +13,4 @@
             <div id="squaresContainer" class="col mt-4 guesses_container row text-center d-none d-md-block"></div>
         </div>
     </main>
-
-
 </div>
-
-
-
-
-
