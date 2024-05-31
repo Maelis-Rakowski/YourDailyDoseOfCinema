@@ -45,6 +45,8 @@ $(document).ready(function() {
                 data: { guess: submissionId },
                 dataType: 'json',
                 success: function(data) {
+                    //clear the input
+                    document.getElementById("movieSearch").value = ""
 
                     //          +====+==============================+==============================+
                     //          | #  |      0 -  Comparison         |      1 - Guess Value         |
