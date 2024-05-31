@@ -26,7 +26,27 @@ const cubeEnd =
 
 const cubes_parent = $('#squaresContainer');
 
+const parent = $('#squaresContainer');
+
+function checkInput() {
+    var input = document.getElementById('movieInput').value;
+    var noGuess = document.getElementById('noGuess');
+  
 initialisationGuessesListe_lg();
+  
+const getCookieValue = (name) => (
+    document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || null
+  )
+
+  
+function deleteAllCookies() {
+    document.cookie.split(';').forEach(cookie => {
+        const eqPos = cookie.indexOf('=');
+        const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+    });
+}
+  
 
 $(document).ready(function() {
     $.ajax({
@@ -35,6 +55,10 @@ $(document).ready(function() {
         dataType: 'json',
         success : function(data) {
             console.log(data);
+            // if a new movie was picked, then delete all cookies
+            if (data) {
+                deleteAllCookies()
+            }
         }
     });
     $('#movieSearch').autocomplete({
@@ -58,6 +82,8 @@ $(document).ready(function() {
                 data: { guess: submissionId },
                 dataType: 'json',
                 success: function(data) {
+                    //clear the input
+                    document.getElementById("movieSearch").value = ""
 
                     //          +====+==============================+==============================+
                     //          | #  |      0 -  Comparison         |      1 - Guess Value         |
@@ -85,7 +111,9 @@ $(document).ready(function() {
 
                         var posterUrl = "https://image.tmdb.org/t/p/w500" + data[9][1];
                     
-                        var posterDiv = createPoster(posterUrl, messageDiv);
+                        var posterDiv = createPoster(posterUrl);
+                        document.cookie = "dailyMoviePosterUrl=" + posterUrl + "; path=/"
+                        document.cookie = "dailyMovieTitle=" + data[1][1]+ "; path=/"
 
                     } else {
                         messageDiv.html('Try again!');
@@ -115,7 +143,11 @@ $(document).ready(function() {
                         data[2][1],
                         resultat_condition
                     );
-
+                    document.cookie = "success=" + data[0][0] + "; path=/"
+                    $.ajax({
+                        url: "userHistory/createUserHistory",
+                        type: "GET"
+                    })
                 }
             });
         },
