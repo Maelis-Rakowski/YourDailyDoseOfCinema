@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Your daily dose of cinema is the best website ever">
-        <link rel="stylesheet" type="text/css" href="/assets/css/style2.css ">
+        <link rel="stylesheet" type="text/css" href="/assets/css/style_resp.css ">
         <title><?= $t ?></title>
         <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
         <!-- <link href="/docs/5.3/assets/css/docs.css" rel="stylesheet"> -->

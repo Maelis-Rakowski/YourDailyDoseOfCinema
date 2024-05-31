@@ -24,13 +24,7 @@ const cubeEnd =
     </div>
 `;
 
-const cubes_parent = $('#squaresContainer');
-
 const parent = $('#squaresContainer');
-
-function checkInput() {
-    var input = document.getElementById('movieInput').value;
-    var noGuess = document.getElementById('noGuess');
   
 initialisationGuessesListe_lg();
   
