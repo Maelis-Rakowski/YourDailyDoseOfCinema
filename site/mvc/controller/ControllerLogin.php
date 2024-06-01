@@ -85,9 +85,7 @@ class ControllerLogin {
         if($users!=null) {
             $answer = true;
         }
-        
         echo json_encode(["answer"=>$answer]);
-       
     }
 
     //Try connect
@@ -214,7 +212,5 @@ class ControllerLogin {
             }
         }
     }
-
-    
 }
 ?>
