@@ -17,7 +17,7 @@
             <td><?= htmlspecialchars($movie->getRuntime()) ?></td>
             <td><?= htmlspecialchars($movie->getOverview()) ?></td>
             <td>
-                <form method="GET" action="/movie/details">
+                <form method="GET" action="/admin/movie/details">
                     <input type="hidden" name="id" value="<?= $movie->getId() ?>">
                     <input type="submit" value="Détails">
                 </form>

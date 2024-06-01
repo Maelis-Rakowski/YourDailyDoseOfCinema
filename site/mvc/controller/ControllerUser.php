@@ -3,6 +3,7 @@
     require_once FILE::build_path(array('model','UserModel.php'));
     require_once FILE::build_path(array('model','UserHistoryModel.php'));
     require_once FILE::build_path(array('model','DailyMovieModel.php'));
+    require_once FILE::build_path(array('model','MovieModel.php'));
 
     class ControllerUser {
         //variable of the view to generate
@@ -18,12 +19,14 @@
                     $user = $user[0];
                     //Récupérer le compteur d'essais du joueur
                     $userHistories = UserHistoryModel::getUserHistoryByUser($user->getId());
-                    $idMovie = DailyMovieModel::getTodayDailyMovie(date('Y-m-d'));
-                    $idDailyMovie = $idMovie->getId();
-                    $userHistory = $userHistories[0]->getDailyUserHistory($idDailyMovie);
-                    $nbTries = $userHistory->getTryNumber();
+                    foreach ($userHistories as $userHistory) {
+                        $dailyMovie = DailyMovieModel::getDailyMovieById($userHistory->getIdDailyMovie());
+                        $movie = MovieModel::getMovieById($dailyMovie->getIdMovie());
+                        $dailyMovie->setMovie($movie);
+                        $userHistory->setDailyMovie($dailyMovie);
+                    }
                     $this->_view = new View(array('view', 'user', 'viewUser.php'));
-                    $this->_view->generate(array('user' => $user, 'nbTries' => $nbTries));
+                    $this->_view->generate(array('user' => $user, 'userHistories' => $userHistories));
                 } else {
                     $controllerError = new ControllerError();
                     $controllerError->show404();

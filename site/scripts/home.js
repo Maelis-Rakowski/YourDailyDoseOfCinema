@@ -336,42 +336,25 @@ function removeSpecialCharacters(inputString) {
 ///////////////////////////////////////////////////
 // Fonction pour récupérer nbTries depuis le serveur
 function getNbTries(callback) {
-    $.ajax({
-        url: 'userHistory/getNbTries',
-        type: 'GET',
-        dataType: 'json',
-        success: function(response) {
-            if (response.status === 'success') {
-                var nbTries = response.nbTries;
-                callback(nbTries);
-            } else {
-                console.error('Erreur lors de la récupération de nbTries:', response.message);
-                callback(null);
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error('Erreur lors de la requête AJAX :', xhr.responseText);
-            callback(null);
-        }
-    });
+    $.get('userHistory/getNbTries')
+    .done(function(reponse){
+        reponse = JSON.parse(reponse);
+        if(reponse.nbTries!=null)
+            callback(reponse.nbTries);
+        else callback(null);
+    })
 }
 
 // Fonction pour mettre à jour nbTries sur le serveur
-function setNbTries(nbTries, callback) {
-    $.ajax({
-        url: 'userHistory/setNbTriesAsSessionVariable',
-        type: 'POST',
-        data: { nbTries: nbTries },
-        success: function(response) {
-        },
-        error: function(xhr, status, error) {
-            console.error('Erreur lors de la mise à jour de la variable de session:', error);
-        }
-    });
+function setNbTries(nbTries) {
+    $.post('userHistory/setNbTriesAsSessionVariable', // Appelle la fonction callTMDBJson du controller tmdb
+        {
+            nbTries: nbTries
+        });
 }
 
 function setNbTriesText(nbTries){
-    document.getElementById("nbTries").textContent = nbTries;
+    $("#nbTries").html('<h4>Essais : ' + nbTries + '</h4>');
 }
 
 function updateTryDataAndText() {
@@ -380,11 +363,8 @@ function updateTryDataAndText() {
             nbTries++;
             updateHistory();
             setNbTriesText(nbTries);
-            setNbTries(nbTries, function(success) {
-                if (success) {
-                    tryShowHints(nbTries);
-                }
-            });
+            tryShowHints(nbTries);
+            setNbTries(nbTries);
         }
     });
 }
@@ -392,25 +372,31 @@ function updateTryDataAndText() {
 //ShowHint
 function tryShowHints(nbTries){
     if (nbTries >= 5) {
-        document.getElementById("tagline").removeAttribute("hidden");
+        //document.getElementById("tagline").removeAttribute("hidden");
+        showTagline();
     }
     if (nbTries >= 10) {
-        document.getElementById("overview").removeAttribute("hidden");
+        showOverview();
     }
 }
 
 //Création  ou Maj du userDailyMovie
 function updateHistory(){
-    $.ajax({
-        url: 'userHistory/updateUserTry', 
-        type: 'POST',
-        success: function(response) {
-            // Traitez la réponse du serveur ici
-            callback(true);
-        },
-        error: function(xhr, status, error) {
-            console.error('Erreur lors de la mise à jour de la variable de session:', error);
-            callback(false);
-        }
-    });
+    $.post('userHistory/updateUserTry')
+}
+
+function showTagline(){
+    $.post('movie/getDailyMovieJson').
+    done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
+        reponse=JSON.parse(reponse);
+        $('#tagline').html('<h4>Tagline : </h4> <h6>' + reponse.tagline + '</h6>');
+    })
+}
+
+function showOverview(){
+    $.post('movie/getDailyMovieJson')
+    .done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
+        reponse=JSON.parse(reponse);
+        $('#overview').html('<h4>Overview : </h4> <h6>' + reponse.overview + '</h6>');
+    })
 }
