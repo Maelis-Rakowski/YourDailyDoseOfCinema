@@ -5,6 +5,8 @@ class DailyMovieModel extends Model {
     private $date;
     private $idMovie;
 
+    private $movie;
+
 // GETTERS & SETTERS
     /**
      * Get the value of id
@@ -29,6 +31,25 @@ class DailyMovieModel extends Model {
         return $this->date;
     }
 
+    /**
+     * Get the value of movie
+     */ 
+    public function getMovie()
+    {
+        return $this->movie;
+    }
+
+    /**
+     * Set the value of movie
+     *
+     * @return  self
+     */ 
+    public function setMovie($movie)
+    {
+        $this->movie = $movie;
+
+        return $this;
+    }
 
 // DATABASE METHODS
     public static function createDailyMovie($date, $id_movie) {
@@ -45,6 +66,22 @@ class DailyMovieModel extends Model {
         $sql = "SELECT * FROM dailymovie WHERE date=:date";
         $values = array(
             "date" => $date
+        );
+        $req_prep = Model::getPDO()->prepare($sql);
+        $req_prep->setFetchMode(PDO::FETCH_CLASS, 'DailyMovieModel');
+        $req_prep->execute($values);
+        $daily_movie = $req_prep->fetchAll();
+        if (sizeof($daily_movie) == 1) {
+            return $daily_movie[0];
+        } else {
+            return null;
+        }
+    }
+
+    public static function getDailyMovieById($id) {
+        $sql = "SELECT * FROM dailymovie WHERE id=:id";
+        $values = array(
+            "id" => $id
         );
         $req_prep = Model::getPDO()->prepare($sql);
         $req_prep->setFetchMode(PDO::FETCH_CLASS, 'DailyMovieModel');

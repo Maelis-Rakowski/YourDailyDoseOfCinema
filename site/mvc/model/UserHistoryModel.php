@@ -6,6 +6,8 @@ class UserHistoryModel extends Model {
     private $idDailyMovie;
     private $tryNumber;
     private $success;
+
+    private $dailyMovie;
     
     public function __construct($idUser = NULL, $idDailyMovie = NULL, $tryNumber = NULL, $success = NULL) {
         if (!is_null($idUser) && !is_null($idDailyMovie) && !is_null($tryNumber) && !is_null($success)) {
@@ -98,7 +100,27 @@ class UserHistoryModel extends Model {
         return $this;
     }
 
-    //DATABASE METHODS
+    /**
+     * Get the value of dailyMovie
+     */ 
+    public function getDailyMovie()
+    {
+        return $this->dailyMovie;
+    }
+
+    /**
+     * Set the value of dailyMovie
+     *
+     * @return  self
+     */ 
+    public function setDailyMovie($dailyMovie)
+    {
+        $this->dailyMovie = $dailyMovie;
+
+        return $this;
+    }
+
+//DATABASE METHODS
 
     public static function createUserHistory($id_user, $id_daily_movie, $try_number, $success) {
         $sql = "INSERT INTO playerhistory (idUser, idDailyMovie, tryNumber, success) VALUES (:idUser, :idDailyMovie, :tryNumber, :success)";
