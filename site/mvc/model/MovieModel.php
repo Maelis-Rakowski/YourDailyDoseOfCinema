@@ -37,7 +37,10 @@ class MovieModel extends Model {
             'runtime' => $this->runtime,
             'posterPath' => $this->posterPath,
             'overview' => $this->overview,
-            'tagline' => $this->tagline
+            'tagline' => $this->tagline,
+            'countries' => $this->countries,
+            'directors' => $this->directors,
+            'genres' => $this->genres
         ]);
     }
     

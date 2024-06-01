@@ -309,42 +309,25 @@ function removeSpecialCharacters(inputString) {
 ///////////////////////////////////////////////////
 // Fonction pour récupérer nbTries depuis le serveur
 function getNbTries(callback) {
-    $.ajax({
-        url: 'userHistory/getNbTries',
-        type: 'GET',
-        dataType: 'json',
-        success: function(response) {
-            if (response.status === 'success') {
-                var nbTries = response.nbTries;
-                callback(nbTries);
-            } else {
-                console.error('Erreur lors de la récupération de nbTries:', response.message);
-                callback(null);
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error('Erreur lors de la requête AJAX :', xhr.responseText);
-            callback(null);
-        }
-    });
+    $.get('userHistory/getNbTries')
+    .done(function(reponse){
+        reponse = JSON.parse(reponse);
+        if(reponse.nbTries!=null)
+            callback(reponse.nbTries);
+        else callback(null);
+    })
 }
 
 // Fonction pour mettre à jour nbTries sur le serveur
 function setNbTries(nbTries) {
-    $.ajax({
-        url: 'userHistory/setNbTriesAsSessionVariable',
-        type: 'POST',
-        data: { nbTries: nbTries },
-        success: function(response) {
-        },
-        error: function(xhr, status, error) {
-            console.error('Erreur lors de la mise à jour de la variable de session:', error);
-        }
-    });
+    $.post('userHistory/setNbTriesAsSessionVariable', // Appelle la fonction callTMDBJson du controller tmdb
+        {
+            nbTries: nbTries
+        });
 }
 
 function setNbTriesText(nbTries){
-    document.getElementById("nbTries").innerHTML = '<h4>Essais : ' + nbTries + '</h4>';
+    $("#nbTries").html('<h4>Essais : ' + nbTries + '</h4>');
 }
 
 function updateTryDataAndText() {
@@ -372,23 +355,11 @@ function tryShowHints(nbTries){
 
 //Création  ou Maj du userDailyMovie
 function updateHistory(){
-    $.ajax({
-        url: 'userHistory/updateUserTry', 
-        type: 'POST',
-        success: function(response) {
-            // Traitez la réponse du serveur ici
-        },
-        error: function(xhr, status, error) {
-            console.error('Erreur lors de la mise à jour de la variable de session:', error);
-        }
-    });
+    $.post('userHistory/updateUserTry')
 }
 
-
 function showTagline(){
-    $.post(//Syntaxe améliorée de la fonction $.ajax() de base commentée dessous
-    'movie/getDailyMovieJson' // Appelle la fonction getDailyMovie du controller movie
-    ).done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
+    $.post('movie/getDailyMovieJson').done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
         //Le paramètre reponse_html est le echo (entre autre le return) de la méthode
         reponse=JSON.parse(reponse);
         $('#tagline').html('<h4>Tagline : </h4> <h6>' + reponse.tagline + '</h6>');//Remplit la balise id "datas" de la vue avec la réponse html du controller
@@ -396,9 +367,8 @@ function showTagline(){
 }
 
 function showOverview(){
-    $.post(//Syntaxe améliorée de la fonction $.ajax() de base commentée dessous
-    'movie/getDailyMovieJson' // Appelle la fonction getDailyMovie du controller movie
-    ).done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
+    $.post('movie/getDailyMovieJson')
+    .done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
         //Le paramètre reponse_html est le echo (entre autre le return) de la méthode
         reponse=JSON.parse(reponse);
         $('#overview').html('<h4>Overview : </h4> <h6>' + reponse.overview + '</h6>');//Remplit la balise id "datas" de la vue avec la réponse html du controller

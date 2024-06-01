@@ -32,18 +32,7 @@
 
         public function getDailyMovieJson() {
             $dailymovie = MovieModel::getCurrentMovie();
-            echo json_encode(['status' => 'success', 
-                'id' => $dailymovie->getId(), 
-                'title' => $dailymovie->getTitle(),
-                'releaseDate' => $dailymovie->getReleaseDate(),
-                'runtime' => $dailymovie->getRuntime(),
-                'posterPath' => $dailymovie->getPosterPath(),
-                'tagline' => $dailymovie->getTagline(),
-                'overview' => $dailymovie->getOverview(),
-                'directors' => $dailymovie->getDirectors(),
-                'countries' => $dailymovie->getCountries(),
-                'genres' => $dailymovie->getGenres()
-            ]);
+            echo($dailymovie->toJson());
         }
     }
 ?>
