@@ -7,6 +7,7 @@
         </div>
         <div id="guesses" class="guess form-floating mb-5">
             <p id="nbTries"></p>
+            <p id="result"></p>
             <input name="movieSearch" class="form-control" id="movieSearch" type="text" placeholder="Guess the game of the day...">
             <label for="movieSearch" class="pl-2 seach_bar form-label">Guess the game of the day...</label>
         </div>
