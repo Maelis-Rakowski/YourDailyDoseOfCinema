@@ -16,7 +16,7 @@ Le projet est développé en PHP, HTML/CCS et JavaScript.
 Prérequis : Avoir un serveur PHP et de base de donnée (WAMP, LAMP etc) 
 1. Clonez ce dépôt.
 2. Créez une base de donnée MariaDB (elle doit untiliser le moteur InnoDB)
-3. Executez le script contenue dans le dossier site/sql
+3. Executez le script `yddoc.sql` contenue dans le dossier site/sql
 4. Dans le dossier site/mvc/Conf, créez un fichier `.env`. Dans ce dossier, mettez : 
    ```yaml .env
    db_user="{Votre nom d'utilisateur}"
