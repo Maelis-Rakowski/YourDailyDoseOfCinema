@@ -330,7 +330,7 @@ function getNbTries(callback) {
 }
 
 // Fonction pour mettre à jour nbTries sur le serveur
-function setNbTries(nbTries, callback) {
+function setNbTries(nbTries) {
     $.ajax({
         url: 'userHistory/setNbTriesAsSessionVariable',
         type: 'POST',
@@ -344,7 +344,7 @@ function setNbTries(nbTries, callback) {
 }
 
 function setNbTriesText(nbTries){
-    document.getElementById("nbTries").textContent = nbTries;
+    document.getElementById("nbTries").innerHTML = '<h4>Essais : ' + nbTries + '</h4>';
 }
 
 function updateTryDataAndText() {
@@ -353,11 +353,8 @@ function updateTryDataAndText() {
             nbTries++;
             updateHistory();
             setNbTriesText(nbTries);
-            setNbTries(nbTries, function(success) {
-                if (success) {
-                    tryShowHints(nbTries);
-                }
-            });
+            tryShowHints(nbTries);
+            setNbTries(nbTries);
         }
     });
 }
@@ -365,10 +362,11 @@ function updateTryDataAndText() {
 //ShowHint
 function tryShowHints(nbTries){
     if (nbTries >= 5) {
-        document.getElementById("tagline").removeAttribute("hidden");
+        //document.getElementById("tagline").removeAttribute("hidden");
+        showTagline();
     }
     if (nbTries >= 10) {
-        document.getElementById("overview").removeAttribute("hidden");
+        showOverview();
     }
 }
 
@@ -379,11 +377,30 @@ function updateHistory(){
         type: 'POST',
         success: function(response) {
             // Traitez la réponse du serveur ici
-            callback(true);
         },
         error: function(xhr, status, error) {
             console.error('Erreur lors de la mise à jour de la variable de session:', error);
-            callback(false);
         }
     });
+}
+
+
+function showTagline(){
+    $.post(//Syntaxe améliorée de la fonction $.ajax() de base commentée dessous
+    'movie/getDailyMovieJson' // Appelle la fonction getDailyMovie du controller movie
+    ).done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
+        //Le paramètre reponse_html est le echo (entre autre le return) de la méthode
+        reponse=JSON.parse(reponse);
+        $('#tagline').html('<h4>Tagline : </h4> <h6>' + reponse.tagline + '</h6>');//Remplit la balise id "datas" de la vue avec la réponse html du controller
+    })
+}
+
+function showOverview(){
+    $.post(//Syntaxe améliorée de la fonction $.ajax() de base commentée dessous
+    'movie/getDailyMovieJson' // Appelle la fonction getDailyMovie du controller movie
+    ).done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
+        //Le paramètre reponse_html est le echo (entre autre le return) de la méthode
+        reponse=JSON.parse(reponse);
+        $('#overview').html('<h4>Overview : </h4> <h6>' + reponse.overview + '</h6>');//Remplit la balise id "datas" de la vue avec la réponse html du controller
+    })
 }

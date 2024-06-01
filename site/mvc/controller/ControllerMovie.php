@@ -1,6 +1,7 @@
 <?php
     require_once FILE::build_path(array('view','view.php'));
     require_once FILE::build_path(array('model','MovieModel.php'));
+    require_once FILE::build_path(array('model','DailyMovieModel.php'));
     class ControllerMovie {
         //variable of the view to generate
         private $_view;
@@ -26,6 +27,23 @@
                 ];
             } 
             echo json_encode($results);
+        }
+
+
+        public function getDailyMovieJson() {
+            $dailymovie = MovieModel::getCurrentMovie();
+            echo json_encode(['status' => 'success', 
+                'id' => $dailymovie->getId(), 
+                'title' => $dailymovie->getTitle(),
+                'releaseDate' => $dailymovie->getReleaseDate(),
+                'runtime' => $dailymovie->getRuntime(),
+                'posterPath' => $dailymovie->getPosterPath(),
+                'tagline' => $dailymovie->getTagline(),
+                'overview' => $dailymovie->getOverview(),
+                'directors' => $dailymovie->getDirectors(),
+                'countries' => $dailymovie->getCountries(),
+                'genres' => $dailymovie->getGenres()
+            ]);
         }
     }
 ?>

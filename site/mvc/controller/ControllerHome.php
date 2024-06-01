@@ -16,17 +16,12 @@
             if(!isset($_SESSION['nbTries'])){
                 $_SESSION['nbTries'] = 0;
             }
-            //Generate the view without data
-            $currentMovie= MovieModel::getCurrentMovie();
-            $tagline = $currentMovie->getTagline();
-            $overview = $currentMovie->getOverview();
-             // save player guess in their history
 
              if (isset($_SESSION["pseudo"])) {
                 ControllerUserHistory::createUserHistory($_SESSION["pseudo"]);
             }
 
-            $this->_view->generate(array("tagline" => $tagline, "overview" => $overview));
+            $this->_view->generate(array(null));
         }
 
         public function submitGuess() {
