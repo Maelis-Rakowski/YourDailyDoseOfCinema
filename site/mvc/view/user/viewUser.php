@@ -10,14 +10,13 @@
                 <th>Try Number</th>
                 <th>Solution</th>
             </tr>
+            <?php foreach ($userHistories as $userHistory):?>
             <tr>
-                <td><?= date("Y-m-d"); ?></td>
-                <td><?= $nbTries ?></td>
-                <td></td> <!-- La colonne solution est laissée vide ou vous pouvez y ajouter des données pertinentes -->
+                <td><?= htmlspecialchars($userHistory->getDailyMovie()->getDate()) ?></td>
+                <td><?= htmlspecialchars($userHistory->getTryNumber()) ?></td>
+                <td><?= htmlspecialchars($userHistory->getDailyMovie()->getMovie()->getTitle()) ?></td>
             </tr>
-            
+            <?php endforeach; ?>
         </table>
     </div>
 </div>
-
-
