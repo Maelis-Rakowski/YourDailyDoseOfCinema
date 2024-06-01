@@ -59,6 +59,6 @@ header {
     left: 50%;
     transform: translate(-50%, -50%);
     margin: 0;
-    color: white; /* ou la couleur de votre choix */
-    font-weight: bold; /* facultatif */
+    color: white;
+    font-weight: bold;
 }

@@ -31,7 +31,7 @@ const cubeEnd =
     </div>
 `;
 
-initialisationGuessesListe_lg();
+// initialisationGuessesListe_lg();
   
 const getCookieValue = (name) => (
     document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || null

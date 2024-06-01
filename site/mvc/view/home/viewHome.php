@@ -12,7 +12,32 @@
             <label for="movieSearch" class="pl-2 seach_bar form-label">Guess the game of the day...</label>
         </div>
         <div id="movieList" class="flex-row">
-            <div  id="squaresContainer" class="d-none d-lg-block"></div>
+        <div class="container-fluid d-none d-lg-block">
+            <div class="row">
+                <div class="col d-flex justify-content-center align-items-center">
+                    <div class="mx-2 fw-bold">Poster</div>
+                </div>
+                <div class="col d-flex justify-content-center align-items-center">
+                    <div class="mx-2 fw-bold">Title</div>
+                </div>
+                <div class="col d-flex justify-content-center align-items-center">
+                    <div class="mx-2 fw-bold">Year</div>
+                </div>
+                <div class="col d-flex justify-content-center align-items-center">
+                    <div class="mx-2 fw-bold">Duration</div>
+                </div>
+                <div class="col d-flex justify-content-center align-items-center">
+                    <div class="mx-2 fw-bold">Genres</div>
+                </div>
+                <div class="col d-flex justify-content-center align-items-center">
+                    <div class="mx-2 fw-bold">Countries</div>
+                </div>
+                <div class="col d-flex justify-content-center align-items-center">
+                    <div class="mx-2 fw-bold">Directors</div>
+                </div>
+            </div>
+        </div>
+            <div  id="squaresContainer" class="d-none d-lg-block container-fluid"></div>
             <div  id="squaresContainer_sm" class="d-block d-lg-none"></div>
         </div>
     </main>
