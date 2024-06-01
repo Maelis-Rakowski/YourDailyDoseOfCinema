@@ -1,4 +1,4 @@
-create table if not exists dailyMovie (
+create table if not exists dailymovie (
     id integer primary key AUTO_INCREMENT,
     date date,
 	idMovie integer,
@@ -12,5 +12,5 @@ create table if not exists playerHistory (
     success tinyint,
     primary key (idUser, idDailyMovie),
     foreign key (idUser) references users(id),
-    foreign key (idDailyMovie) references dailyMovie(id)
+    foreign key (idDailyMovie) references dailymovie(id)
 )
