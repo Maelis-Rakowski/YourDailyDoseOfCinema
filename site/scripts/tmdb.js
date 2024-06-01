@@ -27,3 +27,4 @@ function addMovie(idmovieToAdd){
         $('#answer' + idmovieToAdd).html(reponse_html);
     })
 }
+

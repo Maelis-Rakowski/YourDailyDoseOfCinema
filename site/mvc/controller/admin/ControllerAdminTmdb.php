@@ -55,7 +55,7 @@
             $answer = MovieModel::addMovie($movie);
             //Gestion d'erreur d'existance
             if($answer == -1){
-                echo '<p style="color: red;">this movie already exists in the database<p>';
+                echo '<p class="text-danger error form-text">this movie already exists in the database<p>';
                 return;
             }
 
@@ -108,7 +108,7 @@
                 $movieID
             );
 
-            echo '<p style="color: green;">Movie added successfully</p>';
+            echo '<p class="error form-text text-success">Movie added successfully</p>';
         }
     }
 ?>
