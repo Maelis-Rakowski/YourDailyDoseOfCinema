@@ -45,16 +45,16 @@
         }
 
         public function addMovie(){
-            $idmovie= (int)$_POST['idmovie'];
+            $idmovie = (int)$_POST['idmovie'];
             $movie = json_decode(file_get_contents('https://api.themoviedb.org/3/movie/' . $idmovie . '?api_key=' . $this->apiKey), true);
             
-            $countries=$movie['production_countries'];
+            $countries = $movie['production_countries'];
 
-            $credits=json_decode(file_get_contents('https://api.themoviedb.org/3/movie/' . $idmovie . '/credits?api_key=' . $this->apiKey), true);
+            $credits = json_decode(file_get_contents('https://api.themoviedb.org/3/movie/' . $idmovie . '/credits?api_key=' . $this->apiKey), true);
             
-            $return = MovieModel::addMovie($movie);
+            $answer = MovieModel::addMovie($movie);
             //Gestion d'erreur d'existance
-            if($return==-1){
+            if($answer ==-1){
                 echo '<p style="color: red;">this movie already exists in the database<p>';
                 return;
             }
