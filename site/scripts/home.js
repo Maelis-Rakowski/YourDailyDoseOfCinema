@@ -4,6 +4,13 @@ const cubeStart =
             <div class="image-container">
                 <img
 `;
+
+const cubeStart_sm = 
+`    <div class="col-4">
+        <div class="image-wrapper">
+            <div class="image-container">
+                <img
+`;
 const cubeMiddle = 
 `
 class="img-fluid img-thumbnail" alt="...">
@@ -12,7 +19,7 @@ class="img-fluid img-thumbnail" alt="...">
 
 const htmlStringMiddlePoster = 
 `
-" class="img-fluid rounded img-thumbnail" style="max-width: 150px; max-height: 150px; object-fit: cover;" alt="...">
+" class="img-fluid rounded img-thumbnail" style=" object-fit: cover;" alt="...">
 <p class="text-center" style="word-wrap: break-word;">
 `;
 
@@ -24,9 +31,7 @@ const cubeEnd =
     </div>
 `;
 
-const parent = $('#squaresContainer');
-  
-initialisationGuessesListe_lg();
+// initialisationGuessesListe_lg();
   
 const getCookieValue = (name) => (
     document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || null
@@ -197,8 +202,8 @@ function createPoster(url) {
 
 function initialisationGuessesListe_lg() {
     const parent = $('#movieList');  
-    const guessesContainer_lg = $('<div/>', { class: 'col guesses_container row text-center d-none d-md-block' });
-    const thContainer = $('<div/>', { class: 'flex row border-bottom pb-3' });
+    const guessesContainer_lg = $('<div/>', { class: 'col guesses_container row text-center d-none d-lg-block' });
+    const thContainer = $('<div/>', { class: 'flex row border-bottom mb-3' });
     const tdContainer = $('<div/>', { class: 'td_container' });
     
     const thColumns = [
@@ -218,56 +223,78 @@ function initialisationGuessesListe_lg() {
   
     guessesContainer_lg.append(thContainer);
     guessesContainer_lg.append(tdContainer);  
-    parent.append(guessesContainer_lg);
+    parent.prepend(guessesContainer_lg);
 }
 
 function insertGuessInGuessesListe(poster, title, date, time, genre, country, director, resultat_condition) {
+    poster = `https://image.tmdb.org/t/p/w500` + poster;
+
     //attribution d'un id à la row afin de la retrouver dans d'autres fonctions
+    //PC
+    parent = $('#squaresContainer');
     id = removeSpecialCharacters(title+date+time);
     const htmlRow = '<div class="d_row flex row pb-3" id ="' + id +'" ></div>' ;
     parent.prepend(htmlRow);    
     row = $("#" + id);
-
-    //Poster
-    poster = `https://image.tmdb.org/t/p/w500` + poster;
+    
+    //PC - Poster
     cubePoster = cubeStart + 'id = "' + id + '_' + "poster" + '"' + htmlStringMiddlePoster + cubeEnd;
     row.append(cubePoster);
     posterDiv = $("#" + id+"_poster");
     posterDiv.attr('src', poster);
 
-    //creation des cubes de couleurs
+    //Phone
+    id_sm = id + "_sm";    
+    parent = $('#squaresContainer_sm');
+    const htmlRow_sm = '<div class="card border rounded bg-light m-2" id = "' + id_sm + '"></div>';
+    parent.prepend(htmlRow_sm);
+    currentCard = $("#" + id_sm);
+
+    id_sm = id_sm + "row";
+    currentCard.html('<div class="col m-2 guesses_container row text-center"><div class="container-fluid"><div class="row" id = "' + id_sm + '"></div></div></div>');
+    currentMainRow = $("#" + id_sm);
+
+    id_sm = id_sm + "col_8";
+    currentMainRow.html('<div style="max-height: 400px;" class="col-4"><img class="img-fluid img-thumbnail" src="' + poster + '"></img></div> <div class="col-8 mt-md-3 mt-sm-1"><div class="row gx-2 gy-2 gx-md-5 gy-md-5" id = "' + id_sm + '"></div></div>');
+    cubesContainer_sm = $("#" + id_sm);
+
+
+    //creation des cubes de couleurs PC
     cubes = "";
+    cubes_sm = "";
     const cubes_data = [title, date, time, genre, country, director];
     for(i = 0; i < 6; i++) {
         cubes = cubes + cubeStart + 'id = "' + id + '_' + i + '"' + cubeMiddle + cubes_data[i] + cubeEnd;
+        cubes_sm = cubes_sm + cubeStart_sm + 'id = "' + id_sm + '_' + i + '"' + cubeMiddle + cubes_data[i] + cubeEnd;
     }
     row.append(cubes);
+    cubesContainer_sm.append(cubes_sm);
 
     updateTryDataAndText();
-    // const titleDiv = $("<div></div>").attr("class", "td_column picture");
-    // titleDiv.css({
-    //     'background-image': `url(${col1})`,
-    //     'background-size': 'cover',
-    // });
-    // row.append(titleDiv);
-    
+
     // Title
-    defineColor(resultat_condition[1], id+"_0");
+    defineColor(resultat_condition[1], id + "_0");
+    defineColor(resultat_condition[1], id_sm + "_0");
 
     // Date
-    defineColor(resultat_condition[5], id+"_1", resultat_condition[7]);
+    defineColor(resultat_condition[5], id + "_1", resultat_condition[7]);
+    defineColor(resultat_condition[5], id_sm + "_1", resultat_condition[7]);
 
     // Time
-    defineColor(resultat_condition[6], id+"_2", resultat_condition[8]);
+    defineColor(resultat_condition[6], id + "_2", resultat_condition[8]);
+    defineColor(resultat_condition[6], id_sm + "_2", resultat_condition[8]);
 
     // Genres
-    defineColor(resultat_condition[4], id+"_3");
+    defineColor(resultat_condition[4], id + "_3");
+    defineColor(resultat_condition[4], id_sm + "_3");
 
     // Countries
-    defineColor(resultat_condition[3], id+"_4");
+    defineColor(resultat_condition[3], id + "_4");
+    defineColor(resultat_condition[3], id_sm + "_4");
 
     // directors
-    defineColor(resultat_condition[2], id+"_5");
+    defineColor(resultat_condition[2], id + "_5");
+    defineColor(resultat_condition[2], id_sm + "_5");
 }
 
 function defineColor(condition, id, condition_arrow = -1) {
