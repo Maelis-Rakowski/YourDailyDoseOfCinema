@@ -18,3 +18,4 @@
         </div>
     </main>
 </div>
+<script src="/scripts/home.js"></script>
