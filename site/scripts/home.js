@@ -379,11 +379,9 @@ function updateHistory(){
         type: 'POST',
         success: function(response) {
             // Traitez la réponse du serveur ici
-            callback(true);
         },
         error: function(xhr, status, error) {
             console.error('Erreur lors de la mise à jour de la variable de session:', error);
-            callback(false);
         }
     });
 }
