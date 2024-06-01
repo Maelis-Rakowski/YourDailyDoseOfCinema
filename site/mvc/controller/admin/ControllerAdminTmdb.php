@@ -45,7 +45,7 @@
         }
 
         public function addMovie(){
-            $idmovie=$_POST['idmovie'];
+            $idmovie= (int)$_POST['idmovie'];
             $movie = json_decode(file_get_contents('https://api.themoviedb.org/3/movie/' . $idmovie . '?api_key=' . $this->apiKey), true);
             
             $countries=$movie['production_countries'];
@@ -55,9 +55,7 @@
             $return = MovieModel::addMovie($movie);
             //Gestion d'erreur d'existance
             if($return==-1){
-                $text = "LE FILM EXISTE DEJA DANS LA BDD ALORS ANNULATION DE L'INSERTION";
-                $this->_view = new View(array('view', 'admin', 'tmdb', 'viewResponse.php'));
-                $this->_view->generate(array('text'=>$text));
+                echo '<p style="color: red;">this movie already exists in the database<p>';
                 return;
             }
 
@@ -110,9 +108,7 @@
                 $movieID
             );
 
-            $text = "Le film ". $movie['title'] ." a été ajouté avec succès ^^";
-            $this->_view = new View(array('view', 'admin', 'tmdb', 'viewResponse.php'));
-            $this->_view->generate(array('text'=>$text));
+            echo '<p style="color: green;">Movie added successfully</p>';
         }
     }
 ?>

@@ -16,3 +16,16 @@ document.addEventListener('DOMContentLoaded',function(){
                 })
     });
 });
+
+function addMovie(idmovieToAdd){
+    console.log("adding" + idmovieToAdd);
+    $.post('tmdb/addMovie',
+    {
+        idmovie : idmovieToAdd,
+    }         
+    ).done(function(reponse_html){
+        $('#answer'+idmovieToAdd).empty();
+        $('#answer'+idmovieToAdd).html(reponse_html);
+        console.log(reponse_html);
+    })
+}
