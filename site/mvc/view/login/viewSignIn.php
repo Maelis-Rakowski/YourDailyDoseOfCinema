@@ -1,7 +1,7 @@
 <?php $this->_t="SignIn"?>
 
 <div class="container-xxl bd-gutter mt-3 my-md-4 bd-layout">
-    <main class="bd-main order-1">
+    <div class="bd-main order-1">
 
         <div class="py-5 text-center">
             <h2 class="fw-bold display-5">Welcome Back!</h2>
@@ -31,14 +31,17 @@
 
             <div class="border p-3 rounded bg-light mt-5">
                 <h2 class="display-7 fw-bold">Forgot Password ?</h2>
-                <form method="POST" action="sendEmail" target="_blank">
+                <form id="emailForm" method="POST" action="sendEmail" target="_blank">
                     <div class="mb-3 form-floating mt-3">
-                        <input name="email" class="form-control" type="text" placeholder="exist">
+                        <input name="email" id="emailInput" class="form-control" type="text" placeholder="exist">
                         <label for="email" class="form-label" >Email</label>
                     </div>
-                    <button type="submit" class="btn-dark btn btn-primary mt-4">Send Mail</button>
+                    <p id="answerEmail"></p>
+
+                    <button type="submit" class="btn-dark btn btn-primary mt-4" id="sendEmailButton">Send Mail</button>
                 </form>
             </div>
         </div>
-    </main>
+    </div>
+    <script src="/scripts/login.js"></script>
 </div>

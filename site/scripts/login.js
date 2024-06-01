@@ -90,7 +90,14 @@ $(document).ready(function () {
             });
         },
         minLength: 2,
-    })
+    });
+
+    $("#emailForm").on('submit', function(e) {
+        e.preventDefault(); // On empêche le navigateur d'envoyer le formulaire, on fait le post nous même
+        var email = $("#emailInput").val();
+        checkEmailExists(email);
+    });
+
 })
 
 function getInputFieldPseudo(){
@@ -98,3 +105,21 @@ function getInputFieldPseudo(){
     return input.value;
 }
 
+function checkEmailExists(email) {
+    console.log(email);
+    $.post('checkEmailExists', {
+        emailInput: email,
+    }).done(function(reponse_html) {
+        reponse = JSON.parse(reponse_html);
+        if (reponse["answer"]) {
+            $('#answerEmail').html("email envoyé avec succès");
+            $('#answerEmail').removeClass("text-danger");
+            $('#answerEmail').addClass("text-success");
+            document.getElementById("emailForm").submit();
+        }
+        else{   $('#answerEmail').html("ce mail n'est pas associé à un compte");
+                $('#answerEmail').removeClass("text-success");
+                $('#answerEmail').addClass("text-danger");
+        }
+    });
+}

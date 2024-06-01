@@ -78,6 +78,18 @@ class ControllerLogin {
         echo json_encode($response);
     }
 
+    public function checkEmailExists(){
+        $email = $_POST['emailInput'];
+        $users = UserModel::getUserByEmail($email);
+        $answer = false;
+        if($users!=null) {
+            $answer = true;
+        }
+        
+        echo json_encode(["answer"=>$answer]);
+       
+    }
+
     //Try connect
     public function signIn(){
         if(isset($_POST["pseudo"]) && isset($_POST["password"])) {
@@ -132,20 +144,18 @@ class ControllerLogin {
 
         $email = $_POST['email'];
         $users = UserModel::getUserByEmail($email);
-        if($users==null) {
-            echo("email non reconnu");
-            return;
-        }
-        $user = $users[0];
-        $current_date = date('Y-m-d H:i:s'); // Obtenir la date et l'heure actuelles
-        $random_string = bin2hex(random_bytes(16)); // Générer une chaîne de caractères aléatoire
-        $token_data =  $user->getId() . $current_date . $random_string . $email;
-        $token = hash('sha256', $token_data);
+        if($users!=null) {
+            $user = $users[0];
+            $current_date = date('Y-m-d H:i:s'); // Obtenir la date et l'heure actuelles
+            $random_string = bin2hex(random_bytes(16)); // Générer une chaîne de caractères aléatoire
+            $token_data =  $user->getId() . $current_date . $random_string . $email;
+            $token = hash('sha256', $token_data);
 
-        UserModel::updateUserToken($user->getId(), $token, $current_date);
-        $this->_view = new View(array('view','login','viewMail.php'));
-        //Generate the view without data
-        $this->_view->generate(array('token'=>$token, 'email'=>$email));
+            UserModel::updateUserToken($user->getId(), $token, $current_date);
+            $this->_view = new View(array('view','login','viewMail.php'));
+            //Generate the view without data
+            $this->_view->generate(array('token'=>$token, 'email'=>$email));
+        }
     }
 
     function generatePrivateKey($email) {
@@ -204,5 +214,7 @@ class ControllerLogin {
             }
         }
     }
+
+    
 }
 ?>
