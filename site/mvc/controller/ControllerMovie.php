@@ -29,7 +29,6 @@
             echo json_encode($results);
         }
 
-
         public function getDailyMovieJson() {
             $dailymovie = MovieModel::getCurrentMovie();
             echo($dailymovie->toJson());

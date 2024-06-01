@@ -359,18 +359,17 @@ function updateHistory(){
 }
 
 function showTagline(){
-    $.post('movie/getDailyMovieJson').done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
-        //Le paramètre reponse_html est le echo (entre autre le return) de la méthode
+    $.post('movie/getDailyMovieJson').
+    done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
         reponse=JSON.parse(reponse);
-        $('#tagline').html('<h4>Tagline : </h4> <h6>' + reponse.tagline + '</h6>');//Remplit la balise id "datas" de la vue avec la réponse html du controller
+        $('#tagline').html('<h4>Tagline : </h4> <h6>' + reponse.tagline + '</h6>');
     })
 }
 
 function showOverview(){
     $.post('movie/getDailyMovieJson')
     .done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
-        //Le paramètre reponse_html est le echo (entre autre le return) de la méthode
         reponse=JSON.parse(reponse);
-        $('#overview').html('<h4>Overview : </h4> <h6>' + reponse.overview + '</h6>');//Remplit la balise id "datas" de la vue avec la réponse html du controller
+        $('#overview').html('<h4>Overview : </h4> <h6>' + reponse.overview + '</h6>');
     })
 }
