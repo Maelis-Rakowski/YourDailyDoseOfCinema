@@ -148,8 +148,10 @@ class UserHistoryModel extends Model {
     }
 
     public static function getUserHistoryByUser($idUser) {
-        $sql = "SELECT * FROM playerhistory
-        WHERE idUser = :idUser";
+        $sql = "SELECT p.* FROM playerhistory p
+        JOIN dailymovie dm ON dm.id = p.idDailyMovie 
+        WHERE p.idUser = :idUser 
+        ORDER BY date DESC";
         $rep = Model::getPDO() -> prepare($sql);
         $rep->setFetchMode(PDO::FETCH_CLASS, 'UserHistoryModel');
 
