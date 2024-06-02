@@ -14,21 +14,23 @@
                 $today_date = date('Y-m-d');
                 $daily_movie = DailyMovieModel::getTodayDailyMovie($today_date);
                 $success=false;
-                if (isset($_COOKIE["success"])){
-                    $success = $_COOKIE["success"];
-                    // convert from string to boolean
-                    if ($success == 'true') {
-                        $success = true;
-                    } else {
-                        $success = false;
+                if ($daily_movie != null) {
+                    if (isset($_COOKIE["success"])){
+                        $success = $_COOKIE["success"];
+                        // convert from string to boolean
+                        if ($success == 'true') {
+                            $success = true;
+                        } else {
+                            $success = false;
+                        }
                     }
+                
+                    $hasPlayedToday = UserHistoryModel::hasPlayedToday($user->getId(),$daily_movie->getId());
+                    if ($hasPlayedToday==false) {
+                        //if no user history then create one             
+                        UserHistoryModel::createUserHistory($user->getId(), $daily_movie->getId(), 0, $success);
+                    } 
                 }
-               
-                $hasPlayedToday = UserHistoryModel::hasPlayedToday($user->getId(),$daily_movie->getId());
-                if ($hasPlayedToday==false) {
-                    //if no user history then create one             
-                    UserHistoryModel::createUserHistory($user->getId(), $daily_movie->getId(), 0, $success);
-                } 
             }
         }
         //Add a try
