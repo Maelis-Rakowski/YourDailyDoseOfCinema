@@ -16,7 +16,11 @@
                 <tr>
                     <td><?= htmlspecialchars($userHistory->getDailyMovie()->getDate()) ?></td>
                     <td><?= htmlspecialchars($userHistory->getTryNumber()) ?></td>
-                    <td><?= htmlspecialchars($userHistory->getDailyMovie()->getMovie()->getTitle()) ?></td>
+                    <td>
+                    <?php if ($userHistory->getSuccess()) {?>
+                        <?= htmlspecialchars($userHistory->getDailyMovie()->getMovie()->getTitle()) ?>
+                    <?php } ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
