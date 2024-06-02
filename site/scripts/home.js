@@ -106,7 +106,7 @@ $(document).ready(function() {
                     var messageDiv = createMessageDiv();
                    
                     if (data[0][0]) {
-                        messageDiv.html('<h2 class="text-success">Félicitation !</h2>');
+                        messageDiv.html('<h2 class="text-success">You nailed it !</h2>');
 
                         var posterUrl = "https://image.tmdb.org/t/p/w500" + data[9][1];
                     
