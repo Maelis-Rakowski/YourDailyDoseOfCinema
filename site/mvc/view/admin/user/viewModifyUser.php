@@ -2,16 +2,16 @@
 <div class="form-container">
 
     <h2>Modification du User id : <?=$user_id?></h2>
-    <form action="/user/modifyUser" method="POST">
+    <form action="/admin/user/modifyUser" method="POST">
         <ul>
             <input type="hidden" name="user_id" value=" <?= $user_id ?>">
             <li>
-                <label for="new_user_pseudo">New Pseudo : </label>
-                <input name="new_user_pseudo" type="text" value="<?=$user_pseudo?>">
+                <label for="new_user_pseudo">Pseudo : <?=$user_pseudo?></label>
+                <input name="new_user_pseudo" type="hidden" value="<?=$user_pseudo?>">
             </li>
             <li>
-                <label for="new_user_email">New email : </label>
-                <input name="new_user_email" type="email" value="<?=$user_email?>">
+                <label for="new_user_email">Email : <?=$user_email?></label>
+                <input name="new_user_email" type="hidden" value="<?=$user_email?>">
             </li>
             <li>
                 <label for="new_user_isAdmin">Admininistrator : </label> 
@@ -22,7 +22,7 @@
                 >
             </li>
             <li>                
-                <input type="submit" value="Valider mes modifications">
+                <input type="submit" value="Submit Changes">
             </li>
         </ul>
     </form>

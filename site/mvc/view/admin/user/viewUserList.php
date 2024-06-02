@@ -21,13 +21,13 @@
                         <input type="hidden" name="user_pseudo"     value = "<?= htmlspecialchars($obj->getPseudo())        ?>">
                         <input type="hidden" name="user_isAdmin"    value = "<?= htmlspecialchars($obj->getIsAdmin())       ?>">
 
-                        <input type="submit" value="Modifier">
+                        <input type=<?=$obj->getPseudo() == $_SESSION['pseudo'] ? "hidden" : "submit" ?> value="Modify">
                     </form>
                 </td>
                 <td>
                     <form method="POST" action="/admin/user/delete">
                         <input type="hidden" name="user_id" value="<?= htmlspecialchars($obj->getId()) ?>">
-                        <input type="submit" value="Supprimer">
+                        <input type=<?=$obj->getPseudo() == $_SESSION['pseudo'] ? "hidden" : "submit" ?> value="Delete">
                     </form>
                 </td>
             </tr>
