@@ -228,7 +228,18 @@ function initialisationGuessesListe_lg() {
     parent.prepend(guessesContainer_lg);
 }
 
+function addSpacesAfterCommas(str) {
+    if (typeof str !== 'string') {
+      str = String(str);
+    }
+  
+    return str.replace(/,([^ ])/g, ', $1');
+  }
+  
 function insertGuessInGuessesListe(poster, title, date, time, genre, country, director, resultat_condition) {
+
+    genre = addSpacesAfterCommas(genre);
+    director = addSpacesAfterCommas(director);
     poster = `https://image.tmdb.org/t/p/w500` + poster;
 
     //attribution d'un id à la row afin de la retrouver dans d'autres fonctions
