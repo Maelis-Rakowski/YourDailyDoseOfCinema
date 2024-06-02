@@ -1,4 +1,5 @@
 <div class="container mt-5">
+<?php $this->_t=$movie->getTitle() ?>
     <div class="row border shadow-sm p-3 mb-5 bg-white rounded">
         <div class="col-md-4">
             <!-- Affiche du film -->

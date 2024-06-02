@@ -1,8 +1,8 @@
 <?php $this->_t="YDDOC"?>
 <div class="container-xxl bd-gutter mt-3 my-md-4 bd-layout">
-    <main class="bd-main order-1">
+    <div class="bd-main order-1">
         <div class="py-5 text-center">
-            <h2 class="fw-bold display-5">Guess the movie of the day !</h2>
+            <h3 class="fw-bold display-6">Guess the movie of the day !</h3>
             <p class="lead d-none d-md-block">Welcome to our movie guessing game! Log in to your account to start guessing the movie of the day with the least number of clues. Let's see how well you know your movies!</p>
         </div>
         <div class="container-fluid mb-5">
@@ -63,6 +63,6 @@
             <div  id="squaresContainer" class="d-none d-lg-block container-fluid"></div>
             <div  id="squaresContainer_sm" class="d-block d-lg-none"></div>
         </div>
-    </main>
+</div>
 </div>
 <script src="/scripts/home.js"></script>
