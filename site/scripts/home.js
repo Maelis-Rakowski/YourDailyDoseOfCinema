@@ -106,8 +106,7 @@ $(document).ready(function() {
                     var messageDiv = createMessageDiv();
                    
                     if (data[0][0]) {
-                        messageDiv.html('Félicitation !');
-                        messageDiv.css('color', 'green');
+                        messageDiv.html('<h2 class="text-success">You nailed it !</h2>');
 
                         var posterUrl = "https://image.tmdb.org/t/p/w500" + data[9][1];
                     
@@ -174,8 +173,9 @@ function disableGame() {
     document.getElementById('movieSearch').disabled = true
     // display congratulation message along with the movie name le message bravo + le nom du film
     var messageDiv = createMessageDiv();
-    messageDiv.html('Bravooo ! The daily movie was : ' + getCookieValue("dailyMovieTitle"));
-    messageDiv.css('color', 'green');
+    messageDiv.html('<p class="h3 text-success">Bravooo ! The daily movie was : ' + getCookieValue("dailyMovieTitle") + '</p>');
+
+    
     // afficher le poster
     var posterDiv = createPoster(getCookieValue("dailyMoviePosterUrl"));
     messageDiv.append(posterDiv);
@@ -197,6 +197,7 @@ function createPoster(url) {
     posterDiv.style.backgroundImage = "url(" + url + ")";
     posterDiv.style.backgroundRepeat = "no-repeat";
     posterDiv.style.paddingTop = "25px";
+    posterDiv.style.objectFit ='cover';
     return(posterDiv);
 }
 
@@ -354,7 +355,7 @@ function setNbTries(nbTries) {
 }
 
 function setNbTriesText(nbTries){
-    $("#nbTries").html('<h4>Essais : ' + nbTries + '</h4>');
+    $("#nbTries").html(nbTries);
 }
 
 function updateTryDataAndText() {
@@ -389,7 +390,7 @@ function showTagline(){
     $.post('movie/getDailyMovieJson').
     done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
         reponse=JSON.parse(reponse);
-        $('#tagline').html('<h4>Tagline : </h4> <h6>' + reponse.tagline + '</h6>');
+        $('#tagline').html(reponse.tagline);
     })
 }
 
@@ -397,6 +398,6 @@ function showOverview(){
     $.post('movie/getDailyMovieJson')
     .done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
         reponse=JSON.parse(reponse);
-        $('#overview').html('<h4>Overview : </h4> <h6>' + reponse.overview + '</h6>');
+        $('#overview').html(reponse.overview);
     })
 }
