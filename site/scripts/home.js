@@ -197,7 +197,8 @@ function createPoster(url) {
     posterDiv.style.backgroundImage = "url(" + url + ")";
     posterDiv.style.backgroundRepeat = "no-repeat";
     posterDiv.style.paddingTop = "25px";
-    posterDiv.style.objectFit ='cover';
+    posterDiv.style.backgroundSize ='contain';
+    
     return(posterDiv);
 }
 
