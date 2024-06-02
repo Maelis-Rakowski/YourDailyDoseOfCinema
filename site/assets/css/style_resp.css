@@ -148,3 +148,12 @@ header {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     position: relative; /* positionnement relatif pour le conteneur de l'input field et de la liste */
 }
+
+/* errors */
+.four_zero_four_bg{
+    background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    height: 400px;
+    background-position: center;
+    background-repeat: no-repeat; 
+    text-align: center;
+  }
