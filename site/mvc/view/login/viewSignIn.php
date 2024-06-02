@@ -13,11 +13,11 @@
                 <h2 class="display-7 fw-bold">Sign In</h2>
                 <form method="POST" action="/login/signIn">
                     <div class="form-floating mb-3 mt-3">
-                        <input name="pseudo" class="form-control" type="text" placeholder="a">
+                        <input name="pseudo" id="pseudo" class="form-control" type="text" placeholder="a">
                         <label for="pseudo" class="form-label">Pseudo</label>
                     </div>
                     <div class="mb-3 form-floating">
-                        <input name="password" class="form-control" type="password" placeholder="password">
+                        <input name="password" id="password" class="form-control" type="password" placeholder="password">
                         <label for="password" class="form-label">Password</label>
                         <?php 
                             if($error == "errorConnexion") {
@@ -33,8 +33,8 @@
                 <h2 class="display-7 fw-bold">Forgot Password ?</h2>
                 <form id="emailForm" method="POST" action="sendEmail" target="_blank">
                     <div class="mb-3 form-floating mt-3">
-                        <input name="email" id="emailInput" class="form-control" type="text" placeholder="exist">
-                        <label for="email" class="form-label" >Email</label>
+                        <input name="emailInput" id="emailInput" class="form-control" type="text" placeholder="exist">
+                        <label for="emailInput" class="form-label" >Email</label>
                     </div>
                     <p id="answerEmail"></p>
 

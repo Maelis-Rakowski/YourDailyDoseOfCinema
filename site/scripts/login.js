@@ -65,6 +65,13 @@ function checkIfPasswordMatch() {
 
 
 $(document).ready(function () {
+
+    $("#emailForm").on('submit', function(e) {
+        e.preventDefault(); // On empêche le navigateur d'envoyer le formulaire, on fait le post nous même
+        var email = $("#emailInput").val();
+        checkEmailExists(email);
+    })
+
     $('.pseudo').autocomplete({
         source: function(request, response) {
             $.ajax({
@@ -90,13 +97,9 @@ $(document).ready(function () {
             });
         },
         minLength: 2,
-    });
+    })
 
-    $("#emailForm").on('submit', function(e) {
-        e.preventDefault(); // On empêche le navigateur d'envoyer le formulaire, on fait le post nous même
-        var email = $("#emailInput").val();
-        checkEmailExists(email);
-    });
+
 
 })
 
@@ -106,7 +109,6 @@ function getInputFieldPseudo(){
 }
 
 function checkEmailExists(email) {
-    console.log(email);
     $.post('checkEmailExists', {
         emailInput: email,
     }).done(function(reponse_html) {

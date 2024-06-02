@@ -1,6 +1,6 @@
 <?php $this->_t="ResetPassword"?>
 <div class="container-xxl bd-gutter mt-3 my-md-4 bd-layout">
-    <main class="bd-main order-1">
+    <div class="bd-main order-1">
         <div class="py-5 text-center">
             <h2 class="fw-bold display-5">Start Over with a New Password</h2>
             <p class="lead">Easily reset your password by entering your email address. We'll send you a link to create a new password. If you have any trouble, please contact our support team for assistance..</p>
@@ -39,7 +39,7 @@
                 </form>
             </div>
         </div>
-    </main>
+</div>
 </div>
 
 <script src="/scripts/login.js"></script>

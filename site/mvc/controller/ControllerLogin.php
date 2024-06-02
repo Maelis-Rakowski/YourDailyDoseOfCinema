@@ -140,7 +140,7 @@ class ControllerLogin {
 
     public function sendEmail() {
 
-        $email = $_POST['email'];
+        $email = $_POST['emailInput'];
         $users = UserModel::getUserByEmail($email);
         if($users!=null) {
             $user = $users[0];
