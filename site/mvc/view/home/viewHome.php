@@ -9,20 +9,20 @@
             <div class="row text-center">
                 <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
                     <div class="mx-2">
-                        <div class="fw-bold">Nombre d'essais</div>
+                        <div class="fw-bold">Number of attempts</div>
                         <div id="nbTries"></div>
                     </div>
                 </div>
                 <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
                     <div class="mx-2">
                         <div class="fw-bold">Tagline</div>
-                        <div id="tagline"></div>
+                        <div id="tagline">unlocked after 5 attempts</div>
                     </div>
                 </div>
                 <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
                     <div class="mx-2">
                         <div class="fw-bold">Overview</div>
-                        <div id="overview"></div>
+                        <div id="overview">unlocked after 10 attempts</div>
                     </div>
                 </div>
                 <div class="col-12 col-md-3"></div>
