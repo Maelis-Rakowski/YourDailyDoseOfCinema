@@ -2,7 +2,7 @@
 <div class="container-xxl bd-gutter mt-3 my-md-4 bd-layout">
     <div class="bd-main order-1">
         <div class="py-5 text-center">
-            <h3 class="fw-bold display-6">Guess the movie of the day !</h3>
+            <h2 class="fw-bold display-7">Guess the movie of the day !</h2>
             <p class="lead d-none d-md-block">Welcome to our movie guessing game! Log in to your account to start guessing the movie of the day with the least number of clues. Let's see how well you know your movies!</p>
         </div>
         <div class="container-fluid mb-5">
