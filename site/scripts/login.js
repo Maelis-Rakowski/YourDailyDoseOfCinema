@@ -20,11 +20,12 @@ function checkPassword() {
         var special = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
         all.show();
-        input.length > 8 ? $('#pwd_eightCar').css('color', 'green') : $('#pwd_eightCar').css('color', 'red');
-        special.test(input) ? $('#pwd_special').css('color', 'green') : $('#pwd_special').css('color', 'red');
-        /[A-Z]/.test(input) ? $('#pwd_maj').css('color', 'green') : $('#pwd_maj').css('color', 'red');
-        /[a-z]/.test(input) ? $('#pwd_min').css('color', 'green') : $('#pwd_min').css('color', 'red');
-        /[0-9]/.test(input) ? $('#pwd_number').css('color', 'green') : $('#pwd_number').css('color', 'red');
+        input.length > 8    ? $('#pwd_eightCar').removeClass('text-danger').addClass('text-success') : $('#pwd_eightCar').removeClass('text-success').addClass('text-danger');
+        special.test(input) ? $('#pwd_special').removeClass('text-danger').addClass('text-success') : $('#pwd_special').removeClass('text-success').addClass('text-danger');
+        /[A-Z]/.test(input) ? $('#pwd_maj').removeClass('text-danger').addClass('text-success') : $('#pwd_maj').removeClass('text-success').addClass('text-danger');
+        /[a-z]/.test(input) ? $('#pwd_min').removeClass('text-danger').addClass('text-success') : $('#pwd_min').removeClass('text-success').addClass('text-danger');
+        /[0-9]/.test(input) ? $('#pwd_number').removeClass('text-danger').addClass('text-success') : $('#pwd_number').removeClass('text-success').addClass('text-danger');
+
     }
 
     // si tout est rouge, on empeche le user de submit
@@ -89,7 +90,14 @@ $(document).ready(function () {
             });
         },
         minLength: 2,
-    })
+    });
+
+    $("#emailForm").on('submit', function(e) {
+        e.preventDefault(); // On empêche le navigateur d'envoyer le formulaire, on fait le post nous même
+        var email = $("#emailInput").val();
+        checkEmailExists(email);
+    });
+
 })
 
 function getInputFieldPseudo(){
@@ -97,3 +105,21 @@ function getInputFieldPseudo(){
     return input.value;
 }
 
+function checkEmailExists(email) {
+    console.log(email);
+    $.post('checkEmailExists', {
+        emailInput: email,
+    }).done(function(reponse_html) {
+        reponse = JSON.parse(reponse_html);
+        if (reponse["answer"]) {
+            $('#answerEmail').html("email envoyé avec succès");
+            $('#answerEmail').removeClass("text-danger");
+            $('#answerEmail').addClass("text-success");
+            document.getElementById("emailForm").submit();
+        }
+        else{   $('#answerEmail').html("ce mail n'est pas associé à un compte");
+                $('#answerEmail').removeClass("text-success");
+                $('#answerEmail').addClass("text-danger");
+        }
+    });
+}

@@ -13,7 +13,14 @@
 
         public function readAll() {
             $this->_view = new View(array('view', 'home', 'viewHome.php'));
-            //Generate the view without data
+            if(!isset($_SESSION['nbTries'])){
+                $_SESSION['nbTries'] = 0;
+            }
+
+             if (isset($_SESSION["pseudo"])) {
+                ControllerUserHistory::createUserHistory($_SESSION["pseudo"]);
+            }
+
             $this->_view->generate(array(null));
         }
 
@@ -64,9 +71,7 @@
             // Conversion en string format : 8h 30min
             $guessedDateToString = $this->convertTimeFormatHM($guessed_time);
                        
-
             //Création  trame
-          
             $comparisonResults = [
                 [ $isTheMovieOfTheDay,  $guessed_movie["id"]            ],
                 [ $isSame_title,        $guessed_movie["label"]         ],
@@ -79,11 +84,6 @@
                 [ $is_guess_longer,     $guessedDateToString    ],
                 [ $has_a_poster,        $guessed_movie["image"]         ]
             ];
-
-            // save player guess in their history
-            if (isset($_SESSION["pseudo"])) {
-                ControllerUserHistory::createUserHistory($_SESSION["pseudo"]);
-            }
 
             echo json_encode($comparisonResults);
         }
@@ -105,10 +105,10 @@
             if (!MovieModel::getCurrentMovie()) {
                 $movie = MovieModel::getRandomMovie();
                 DailyMovieModel::createDailyMovie(date('Y-m-d'), $movie->getId());
-                echo json_encode("picked");
+                echo json_encode(true);
             }
             else {
-                echo json_encode("already picked");
+                echo json_encode(false);
             }
         }      
     }

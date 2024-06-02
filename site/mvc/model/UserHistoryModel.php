@@ -6,6 +6,8 @@ class UserHistoryModel extends Model {
     private $idDailyMovie;
     private $tryNumber;
     private $success;
+
+    private $dailyMovie;
     
     public function __construct($idUser = NULL, $idDailyMovie = NULL, $tryNumber = NULL, $success = NULL) {
         if (!is_null($idUser) && !is_null($idDailyMovie) && !is_null($tryNumber) && !is_null($success)) {
@@ -98,6 +100,26 @@ class UserHistoryModel extends Model {
         return $this;
     }
 
+    /**
+     * Get the value of dailyMovie
+     */ 
+    public function getDailyMovie()
+    {
+        return $this->dailyMovie;
+    }
+
+    /**
+     * Set the value of dailyMovie
+     *
+     * @return  self
+     */ 
+    public function setDailyMovie($dailyMovie)
+    {
+        $this->dailyMovie = $dailyMovie;
+
+        return $this;
+    }
+
 //DATABASE METHODS
 
     public static function createUserHistory($id_user, $id_daily_movie, $try_number, $success) {
@@ -113,15 +135,23 @@ class UserHistoryModel extends Model {
         $rep->execute($values);
     } 
 
-    public static function updateTryNumber($id_user, $id_daily_movie, $try_number) {
-        $sql = "UPDATE playerhistory SET tryNumber = $try_number WHERE idUser = $id_user AND idDailyMovie = $id_daily_movie";
-        $rep = Model::getPDO() -> prepare($sql);
-        $rep->execute();
+    public static function updateTryNumberAndSuccess($id_user, $id_daily_movie, $try_number, $success) {
+        $sql = "UPDATE playerhistory SET tryNumber =:tryNumber, success =:success WHERE idUser =:idUser AND idDailyMovie =:idDailyMovie";
+        $values = array(
+            "tryNumber"=> $try_number,
+            "success"=> $success,
+            "idUser"=> $id_user,
+            "idDailyMovie"=> $id_daily_movie
+        );
+        $rep = Model::getPDO()->prepare($sql);
+        $rep->execute($values);
     }
 
     public static function getUserHistoryByUser($idUser) {
-        $sql = "SELECT * FROM playerhistory
-        WHERE idUser = :idUser";
+        $sql = "SELECT p.* FROM playerhistory p
+        JOIN dailymovie dm ON dm.id = p.idDailyMovie 
+        WHERE p.idUser = :idUser 
+        ORDER BY date DESC";
         $rep = Model::getPDO() -> prepare($sql);
         $rep->setFetchMode(PDO::FETCH_CLASS, 'UserHistoryModel');
 
@@ -132,14 +162,16 @@ class UserHistoryModel extends Model {
         return $rep->fetchAll();
     }
 
-    public static function getUserHistoryByDailyMovie($daily_movie_id) {
+    public static function getUserHistoryByDailyMovieAndUser($daily_movie_id, $idUser) {
         $sql = "SELECT * FROM playerhistory
-        WHERE idDailyMovie = :idDailyMovie";
+        WHERE idDailyMovie = :idDailyMovie
+        AND idUser = :idUser";
         $rep = Model::getPDO() -> prepare($sql);
         $rep->setFetchMode(PDO::FETCH_CLASS, 'UserHistoryModel');
 
         $values = array(
-            "idDailyMovie" => $daily_movie_id
+            "idDailyMovie" => $daily_movie_id,
+            "idUser" => $idUser
         );
         $rep->execute($values);
         $user_history = $rep->fetchAll();
@@ -149,5 +181,30 @@ class UserHistoryModel extends Model {
         return false;
     }
 
+    //Return the daily history of the user if played. if not played today, return false
+    public static function hasPlayedToday($user_id,$daily_movie_id){
+        if(UserHistoryModel::getUserHistoryByUser($user_id) == null){
+            return false;
+        }
+        return UserHistoryModel::getUserHistoryByUser($user_id)[0]->getDailyUserHistory($daily_movie_id);
+    }
+
+    public function getDailyUserHistory($daily_movie_id){
+        $sql = "SELECT * FROM playerhistory WHERE idDailyMovie = :idDailyMovie AND idUser = :idUser";
+        $rep = Model::getPDO() -> prepare($sql);
+        $rep->setFetchMode(PDO::FETCH_CLASS, 'UserHistoryModel');
+        
+        $idUser= $this->getIdUser();
+        $values = array(
+            "idDailyMovie" => $daily_movie_id,
+            "idUser" => $idUser
+        );
+        $rep->execute($values);
+        $user_history = $rep->fetchAll();
+        if (sizeof($user_history) == 1) {
+            return $user_history[0];
+        }
+        return false;
+    }
 }
 ?>

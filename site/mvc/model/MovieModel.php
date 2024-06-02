@@ -37,7 +37,10 @@ class MovieModel extends Model {
             'runtime' => $this->runtime,
             'posterPath' => $this->posterPath,
             'overview' => $this->overview,
-            'tagline' => $this->tagline
+            'tagline' => $this->tagline,
+            'countries' => $this->countries,
+            'directors' => $this->directors,
+            'genres' => $this->genres
         ]);
     }
     
@@ -91,6 +94,8 @@ class MovieModel extends Model {
     }
 
     public function getTagline() {
+        if($this->tagline == "")
+            return "No TagLine for this movie -_-";
         return $this->tagline;
     }
 
@@ -288,8 +293,6 @@ class MovieModel extends Model {
         $movies = $req_prep->fetchAll();
 
         if (sizeof($movies) == 0){
-            var_dump(date('Y-m-d'));
-            var_dump($movies);
             return false;
         } else {            
             $movie = $movies[0];

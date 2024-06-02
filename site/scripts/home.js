@@ -1,24 +1,65 @@
-function checkInput() {
-    var input = document.getElementById('movieInput').value;
-    var noGuess = document.getElementById('noGuess');
+const cubeStart = 
+`    <div class="col">
+        <div class="image-wrapper">
+            <div class="image-container">
+                <img
+`;
+
+const cubeStart_sm = 
+`    <div class="col-4">
+        <div class="image-wrapper">
+            <div class="image-container">
+                <img
+`;
+const cubeMiddle = 
+`
+class="img-fluid img-thumbnail" alt="...">
+<p class="text-center">
+`;
+
+const htmlStringMiddlePoster = 
+`
+" class="img-fluid rounded img-thumbnail" style=" object-fit: cover;" alt="...">
+<p class="text-center" style="word-wrap: break-word;">
+`;
+
+const cubeEnd = 
+`
+                </p> 
+            </div>
+        </div>
+    </div>
+`;
+
+// initialisationGuessesListe_lg();
   
-        if (input === '') {
-            noGuess.classList.add('displayNone');
-            noGuess.classList.remove('displayBlock');
-        } else {
-            noGuess.classList.remove('displayNone');
-            noGuess.classList.add('displayBlock');
-        }
+const getCookieValue = (name) => (
+    document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || null
+)
+  
+function deleteAllCookies() {
+    document.cookie.split(';').forEach(cookie => {
+        const eqPos = cookie.indexOf('=');
+        const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+    });
 }
 
-initialisationGuessesListe();
 $(document).ready(function() {
     $.ajax({
         url:'home/pickTodayMovie',
         type: 'POST',
         dataType: 'json',
         success : function(data) {
-            console.log(data);
+            // if a new movie was picked, then delete all cookies
+            if (data) {
+                deleteAllCookies()
+            }
+            //Affiche le nombre d'essais de la session
+            getNbTries(function(nbTries) {
+                setNbTriesText(nbTries);
+                tryShowHints(nbTries);
+            });
         }
     });
     $('#movieSearch').autocomplete({
@@ -42,6 +83,8 @@ $(document).ready(function() {
                 data: { guess: submissionId },
                 dataType: 'json',
                 success: function(data) {
+                    //clear the input
+                    document.getElementById("movieSearch").value = ""
 
                     //          +====+==============================+==============================+
                     //          | #  |      0 -  Comparison         |      1 - Guess Value         |
@@ -60,16 +103,19 @@ $(document).ready(function() {
 
 
                     // Verif : Est-ce que le guess est le film du jour ?
-                    console.log("tableau converti en json : ", data);
                     var messageDiv = createMessageDiv();
-
+                   
                     if (data[0][0]) {
-                        messageDiv.html('Félicitation !');
-                        messageDiv.css('color', 'green');
+                        messageDiv.html('<h2 class="text-success">You nailed it !</h2>');
 
                         var posterUrl = "https://image.tmdb.org/t/p/w500" + data[9][1];
                     
-                        var posterDiv = createPoster(posterUrl, messageDiv);
+                        var posterDiv = createPoster(posterUrl);
+                        // setting cookies for the finished daily movie view 
+                        document.cookie = "dailyMoviePosterUrl=" + posterUrl + "; path=/"
+                        document.cookie = "dailyMovieTitle=" + data[1][1]+ "; path=/"
+
+                        document.getElementById('movieSearch').disabled = true
 
                     } else {
                         messageDiv.html('Try again!');
@@ -77,7 +123,7 @@ $(document).ready(function() {
                     messageDiv.append(posterDiv);
 
                     // Affichage des résultats
-                    let colors = [ 
+                    let resultat_condition = [ 
                         data[0][0],                       
                         data[1][0],
                         data[2][0],
@@ -97,9 +143,13 @@ $(document).ready(function() {
                         data[4][1],
                         data[3][1],
                         data[2][1],
-                        colors
+                        resultat_condition
                     );
-
+                    document.cookie = "success=" + data[0][0] + "; path=/"
+                    $.ajax({
+                        url: "userHistory/createUserHistory",
+                        type: "GET"
+                    })
                 }
             });
         },
@@ -110,8 +160,26 @@ $(document).ready(function() {
             collision: "none"
         }
     });
+
+    if(getCookieValue("success") != null && getCookieValue("success") != "false") {
+        disableGame()
+    }
+
 });
 
+function disableGame() {
+    // the movie was found
+    // disable the search input
+    document.getElementById('movieSearch').disabled = true
+    // display congratulation message along with the movie name le message bravo + le nom du film
+    var messageDiv = createMessageDiv();
+    messageDiv.html('<p class="h3 text-success">Bravooo ! The daily movie was : ' + getCookieValue("dailyMovieTitle") + '</p>');
+
+    
+    // afficher le poster
+    var posterDiv = createPoster(getCookieValue("dailyMoviePosterUrl"));
+    messageDiv.append(posterDiv);
+}
 
 function createMessageDiv() {
     var messageDiv = $('#result');
@@ -129,16 +197,17 @@ function createPoster(url) {
     posterDiv.style.backgroundImage = "url(" + url + ")";
     posterDiv.style.backgroundRepeat = "no-repeat";
     posterDiv.style.paddingTop = "25px";
+    posterDiv.style.backgroundSize ='contain';
+    
     return(posterDiv);
 }
 
-function initialisationGuessesListe() {
-    const parent = $('#guesses');
-  
-    const guessesContainer = $('<div/>', { class: 'guesses_container' });
-    const thContainer = $('<div/>', { class: 'th_container' });
+function initialisationGuessesListe_lg() {
+    const parent = $('#movieList');  
+    const guessesContainer_lg = $('<div/>', { class: 'col guesses_container row text-center d-none d-lg-block' });
+    const thContainer = $('<div/>', { class: 'flex row border-bottom mb-3' });
     const tdContainer = $('<div/>', { class: 'td_container' });
-  
+    
     const thColumns = [
         'Poster',
         'Title',
@@ -150,79 +219,197 @@ function initialisationGuessesListe() {
     ];
   
     thColumns.forEach(column => {
-      const thColumn = $('<div/>', { class: 'th_column', text: column });
+      const thColumn = $('<div/>', { class: 'col fw-bold', text: column });
       thContainer.append(thColumn);
     });
   
-    guessesContainer.append(thContainer);
-    guessesContainer.append(tdContainer);
-  
-    parent.append(guessesContainer);
+    guessesContainer_lg.append(thContainer);
+    guessesContainer_lg.append(tdContainer);  
+    parent.prepend(guessesContainer_lg);
 }
 
-function insertGuessInGuessesListe(col1, col2, col3, col4, col5, col6, col7, colors) {
-    const container = $(".td_container");
-    const row = $("<div></div>").attr("class", "td_row");
-    col1 = "https://image.tmdb.org/t/p/w500"+col1;
+function addSpacesAfterCommas(str) {
+    if (typeof str !== 'string') {
+      str = String(str);
+    }
+  
+    return str.replace(/,([^ ])/g, ', $1');
+  }
+  
+function insertGuessInGuessesListe(poster, title, date, time, genre, country, director, resultat_condition) {
 
+    genre = addSpacesAfterCommas(genre);
+    director = addSpacesAfterCommas(director);
+    poster = `https://image.tmdb.org/t/p/w500` + poster;
 
-    const titleDiv = $("<div></div>").attr("class", "td_column picture");
-    titleDiv.css({
-        'background-image': `url(${col1})`,
-        'background-size': 'cover',
-    });
-    row.append(titleDiv);
+    //attribution d'un id à la row afin de la retrouver dans d'autres fonctions
+    //PC
+    parent = $('#squaresContainer');
+    id = removeSpecialCharacters(title+date+time);
+    const htmlRow = '<div class="d_row flex row pb-3" id ="' + id +'" ></div>' ;
+    parent.prepend(htmlRow);    
+    row = $("#" + id);
     
+    //PC - Poster
+    cubePoster = cubeStart + 'id = "' + id + '_' + "poster" + '"' + htmlStringMiddlePoster + cubeEnd;
+    row.append(cubePoster);
+    posterDiv = $("#" + id+"_poster");
+    posterDiv.attr('src', poster);
+
+    //Phone
+    id_sm = id + "_sm";    
+    parent = $('#squaresContainer_sm');
+    const htmlRow_sm = '<div class="card border rounded bg-light m-2" id = "' + id_sm + '"></div>';
+    parent.prepend(htmlRow_sm);
+    currentCard = $("#" + id_sm);
+
+    id_sm = id_sm + "row";
+    currentCard.html('<div class="col m-2 guesses_container row text-center"><div class="container-fluid"><div class="row" id = "' + id_sm + '"></div></div></div>');
+    currentMainRow = $("#" + id_sm);
+
+    id_sm = id_sm + "col_8";
+    currentMainRow.html('<div style="max-height: 400px;" class="col-4"><img class="img-fluid img-thumbnail" src="' + poster + '"></img></div> <div class="col-8 mt-md-3 mt-sm-1"><div class="row gx-2 gy-2 gx-md-5 gy-md-5" id = "' + id_sm + '"></div></div>');
+    cubesContainer_sm = $("#" + id_sm);
+
+
+    //creation des cubes de couleurs PC
+    cubes = "";
+    cubes_sm = "";
+    const cubes_data = [title, date, time, genre, country, director];
+    for(i = 0; i < 6; i++) {
+        cubes = cubes + cubeStart + 'id = "' + id + '_' + i + '"' + cubeMiddle + cubes_data[i] + cubeEnd;
+        cubes_sm = cubes_sm + cubeStart_sm + 'id = "' + id_sm + '_' + i + '"' + cubeMiddle + cubes_data[i] + cubeEnd;
+    }
+    row.append(cubes);
+    cubesContainer_sm.append(cubes_sm);
+
+    updateTryDataAndText();
+
     // Title
-    if(colors[1])
-        row.append("<div class='td_column name green'>" + col2 + "</div>");
-    else
-        row.append("<div class='td_column name red'>" + col2 + "</div>");
+    defineColor(resultat_condition[1], id + "_0");
+    defineColor(resultat_condition[1], id_sm + "_0");
 
     // Date
-    if(colors[5])
-        row.append("<div class='td_column date green'>" + col3 + "</div>");
-    else if(colors[7])
-        row.append("<div class='td_column date bot_arrow'>" + col3 + "</div>");
-    else
-        row.append("<div class='td_column date top_arrow'>" + col3 + "</div>");
-
+    defineColor(resultat_condition[5], id + "_1", resultat_condition[7]);
+    defineColor(resultat_condition[5], id_sm + "_1", resultat_condition[7]);
 
     // Time
-    if(colors[6])
-        row.append("<div class='td_column time green'>" + col4 + "</div>");
-    else if(colors[8])
-        row.append("<div class='td_column time bot_arrow'>" + col4 + "</div>");
-    else
-        row.append("<div class='td_column time top_arrow'>" + col4 + "</div>");
-    
+    defineColor(resultat_condition[6], id + "_2", resultat_condition[8]);
+    defineColor(resultat_condition[6], id_sm + "_2", resultat_condition[8]);
 
-   // Genres
-    if (colors[4] === 1) {
-        row.append("<div class='td_column genre green'>" + col5 + "</div>");
-    } else if (colors[4] === 0.5) {
-        row.append("<div class='td_column genre orange'>" + col5 + "</div>");
-    } else if (colors[4] === 0) {
-        row.append("<div class='td_column genre red'>" + col5 + "</div>");
+    // Genres
+    defineColor(resultat_condition[4], id + "_3");
+    defineColor(resultat_condition[4], id_sm + "_3");
+
+    // Countries
+    defineColor(resultat_condition[3], id + "_4");
+    defineColor(resultat_condition[3], id_sm + "_4");
+
+    // directors
+    defineColor(resultat_condition[2], id + "_5");
+    defineColor(resultat_condition[2], id_sm + "_5");
+}
+
+function defineColor(condition, id, condition_arrow = -1) {
+    imageElement = $("#" + id);
+    if (condition == 1 || condition == true) {              //GREEN
+        imageElement.attr('src', `/assets/images/square-green.png`);
+    } 
+    else if (condition_arrow !== -1) {  //ARROWS
+        if(condition_arrow) {           // BOT
+            imageElement.attr('src', `/assets/images/square-bot.png`);
+        }
+        else {          // TOP
+            imageElement.attr('src', `/assets/images/square-top.png`);                
+        }
+    } 
+    else if (condition === 0.5) {       // ORANGE
+        imageElement.attr('src', `/assets/images/square-orange.png`);
+    } else  {                           // RED     
+        imageElement.attr('src', `/assets/images/square-red.png`);
     }
-    
-    // Counties
-    if (colors[3] === 1) {
-        row.append("<div class='td_column pays green'>" + col6 + "</div>");
-    } else if (colors[3] === 0.5) {
-        row.append("<div class='td_column pays orange'>" + col6 + "</div>");
-    } else if (colors[3] === 0) {
-        row.append("<div class='td_column pays red'>" + col6 + "</div>");
+}
+
+function removeSpecialCharacters(inputString) {
+    // Définir une expression régulière pour les caractères spéciaux
+    const regex = /[^\w\d]/g;
+  
+    // Remplacer tous les caractères spéciaux dans la chaîne de caractères
+    // en utilisant l'expression régulière et la méthode replace()
+    const outputString = inputString.replace(regex, '');
+  
+    // Retourner la chaîne de caractères modifiée
+    return outputString;
+}
+
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+//Gestion des TryNumber
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+// Fonction pour récupérer nbTries depuis le serveur
+function getNbTries(callback) {
+    $.get('userHistory/getNbTries')
+    .done(function(reponse){
+        reponse = JSON.parse(reponse);
+        if(reponse.nbTries!=null)
+            callback(reponse.nbTries);
+        else callback(null);
+    })
+}
+
+// Fonction pour mettre à jour nbTries sur le serveur
+function setNbTries(nbTries) {
+    $.post('userHistory/setNbTriesAsSessionVariable', // Appelle la fonction callTMDBJson du controller tmdb
+        {
+            nbTries: nbTries
+        });
+}
+
+function setNbTriesText(nbTries){
+    $("#nbTries").html(nbTries);
+}
+
+function updateTryDataAndText() {
+    getNbTries(function(nbTries) {
+        if (nbTries !== null) {
+            nbTries++;
+            updateHistory();
+            setNbTriesText(nbTries);
+            tryShowHints(nbTries);
+            setNbTries(nbTries);
+        }
+    });
+}
+
+//ShowHint
+function tryShowHints(nbTries){
+    if (nbTries >= 5) {
+        //document.getElementById("tagline").removeAttribute("hidden");
+        showTagline();
     }
-    
-    // Directors
-    if (colors[2] === 1) {
-        row.append("<div class='td_column pays green'>" + col7 + "</div>");
-    } else if (colors[2] === 0.5) {
-        row.append("<div class='td_column pays orange'>" + col7 + "</div>");
-    } else if (colors[2] === 0) {
-        row.append("<div class='td_column pays red'>" + col7 + "</div>");
+    if (nbTries >= 10) {
+        showOverview();
     }
-    
-    container.prepend(row);
+}
+
+//Création  ou Maj du userDailyMovie
+function updateHistory(){
+    $.post('userHistory/updateUserTry')
+}
+
+function showTagline(){
+    $.post('movie/getDailyMovieJson').
+    done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
+        reponse=JSON.parse(reponse);
+        $('#tagline').html(reponse.tagline);
+    })
+}
+
+function showOverview(){
+    $.post('movie/getDailyMovieJson')
+    .done(function(reponse){//Quand la requête post est terminée,appel de la fonction done()
+        reponse=JSON.parse(reponse);
+        $('#overview').html(reponse.overview);
+    })
 }
