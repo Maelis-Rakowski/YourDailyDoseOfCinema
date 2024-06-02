@@ -41,3 +41,5 @@
         </div>
     </main>
 </div>
+
+<script src="/scripts/login.js"></script>

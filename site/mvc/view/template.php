@@ -27,7 +27,7 @@
                         <li class="nav-item"><a class="nav-link text-white" href="/home">Home</a></li>
                         <?php
                             if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"]) {
-                                echo '<li class="nav-item"> <a class="nav-link text-white" href="/admin/user">User</a> </li>';
+                                echo '<li class="nav-item"> <a class="nav-link text-white" href="/admin/user">Users</a> </li>';
                                 echo '<li class="nav-item"> <a class="nav-link text-white" href="/admin/movie">Movies</a></li>';
                                 echo '<li class="nav-item"> <a class="nav-link text-white display-2" href="/admin/tmdb">TMDB</a></li>';
                             }
