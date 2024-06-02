@@ -9,11 +9,8 @@
     <div class="container p-2">
         <form method="post">
             <input id="movieInput" type="text" name="movie_title">
-            <button type="button" id="envoyer">Rechercher</button>
+            <button type="button" id="envoyer">Search</button>
         </form>
-        <ul>
-            <li class="displayNone" id="noGuess">aucun résultat trouvé</li>
-        </ul>
     </div>
 </div>
 

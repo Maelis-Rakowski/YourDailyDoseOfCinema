@@ -7,15 +7,15 @@
         <div class="col-md-8">
             <!-- Détails du film -->
             <h2><?= htmlspecialchars($movie->getTitle()) ?></h2>
-            <h4>Date de sortie :</h4>
+            <h4>Release Date :</h4>
             <p><?= htmlspecialchars($movie->getReleaseDate()) ?></p>
-            <h4>Résumé</h4>
+            <h4>Overview :</h4>
             <p><?= htmlspecialchars($movie->getOverview()) ?></p>
-            <h4>Durée :</h4>
+            <h4>Runtime :</h4>
             <p><?= htmlspecialchars($movie->getRuntime()) ?> minutes</p>
-            <h4>Slogan</h4>
+            <h4>Tagline :</h4>
             <q><?= htmlspecialchars($movie->getTagline()) ?></q>
-            <h4>Genres</h4>
+            <h4>Genres :</h4>
             <p><?php
                 $genres_string = "";
                 foreach ($movie->getGenres() as $genre) {
@@ -23,7 +23,7 @@
                 }
                 echo ltrim($genres_string, ', ');
             ?></p>
-            <h4>Réalisateurs</h4>
+            <h4>Directors :</h4>
             <p><?php
                 $director_str = "";
                 foreach ($movie->getDirectors() as $director) {
@@ -31,7 +31,7 @@
                 }
                 echo ltrim($director_str, ', ');
             ?></p>
-            <h4>Pays</h4>
+            <h4>Countries :</h4>
             <p><?php
                 $countries_str = "";
                 foreach ($movie->getCountries() as $country) {
