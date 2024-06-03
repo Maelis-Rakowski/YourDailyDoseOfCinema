@@ -52,14 +52,18 @@ $(document).ready(function() {
         dataType: 'json',
         success : function(data) {
             // if a new movie was picked, then delete all cookies
-            if (data) {
+            if (getCookieValue("idMovie") != data) {
                 deleteAllCookies()
+                document.cookie = "idMovie=" + data + "; path=/"
+                setNbTriesText(0)
+            } else {
+                
+                //Affiche le nombre d'essais de la session
+                getNbTries(function(nbTries) {
+                    setNbTriesText(nbTries);
+                    tryShowHints(nbTries);
+                });
             }
-            //Affiche le nombre d'essais de la session
-            getNbTries(function(nbTries) {
-                setNbTriesText(nbTries);
-                tryShowHints(nbTries);
-            });
         }
     });
     $('#movieSearch').autocomplete({
@@ -112,6 +116,7 @@ $(document).ready(function() {
                     
                         var posterDiv = createPoster(posterUrl);
                         // setting cookies for the finished daily movie view 
+                        document.cookie = "idMovie=" + data[0][1] + "; path=/"
                         document.cookie = "dailyMoviePosterUrl=" + posterUrl + "; path=/"
                         document.cookie = "dailyMovieTitle=" + data[1][1]+ "; path=/"
 
