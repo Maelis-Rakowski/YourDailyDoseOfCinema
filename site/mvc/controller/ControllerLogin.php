@@ -27,7 +27,6 @@ class ControllerLogin {
         //Generate the view without data
         $this->_view->generate(array(null));
     }
-
     
     public function signInView($error = "") {      //si aucun parametre array(null) assigné par default
         //If the user is already connected, it shows the view connected, else signInView
