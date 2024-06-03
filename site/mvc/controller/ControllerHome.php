@@ -105,10 +105,10 @@
             if (!MovieModel::getCurrentMovie()) {
                 $movie = MovieModel::getRandomMovie();
                 DailyMovieModel::createDailyMovie(date('Y-m-d'), $movie->getId());
-                echo json_encode(true);
+                echo json_encode($movie->getId());
             }
             else {
-                echo json_encode(false);
+                echo json_encode(MovieModel::getCurrentMovie()->getId());
             }
         }      
     }
