@@ -10,6 +10,7 @@
                 <th>Runtime</th>
                 <th>Overview</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -22,8 +23,14 @@
                     <td>
                         <form method="GET" action="/admin/movie/details">
                             <input type="hidden" name="id" value="<?= $movie->getId() ?>">
-                            <input type="submit" value="Détails">
+                            <input type="submit" value="More">
                         </form>
+                    </td>
+                    <td>
+                    <form method="POST" action="/admin/movie/delete" class="delete-form">
+                        <input type="hidden" name="movie_id" value="<?= htmlspecialchars($movie->getId()) ?>">
+                        <input type="submit" value="Delete" class="delete-button">
+                    </form>
                     </td>
                 </tr>
             <?php endforeach;?>
@@ -31,3 +38,4 @@
         </table>
     </div>
 </div>
+<script src="/scripts/delete_confirm.js"></script>

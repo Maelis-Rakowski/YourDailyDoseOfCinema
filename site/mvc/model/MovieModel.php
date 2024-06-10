@@ -242,6 +242,13 @@ class MovieModel extends Model {
         $req->execute($values);
     }
 
+    public static function deleteMovieById($id){
+        $sql = "DELETE FROM movies WHERE id = :movie_id;";
+        $rep = Model::getPDO() -> prepare($sql);
+        $value = array("movie_id" => $id);
+        $rep->execute($value);
+    }
+
     public static function getMovieById($id) {
         $sql = "SELECT * FROM movies WHERE id=:id";
         $values = array("id" => $id);

@@ -25,5 +25,11 @@
                 $this->_view->generate(array());
             }
         }
+
+        public function delete() {
+            $movieIdToDelete = $_POST["movie_id"];
+            MovieModel::deleteMovieById($movieIdToDelete);
+            header('Location: /admin/movie');
+        }
     }
 ?>
