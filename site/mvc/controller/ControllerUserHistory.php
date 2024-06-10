@@ -67,12 +67,13 @@
         //Set Nb Tries on a sessionVariable
         public function setNbTriesAsSessionVariable(){
            
-                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nbTries'])) {
-                    $_SESSION['nbTries'] = (int)$_POST['nbTries'];
-                    echo json_encode(['status' => 'success']);
-                } else {
-                    echo "NbTries non défini";
-                }
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nbTries'])) {
+                $_SESSION['nbTries'] = (int)$_POST['nbTries'];
+                echo json_encode(['status' => 'success']);
+            } 
+            else {
+                echo "NbTries not defined";
+            }
           
         }
 
