@@ -18,10 +18,8 @@
 
         public function delete() {
             $userIdToDelete = $_POST["user_id"];
-            $this->_view = new View(array('view', 'admin', 'user', 'viewUserList.php'));
             UserModel::deleteUserById($userIdToDelete);
-            $users = UserModel::selectAll("users", "UserModel");
-            $this->_view->generate(array('users'=>$users));
+            header('Location: /admin/user');
         }
 
         public function modifyUser() {
