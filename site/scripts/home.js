@@ -371,6 +371,7 @@ function setNbTriesText(nbTries){
 }
 
 function updateTryDataAndText() {
+
     getNbTries(function(nbTries) {
         if (nbTries !== null) {
             nbTries++;

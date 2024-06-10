@@ -106,7 +106,6 @@ class UserModel extends Model {
         $req->closeCursor();
     }
 
-    //TEMP
     public static function getUserByPseudo($pseudo){
         $sql = "SELECT * FROM users
         WHERE pseudo = :pseudo";
@@ -120,7 +119,6 @@ class UserModel extends Model {
         return $rep->fetchAll();
     }
 
-    //TEMP
     public static function getUserByEmail($email){
         $sql = "SELECT * FROM users
         WHERE email = :email";
