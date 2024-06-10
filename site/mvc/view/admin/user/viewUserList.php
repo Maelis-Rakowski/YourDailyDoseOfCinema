@@ -25,12 +25,13 @@
                     </form>
                 </td>
                 <td>
-                    <form method="POST" action="/admin/user/delete">
+                    <form method="POST" action="/admin/user/delete" class="delete-form">
                         <input type="hidden" name="user_id" value="<?= htmlspecialchars($obj->getId()) ?>">
-                        <input type=<?=$obj->getPseudo() == $_SESSION['pseudo'] ? "hidden" : "submit" ?> value="Delete">
+                        <input type="<?= $obj->getPseudo() == $_SESSION['pseudo'] ? 'hidden' : 'submit' ?>" value="Delete" class="delete-button">
                     </form>
                 </td>
             </tr>
         <?php endforeach;?>
     </table>
 </div>
+<script src="/scripts/delete_confirm.js"></script>

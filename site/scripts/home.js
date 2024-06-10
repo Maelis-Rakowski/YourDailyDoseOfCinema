@@ -57,7 +57,6 @@ $(document).ready(function() {
                 document.cookie = "idMovie=" + data + "; path=/"
                 setNbTriesText(0)
             } else {
-                
                 //Affiche le nombre d'essais de la session
                 getNbTries(function(nbTries) {
                     setNbTriesText(nbTries);
