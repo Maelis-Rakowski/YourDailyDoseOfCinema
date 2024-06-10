@@ -45,3 +45,29 @@ Si vous avez joué au jeu en étant connecté, vous pouvez consulter l'historiqu
 
 ### Accès au back office (pour les administrateurs)
 Si vous avez un compte administrateur, vous pouvez accéder au back office en allant dans l'onglet **TMDB**. Pour ajouter un film, tapez son nom puis cliquez sur **Add**. Si le film est déjà dans la base de données, il ne sera pas ajouté.
+
+## Choix technique
+Tout d'abord, nous avons utilisé le modèle de conception MVC (Model-View-Controller) pour séparer la logique de l'application en trois parties distinctes : le modèle, la vue et le contrôleur. Cela permet une meilleure organisation du code, facilite la maintenance et améliore la réutilisabilité du code.
+
+### Routeur
+Ensuite, nous avons utilisé le fichier .htaccess pour rediriger toutes les requêtes vers le fichier index.php. Cela permet de centraliser la logique de routage de l'application et de simplifier la gestion des URL. Le fichier index.php utilise ensuite un routeur pour déterminer le contrôleur et l'action à exécuter en fonction de l'URL demandée.
+
+Le routeur fonctionne en récupérant l'URL demandée et en la divisant en parties, une partie est delimité par un '/'. La première partie de l'URL correspond au contrôleur à utiliser, tandis que la deuxième partie correspond à l'action à exécuter. Si l'URL ne contient qu'une seule partie, le contrôleur par défaut est utilisé et l'action "readAll" est exécutée. Si l'URL ne correspond à aucun contrôleur ou action valide, le contrôleur "error" est utilisé et l'action "show404" est exécutée pour afficher une page d'erreur 404.
+
+### View
+Dans notre projet web, nous avons utilisé une classe View pour gérer l'affichage des vues. La classe View prend en charge un tableau de chemin d'accès en tant que paramètre de constructeur, qui est utilisé pour déterminer le fichier de vue à afficher.
+
+La méthode generate() de la classe View est utilisée pour afficher la vue. Cette méthode prend deux paramètres : $data et $generateTemplate. Le paramètre $data est un tableau associatif contenant les données à afficher dans la vue. Le paramètre $generateTemplate est un booléen facultatif qui détermine si le modèle de mise en page doit être utilisé ou non.
+
+La méthode generate() commence par générer le contenu de la vue spécifique (sans en-tête ni pied de page). Si le paramètre $generateTemplate est défini sur true (valeur par défaut), la méthode generate() génère également le contenu du modèle de mise en page, qui contient le contenu de la vue spécifique à l'emplacement approprié.
+
+Enfin, la méthode generate() affiche le contenu généré à l'aide de la fonction echo. Cela permet de séparer la logique de l'application de la présentation et de faciliter la maintenance et la réutilisabilité du code.
+
+### Session
+Nous avons également utilisé des sessions PHP pour gérer l'authentification et l'autorisation des utilisateurs. Les sessions permettent de stocker des données utilisateur temporairement sur le serveur et de les réutiliser sur plusieurs requêtes.
+
+### Fichier de configuration
+Enfin, nous avons utilisé un fichier de configuration .env pour stocker les paramètres de configuration de l'application, tels que les informations de connexion à la base de données. Cela permet de séparer la configuration de l'application du code source et de faciliter la maintenance et le déploiement de l'application.
+
+
+
