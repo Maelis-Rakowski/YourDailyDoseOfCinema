@@ -66,22 +66,23 @@
 
         //Set Nb Tries on a sessionVariable
         public function setNbTriesAsSessionVariable(){
-            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nbTries'])) {
-                $_SESSION['nbTries'] = (int)$_POST['nbTries'];
-                echo json_encode(['status' => 'success']);
-            } else {
-                echo json_encode(['status' => 'error', 'message' => 'Paramètre nbTries manquant']);
-            }
+           
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nbTries'])) {
+                    $_SESSION['nbTries'] = (int)$_POST['nbTries'];
+                    echo json_encode(['status' => 'success']);
+                } else {
+                    echo "NbTries non défini";
+                }
+          
         }
 
         //Get the Nb Tries on the sessionVariable
         public function getNbTries(){
             if(!isset($_SESSION['pseudo'])){
-                if (isset($_SESSION['nbTries'])) {
-                    echo json_encode(['status' => 'success', 'nbTries' => $_SESSION['nbTries']]);
-                } else {
-                    echo json_encode(['status' => 'error', 'message' => 'nbTries non défini']);
+                if (!isset($_SESSION['nbTries'])) {
+                    $_SESSION['nbTries']=0;
                 }
+                echo json_encode(['status' => 'success', 'nbTries' => $_SESSION['nbTries']]);
             }
             else{
                 $userHistory = ControllerUserHistory::getDailyUserHistory();

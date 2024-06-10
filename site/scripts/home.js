@@ -354,20 +354,28 @@ function removeSpecialCharacters(inputString) {
 ///////////////////////////////////////////////////
 // Fonction pour récupérer nbTries depuis le serveur
 function getNbTries(callback) {
+
     $.get('userHistory/getNbTries')
     .done(function(reponse){
         reponse = JSON.parse(reponse);
         if(reponse.nbTries!=null)
             callback(reponse.nbTries);
         else callback(null);
+        console.log(reponse);
+
     })
 }
 
 // Fonction pour mettre à jour nbTries sur le serveur
 function setNbTries(nbTries) {
+    console.log(nbTries);
+
     $.post('userHistory/setNbTriesAsSessionVariable', // Appelle la fonction callTMDBJson du controller tmdb
         {
             nbTries: nbTries
+        }).done(function(reponse){
+            console.log(reponse);
+
         });
 }
 
@@ -380,10 +388,10 @@ function updateTryDataAndText() {
     getNbTries(function(nbTries) {
         if (nbTries !== null) {
             nbTries++;
-            updateHistory();
-            setNbTriesText(nbTries);
-            tryShowHints(nbTries);
             setNbTries(nbTries);
+            setNbTriesText(nbTries);
+            updateHistory();
+            tryShowHints(nbTries);
         }
     });
 }
