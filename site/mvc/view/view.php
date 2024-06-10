@@ -37,7 +37,7 @@ class View {
 
             return ob_get_clean();
         } else {
-           
+          
             throw new Exception('Fichier '.$file.' introuvable');
         }
     }

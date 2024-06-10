@@ -40,6 +40,24 @@
             // CAR çA PREND TROP DE TEMPS DE FAIRE LA REQUETE DETAILS SUR TOUS LES FILMS
             //!!!!!!!!!!!!!!!!!!!!!!!!!!
             $datamovies = json_decode($response, true);
+
+            if (isset($datamovies['results'])) {
+
+                // Filtrer les films avec un vote_count > 500
+                $filteredMovies = array_filter($datamovies['results'], function($movie) {
+                    return $movie['vote_count'] > 500;
+                });
+
+                // Trier les résultats filtrés par nombre de votes
+                usort($filteredMovies, function($a, $b) {
+                    return $b['vote_count'] - $a['vote_count'];
+                });
+
+                // Remplacer les résultats dans datamovies par les films filtrés et triés
+                $datamovies['results'] = $filteredMovies;
+            }
+
+
             $this->_view = new View(array('view', 'admin', 'tmdb', 'viewList.php'));
             $this->_view->generate(array('datamovies'=>$datamovies),false);
         }
