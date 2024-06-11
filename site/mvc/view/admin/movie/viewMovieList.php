@@ -2,7 +2,7 @@
     <div class="container p-5">
         <?php $this->_t="Movie List"?>
 
-        <table class="table table-striped" >
+        <table class="table table-striped" data-element-type="movie">
         <thead>
             <tr>
                 <th>Title</th>
@@ -15,7 +15,7 @@
         </thead>
         <tbody>
             <?php foreach ($movies as $movie): ?>
-                <tr>
+                <tr id=<?= htmlspecialchars($movie->getId()) ?>>
                     <td><?= htmlspecialchars($movie->getTitle()) ?></td>
                     <td><?= htmlspecialchars($movie->getReleaseDate()) ?></td>
                     <td><?= htmlspecialchars($movie->getRuntime()) ?></td>
@@ -27,10 +27,8 @@
                         </form>
                     </td>
                     <td>
-                    <form method="POST" action="/admin/movie/delete" class="delete-form">
-                        <input type="hidden" name="movie_id" value="<?= htmlspecialchars($movie->getId()) ?>">
-                        <input type="submit" value="Delete" class="delete-button">
-                    </form>
+                    <button class="btn btn-danger delete-button" data-id="<?= htmlspecialchars($movie->getId()) ?>">Delete</button>
+                    
                     </td>
                 </tr>
             <?php endforeach;?>
@@ -38,4 +36,4 @@
         </table>
     </div>
 </div>
-<script src="/scripts/delete_confirm.js"></script>
+<script src="/scripts/data_list.js"></script>
