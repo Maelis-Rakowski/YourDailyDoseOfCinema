@@ -45,10 +45,9 @@ function deleteAllCookies() {
     });
 }
 
-$(document).ready(function() {
-    $.ajax({
+$(function() {
+    $.post({
         url:'home/pickTodayMovie',
-        type: 'POST',
         dataType: 'json',
         success : function(data) {
             // if a new movie was picked, then delete all cookies
@@ -67,9 +66,8 @@ $(document).ready(function() {
     });
     $('#movieSearch').autocomplete({
         source: function(request, response) {
-            $.ajax({
+            $.get({
                 url: 'movie/searchMoviesByTitle',
-                type: 'GET',
                 dataType: 'json',
                 data: { query: request.term },
                 success: function(data) {
@@ -80,9 +78,8 @@ $(document).ready(function() {
         minLength: 1,
         select: function(event, ui) {
             var submissionId = ui.item; // get the selected movie name
-            $.ajax({
+            $.post({
                 url: 'home/submitGuess',
-                type: 'POST',
                 data: { guess: submissionId },
                 dataType: 'json',
                 success: function(data) {
@@ -150,9 +147,8 @@ $(document).ready(function() {
                         resultat_condition
                     );
                     document.cookie = "success=" + data[0][0] + "; path=/"
-                    $.ajax({
+                    $.get({
                         url: "userHistory/createUserHistory",
-                        type: "GET"
                     })
                 }
             });
@@ -174,6 +170,7 @@ $(document).ready(function() {
 function disableGame() {
     // the movie was found
     // disable the search input
+    // for an unknown reason, $ does not work here
     document.getElementById('movieSearch').disabled = true
     // display congratulation message along with the movie name le message bravo + le nom du film
     var messageDiv = createMessageDiv();
