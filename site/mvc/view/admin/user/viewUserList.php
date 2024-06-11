@@ -1,6 +1,6 @@
 <?php $this->_t="UserList"?>
 <div class="container p-5">
-    <table class="table table-striped" data-element-type="movie">
+    <table class="table table-striped" data-element-type="user">
         <tr>
             <th>Pseudo</th>
             <th>Email</th>
