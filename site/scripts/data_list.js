@@ -11,7 +11,7 @@ $(function() {
             let dataType = $('table').data('element-type')
             let idField = dataType + "_id"
             $.post({
-                url : "/admin/movie/delete",
+                url : "/admin/"+ dataType + "/delete",
                 dataType: 'json',
                 data: { [idField]: idToDelete }
             });
