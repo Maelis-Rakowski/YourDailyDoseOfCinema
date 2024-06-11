@@ -19,7 +19,6 @@
         public function delete() {
             $userIdToDelete = $_POST["user_id"];
             UserModel::deleteUserById($userIdToDelete);
-            header('Location: /admin/user');
         }
 
         public function modifyUser() {

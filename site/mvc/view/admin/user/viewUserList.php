@@ -1,6 +1,6 @@
 <?php $this->_t="UserList"?>
 <div class="container p-5">
-    <table class="table table-striped">
+    <table class="table table-striped" data-element-type="movie">
         <tr>
             <th>Pseudo</th>
             <th>Email</th>
@@ -10,7 +10,7 @@
         </tr>
         
         <?php foreach ($users as $obj): ?>
-            <tr>
+            <tr id=<?= htmlspecialchars($obj->getId()) ?>>
                 <td><?= htmlspecialchars($obj->getPseudo()) ?></td>
                 <td><?= htmlspecialchars($obj->getEmail()) ?></td>
                 <td><?= htmlspecialchars($obj->getIsAdmin()) ? "true" : "false" ?></td>
@@ -25,13 +25,10 @@
                     </form>
                 </td>
                 <td>
-                    <form method="POST" action="/admin/user/delete" class="delete-form">
-                        <input type="hidden" name="user_id" value="<?= htmlspecialchars($obj->getId()) ?>">
-                        <input type="<?= $obj->getPseudo() == $_SESSION['pseudo'] ? 'hidden' : 'submit' ?>" value="Delete" class="delete-button">
-                    </form>
+                    <button class="btn btn-danger delete-button" data-id="<?= htmlspecialchars($obj->getId()) ?>">Delete</button>
                 </td>
             </tr>
         <?php endforeach;?>
     </table>
 </div>
-<script src="/scripts/delete_confirm.js"></script>
+<script src="/scripts/data_list.js"></script>
